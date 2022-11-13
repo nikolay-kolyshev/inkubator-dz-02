@@ -1,0 +1,9 @@
+{
+  "name": "inkubator-video-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/nikolay-kolyshev/inkubator-video-api.git",
+  "author": "Николай Колышев <sword.of.destiny2001@mail.ru>",
+  "license": "MIT",
+  "private": true
+}

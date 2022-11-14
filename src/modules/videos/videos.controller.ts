@@ -183,9 +183,9 @@ export class VideosController {
         const newVideo: UpdateVideoDto = {
             title,
             author,
-            canBeDownloaded,
-            minAgeRestriction: minAgeRestriction,
-            publicationDate: publicationDate,
+            canBeDownloaded: canBeDownloaded || false,
+            minAgeRestriction: minAgeRestriction || null,
+            publicationDate: publicationDate || addDays(new Date(), 1).toISOString(),
             availableResolutions,
         };
 

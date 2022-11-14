@@ -135,7 +135,7 @@ var VideosController = /** @class */ (function () {
                 return;
             }
             var fieldValidator = new field_validator_1.FieldValidator();
-            availableResolutions === null || availableResolutions === void 0 ? void 0 : availableResolutions.map(function (value, index) {
+            availableResolutions === null || availableResolutions === void 0 ? void 0 : availableResolutions.map(function (value) {
                 fieldValidator.addFieldValidation({
                     fieldName: 'availableResolutions',
                     errorMessage: 'You did not provide correct resolution',
@@ -183,13 +183,11 @@ var VideosController = /** @class */ (function () {
                 return;
             }
             var newVideo = {
-                id: this.videosService.getVideosLength(),
                 title: title,
                 author: author,
-                canBeDownloaded: canBeDownloaded || false,
-                minAgeRestriction: minAgeRestriction || null,
-                createdAt: new Date().toISOString(),
-                publicationDate: publicationDate || (0, addDays_1.default)(new Date(), 1).toISOString(),
+                canBeDownloaded: canBeDownloaded,
+                minAgeRestriction: minAgeRestriction,
+                publicationDate: publicationDate,
                 availableResolutions: availableResolutions,
             };
             var videoCandidate = this.videosService.updateVideo(+id, newVideo);

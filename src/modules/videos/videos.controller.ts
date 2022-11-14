@@ -128,7 +128,7 @@ export class VideosController {
         }
 
         const fieldValidator = new FieldValidator();
-        availableResolutions?.map((value, index) => {
+        availableResolutions?.map((value) => {
             fieldValidator.addFieldValidation({
                 fieldName: 'availableResolutions',
                 errorMessage: 'You did not provide correct resolution',
@@ -180,14 +180,12 @@ export class VideosController {
             return;
         }
 
-        const newVideo: TVideoSchema = {
-            id: this.videosService.getVideosLength(),
+        const newVideo: UpdateVideoDto = {
             title,
             author,
-            canBeDownloaded: canBeDownloaded || false,
-            minAgeRestriction: minAgeRestriction || null,
-            createdAt: new Date().toISOString(),
-            publicationDate: publicationDate || addDays(new Date(), 1).toISOString(),
+            canBeDownloaded,
+            minAgeRestriction: minAgeRestriction,
+            publicationDate: publicationDate,
             availableResolutions,
         };
 

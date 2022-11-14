@@ -1,0 +1,1 @@
+{"version":3,"file":"videos.constants.js","sourceRoot":"","sources":["../../../src/modules/videos/videos.constants.ts"],"names":[],"mappings":";;;AAAA,+CAAsD;AAEzC,QAAA,UAAU,GAAG;IACtB,aAAa,EAAE,MAAM,CAAC,GAAG,CAAC,eAAe,CAAC;IAC1C,gBAAgB,EAAE,MAAM,CAAC,GAAG,CAAC,kBAAkB,CAAC;CACnD,CAAC;AAEW,QAAA,qBAAqB,GAAG,MAAM,CAAC,MAAM,CAAC,mCAAoB,CAAC,CAAC"}

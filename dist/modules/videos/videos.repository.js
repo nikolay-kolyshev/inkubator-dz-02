@@ -86,7 +86,7 @@ var VideosRepository = /** @class */ (function () {
             var updatedVideo = null;
             this.videos = this.videos.map(function (video) {
                 if (+video.id === id) {
-                    updatedVideo = __assign(__assign({}, video), { videoCandidate: videoCandidate });
+                    updatedVideo = __assign(__assign({}, video), videoCandidate);
                     return updatedVideo;
                 }
                 return video;

@@ -2,7 +2,6 @@ import { inject } from 'inversify';
 import { provide } from 'inversify-binding-decorators';
 import { Nullable } from '../../common/types';
 import { VIDEOS_IDS } from './videos.constants';
-import { UpdateVideoDto } from './videos.dto';
 import { VideosRepository } from './videos.repository';
 import { TVideoSchema } from './videos.types';
 
@@ -19,7 +18,7 @@ export class VideosService {
         }
     }
 
-    public updateVideo(id: number, video: UpdateVideoDto) {
+    public updateVideo(id: number, video: TVideoSchema) {
         const videoCandidate = this.videosRepository.updateVideo(id, video);
         if (videoCandidate) {
             return video;

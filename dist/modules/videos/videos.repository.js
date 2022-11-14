@@ -83,15 +83,15 @@ var VideosRepository = /** @class */ (function () {
         configurable: true,
         writable: true,
         value: function (id, videoCandidate) {
-            var updatedVideo = null;
+            var isVideoFounded = false;
             this.videos = this.videos.map(function (video) {
                 if (video.id === id) {
-                    updatedVideo = __assign(__assign({}, video), videoCandidate);
-                    return updatedVideo;
+                    isVideoFounded = true;
+                    return videoCandidate;
                 }
                 return video;
             });
-            return updatedVideo !== null && updatedVideo !== void 0 ? updatedVideo : null;
+            return isVideoFounded ? videoCandidate : null;
         }
     });
     Object.defineProperty(VideosRepository.prototype, "deleteVideoById", {

@@ -4,7 +4,6 @@ import { autorun, makeAutoObservable } from 'mobx';
 import { Logger } from '../../common/logger/logger';
 import { LOGGER_IDS } from '../../common/logger/logger.constants';
 import { VIDEOS_IDS } from './videos.constants';
-import { UpdateVideoDto } from './videos.dto';
 import { IVideosRepository, TVideoSchema } from './videos.types';
 
 let videosDB: TVideoSchema[] = [];
@@ -33,17 +32,17 @@ export class VideosRepository implements IVideosRepository {
         this.logger.info('Video crated', this.videos);
     }
 
-    public updateVideo(id: number, videoCandidate: UpdateVideoDto): TVideoSchema | null {
-        let updatedVideo = null;
+    public updateVideo(id: number, videoCandidate: TVideoSchema): TVideoSchema | null {
+        let isVideoFounded = false;
 
         this.videos = this.videos.map((video) => {
             if (video.id === id) {
-                updatedVideo = { ...video, ...videoCandidate };
-                return updatedVideo;
+                isVideoFounded = true;
+                return videoCandidate;
             }
             return video;
         });
-        return updatedVideo ?? null;
+        return isVideoFounded ? videoCandidate : null;
     }
 
     public deleteVideoById(id: number) {

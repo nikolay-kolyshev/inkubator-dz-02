@@ -12,11 +12,11 @@ import {
     response,
 } from 'inversify-express-utils';
 import { STATUS_CODES } from '../../common/constants';
-import { FieldValidator } from '../../common/field-validator/field-validator';
-import { AVAILABLE_RESOLUTIONS, VIDEOS_IDS } from './videos.constants';
+import { VIDEOS_IDS } from './videos.constants';
 import { CreateVideoDto, UpdateVideoDto } from './videos.dto';
 import { VideosService } from './videos.service';
 import { TVideoSchema } from './videos.types';
+import { VideosValidator } from './videos.validator';
 
 @controller('/videos')
 export class VideosController {
@@ -60,34 +60,7 @@ export class VideosController {
     ) {
         const { title, author, availableResolutions, minAgeRestriction, publicationDate, canBeDownloaded } = req.body;
 
-        const fieldValidator = new FieldValidator();
-        availableResolutions?.map((value, index) => {
-            fieldValidator.addFieldValidation({
-                fieldName: 'availableResolutions',
-                errorMessage: 'You did not provide correct resolution',
-                errorCondition: !AVAILABLE_RESOLUTIONS.includes(value),
-            });
-        });
-        const errorsMessages = fieldValidator
-            .addFieldValidation({
-                fieldName: 'title',
-                errorMessage: `You don't have title or the title is incorrect`,
-                errorCondition: !title || title.length > 40 || title.trim().length === 0 || typeof title !== 'string',
-            })
-            .addFieldValidation({
-                fieldName: 'author',
-                errorMessage: `You don't have author or author is incorrect`,
-                errorCondition:
-                    !author || author.length > 20 || author.trim().length === 0 || typeof author !== 'string',
-            })
-            .addFieldValidation({
-                fieldName: 'availableResolutions',
-                errorMessage: `You don't have availableResolutions`,
-                errorCondition:
-                    !availableResolutions ||
-                    availableResolutions.length > AVAILABLE_RESOLUTIONS.length ||
-                    availableResolutions.length === 0,
-            }).finishAndReturnErrorMessages;
+        const errorsMessages = VideosValidator.validateCreateVideo(req.body);
 
         if (errorsMessages.length >= 1) {
             res.status(STATUS_CODES.BAD_REQUEST).send({ errorsMessages });
@@ -127,53 +100,7 @@ export class VideosController {
             return;
         }
 
-        const fieldValidator = new FieldValidator();
-        availableResolutions?.map((value) => {
-            fieldValidator.addFieldValidation({
-                fieldName: 'availableResolutions',
-                errorMessage: 'You did not provide correct resolution',
-                errorCondition: !AVAILABLE_RESOLUTIONS.includes(value),
-            });
-        });
-        const errorsMessages = fieldValidator
-            .addFieldValidation({
-                fieldName: 'title',
-                errorMessage: `You don't have title or the title is incorrect`,
-                errorCondition: !title || title.length > 40 || title.trim().length === 0 || typeof title !== 'string',
-            })
-            .addFieldValidation({
-                fieldName: 'author',
-                errorMessage: `You don't have author or author is incorrect`,
-                errorCondition:
-                    !author || author.length > 20 || author.trim().length === 0 || typeof author !== 'string',
-            })
-            .addFieldValidation({
-                fieldName: 'availableResolutions',
-                errorMessage: `You don't have availableResolutions`,
-                errorCondition:
-                    !availableResolutions ||
-                    availableResolutions.length > AVAILABLE_RESOLUTIONS.length ||
-                    availableResolutions.length === 0,
-            })
-            .addFieldValidation({
-                fieldName: 'minAgeRestriction',
-                errorMessage: `I know you cant test this -_-`,
-                errorCondition:
-                    !minAgeRestriction ||
-                    minAgeRestriction < 1 ||
-                    minAgeRestriction > 18 ||
-                    typeof minAgeRestriction !== 'number',
-            })
-            .addFieldValidation({
-                fieldName: 'publicationDate',
-                errorMessage: `Это самурайский бекенннннннд`,
-                errorCondition: !publicationDate || typeof publicationDate !== 'string',
-            })
-            .addFieldValidation({
-                fieldName: 'canBeDownloaded',
-                errorMessage: `Это самурайский бекенннннннд!`,
-                errorCondition: typeof canBeDownloaded !== 'boolean',
-            }).finishAndReturnErrorMessages;
+        const errorsMessages = VideosValidator.validateUpdateVideo(req.body);
 
         if (errorsMessages.length >= 1) {
             res.status(STATUS_CODES.BAD_REQUEST).send({ errorsMessages });

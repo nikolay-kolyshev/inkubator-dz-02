@@ -38,7 +38,7 @@ export class VideosRepository implements IVideosRepository {
         this.videos = this.videos.map((video) => {
             if (+video.id === id) {
                 isVideoFounded = true;
-                return videoCandidate;
+                return { ...video, videoCandidate };
             }
             return video;
         });

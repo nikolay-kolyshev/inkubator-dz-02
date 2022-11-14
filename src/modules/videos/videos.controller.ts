@@ -18,8 +18,6 @@ import { CreateVideoDto, UpdateVideoDto } from './videos.dto';
 import { VideosService } from './videos.service';
 import { TVideoSchema } from './videos.types';
 
-const dateNow = new Date();
-
 @controller('/videos')
 export class VideosController {
     constructor(@inject(VIDEOS_IDS.VideosService) private videosService: VideosService) {
@@ -103,7 +101,7 @@ export class VideosController {
             canBeDownloaded: canBeDownloaded || false,
             minAgeRestriction: minAgeRestriction || null,
             createdAt: new Date().toISOString(),
-            publicationDate: publicationDate || addDays(dateNow, 1).toISOString(),
+            publicationDate: publicationDate || addDays(new Date(), 1).toISOString(),
             availableResolutions,
         };
 
@@ -189,12 +187,12 @@ export class VideosController {
             canBeDownloaded: canBeDownloaded || false,
             minAgeRestriction: minAgeRestriction || null,
             createdAt: new Date().toISOString(),
-            publicationDate: publicationDate || addDays(dateNow, 1).toISOString(),
+            publicationDate: publicationDate || addDays(new Date(), 1).toISOString(),
             availableResolutions,
         };
 
         try {
-            const videoCandidate = this.videosService.updateVideo(newVideo);
+            const videoCandidate = this.videosService.updateVideo(id, newVideo);
             if (!videoCandidate) {
                 res.sendStatus(STATUS_CODES.NOT_FOUND);
                 return;

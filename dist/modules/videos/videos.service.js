@@ -44,8 +44,8 @@ var VideosService = /** @class */ (function () {
         enumerable: false,
         configurable: true,
         writable: true,
-        value: function (video) {
-            var videoCandidate = this.videosRepository.updateVideo(video);
+        value: function (id, video) {
+            var videoCandidate = this.videosRepository.updateVideo(id, video);
             if (videoCandidate) {
                 return video;
             }

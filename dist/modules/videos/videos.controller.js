@@ -20,7 +20,6 @@ var constants_1 = require("../../common/constants");
 var field_validator_1 = require("../../common/field-validator/field-validator");
 var videos_constants_1 = require("./videos.constants");
 var videos_service_1 = require("./videos.service");
-var dateNow = new Date();
 var VideosController = /** @class */ (function () {
     function VideosController(videosService) {
         Object.defineProperty(this, "videosService", {
@@ -113,7 +112,7 @@ var VideosController = /** @class */ (function () {
                 canBeDownloaded: canBeDownloaded || false,
                 minAgeRestriction: minAgeRestriction || null,
                 createdAt: new Date().toISOString(),
-                publicationDate: publicationDate || (0, addDays_1.default)(dateNow, 1).toISOString(),
+                publicationDate: publicationDate || (0, addDays_1.default)(new Date(), 1).toISOString(),
                 availableResolutions: availableResolutions,
             };
             try {
@@ -190,11 +189,11 @@ var VideosController = /** @class */ (function () {
                 canBeDownloaded: canBeDownloaded || false,
                 minAgeRestriction: minAgeRestriction || null,
                 createdAt: new Date().toISOString(),
-                publicationDate: publicationDate || (0, addDays_1.default)(dateNow, 1).toISOString(),
+                publicationDate: publicationDate || (0, addDays_1.default)(new Date(), 1).toISOString(),
                 availableResolutions: availableResolutions,
             };
             try {
-                var videoCandidate = this.videosService.updateVideo(newVideo);
+                var videoCandidate = this.videosService.updateVideo(id, newVideo);
                 if (!videoCandidate) {
                     res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
                     return;

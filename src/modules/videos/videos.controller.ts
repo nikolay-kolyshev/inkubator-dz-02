@@ -35,15 +35,15 @@ export class VideosController {
     public getVideoById(@requestParam('id') id: number, @response() res: Response<TVideoSchema>) {
         const videoCandidate = this.videosService.getVideoById(+id);
         if (!videoCandidate) {
-            throw new Error('Video not found');
             res.sendStatus(STATUS_CODES.NOT_FOUND);
+            return;
         }
         return res.status(STATUS_CODES.OK).send(videoCandidate);
     }
 
     @httpDelete('/:id')
     public deleteVideoById(@requestParam('id') id: number, @response() res: Response) {
-        const videoCandidate = this.videosService.deleteVideoById(+id);
+        const videoCandidate = this.videosService.getVideoById(+id);
         if (!videoCandidate) {
             res.sendStatus(STATUS_CODES.NOT_FOUND);
         }

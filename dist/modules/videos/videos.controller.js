@@ -46,8 +46,8 @@ var VideosController = /** @class */ (function () {
         value: function (id, res) {
             var videoCandidate = this.videosService.getVideoById(+id);
             if (!videoCandidate) {
-                throw new Error('Video not found');
                 res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
+                return;
             }
             return res.status(constants_1.STATUS_CODES.OK).send(videoCandidate);
         }
@@ -57,7 +57,7 @@ var VideosController = /** @class */ (function () {
         configurable: true,
         writable: true,
         value: function (id, res) {
-            var videoCandidate = this.videosService.deleteVideoById(+id);
+            var videoCandidate = this.videosService.getVideoById(+id);
             if (!videoCandidate) {
                 res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
             }

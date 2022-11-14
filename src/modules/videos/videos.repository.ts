@@ -33,17 +33,17 @@ export class VideosRepository implements IVideosRepository {
     }
 
     public updateVideo(id: number, videoCandidate: TVideoSchema): TVideoSchema | null {
-        let isVideoFounded = false;
+        let updatedVideo = null;
 
         this.videos = this.videos.map((video) => {
             if (+video.id === id) {
-                isVideoFounded = true;
-                return { ...video, videoCandidate };
+                updatedVideo = { ...video, videoCandidate };
+                return updatedVideo;
             }
             return video;
         });
 
-        return isVideoFounded ? videoCandidate : null;
+        return updatedVideo ?? null;
     }
 
     public deleteVideoById(id: number) {

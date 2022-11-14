@@ -185,9 +185,9 @@ var VideosController = /** @class */ (function () {
             var newVideo = {
                 title: title,
                 author: author,
-                canBeDownloaded: canBeDownloaded,
-                minAgeRestriction: minAgeRestriction,
-                publicationDate: publicationDate,
+                canBeDownloaded: canBeDownloaded || false,
+                minAgeRestriction: minAgeRestriction || null,
+                publicationDate: publicationDate || (0, addDays_1.default)(new Date(), 1).toISOString(),
                 availableResolutions: availableResolutions,
             };
             var videoCandidate = this.videosService.updateVideo(+id, newVideo);

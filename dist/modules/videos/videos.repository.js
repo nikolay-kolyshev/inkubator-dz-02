@@ -85,7 +85,7 @@ var VideosRepository = /** @class */ (function () {
         value: function (id, videoCandidate) {
             var isVideoFounded = false;
             this.videos = this.videos.map(function (video) {
-                if (video.id === id) {
+                if (+video.id === id) {
                     isVideoFounded = true;
                     return videoCandidate;
                 }

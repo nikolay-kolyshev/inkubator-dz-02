@@ -47,7 +47,7 @@ var VideosService = /** @class */ (function () {
         value: function (id, video) {
             var videoCandidate = this.videosRepository.updateVideo(id, video);
             if (videoCandidate) {
-                return video;
+                return videoCandidate;
             }
             else {
                 throw new Error('Video was not found');

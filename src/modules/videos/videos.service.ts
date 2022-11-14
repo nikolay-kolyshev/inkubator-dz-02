@@ -21,7 +21,7 @@ export class VideosService {
     public updateVideo(id: number, video: TVideoSchema) {
         const videoCandidate = this.videosRepository.updateVideo(id, video);
         if (videoCandidate) {
-            return video;
+            return videoCandidate;
         } else {
             throw new Error('Video was not found');
         }

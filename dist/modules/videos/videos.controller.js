@@ -192,17 +192,8 @@ var VideosController = /** @class */ (function () {
                 publicationDate: publicationDate || (0, addDays_1.default)(new Date(), 1).toISOString(),
                 availableResolutions: availableResolutions,
             };
-            try {
-                var videoCandidate = this.videosService.updateVideo(id, newVideo);
-                if (!videoCandidate) {
-                    res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
-                    return;
-                }
-            }
-            catch (error) {
-                res.sendStatus(constants_1.STATUS_CODES.INTERNAL_SERVER_ERROR);
-            }
-            res.status(constants_1.STATUS_CODES.NO_CONTENT).send(newVideo);
+            var videoCandidate = this.videosService.updateVideo(+id, newVideo);
+            res.status(constants_1.STATUS_CODES.NO_CONTENT).send(videoCandidate);
         }
     });
     __decorate([

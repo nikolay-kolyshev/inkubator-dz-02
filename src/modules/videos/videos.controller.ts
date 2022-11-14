@@ -191,16 +191,8 @@ export class VideosController {
             availableResolutions,
         };
 
-        try {
-            const videoCandidate = this.videosService.updateVideo(id, newVideo);
-            if (!videoCandidate) {
-                res.sendStatus(STATUS_CODES.NOT_FOUND);
-                return;
-            }
-        } catch (error) {
-            res.sendStatus(STATUS_CODES.INTERNAL_SERVER_ERROR);
-        }
+        const videoCandidate = this.videosService.updateVideo(+id, newVideo);
 
-        res.status(STATUS_CODES.NO_CONTENT).send(newVideo);
+        res.status(STATUS_CODES.NO_CONTENT).send(videoCandidate);
     }
 }

@@ -8,7 +8,7 @@ export type TVideoSchema = {
     minAgeRestriction?: Nullable<number>;
     createdAt?: string;
     publicationDate?: string;
-    availableResolutions?: EAvailableResolution[];
+    availableResolutions?: Nullable<EAvailableResolution[]>;
 };
 
 export enum EAvailableResolution {

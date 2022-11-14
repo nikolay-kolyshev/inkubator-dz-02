@@ -75,7 +75,7 @@ export class VideosController {
             minAgeRestriction: minAgeRestriction || null,
             createdAt: new Date().toISOString(),
             publicationDate: publicationDate || addDays(new Date(), 1).toISOString(),
-            availableResolutions,
+            availableResolutions: availableResolutions ?? null,
         };
 
         try {
@@ -113,7 +113,7 @@ export class VideosController {
             canBeDownloaded: canBeDownloaded || false,
             minAgeRestriction: minAgeRestriction || null,
             publicationDate: publicationDate || addDays(new Date(), 1).toISOString(),
-            availableResolutions,
+            availableResolutions: availableResolutions ?? null,
         };
 
         const videoCandidate = this.videosService.updateVideo(+id, newVideo);

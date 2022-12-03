@@ -5,6 +5,6 @@ import { TestingController } from './testing.controller';
 
 const blogsRouter = Router();
 
-blogsRouter.get('/all-data', TestingController.deleteAllData);
+blogsRouter.delete('/all-data', TestingController.deleteAllData);
 
 export default blogsRouter;

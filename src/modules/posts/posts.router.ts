@@ -10,7 +10,7 @@ const postsRouter = Router();
 
 postsRouter.get('/', PostsController.getAllPosts);
 postsRouter.post('/', authGuard, ...postsValidation.inputBody, inputValidationMiddleware, PostsController.postPost);
-postsRouter.get('/:id', authGuard, PostsController.getPostById);
+postsRouter.get('/:id', PostsController.getPostById);
 postsRouter.put(
     '/:id',
     authGuard,

@@ -18,7 +18,7 @@ var posts_validation_1 = require("./posts.validation");
 var postsRouter = (0, express_1.Router)();
 postsRouter.get('/', posts_controller_1.PostsController.getAllPosts);
 postsRouter.post.apply(postsRouter, __spreadArray(__spreadArray(['/', auth_guard_1.authGuard], posts_validation_1.postsValidation.inputBody, false), [input_validation_middleware_1.inputValidationMiddleware, posts_controller_1.PostsController.postPost], false));
-postsRouter.get('/:id', auth_guard_1.authGuard, posts_controller_1.PostsController.getPostById);
+postsRouter.get('/:id', posts_controller_1.PostsController.getPostById);
 postsRouter.put.apply(postsRouter, __spreadArray(__spreadArray(__spreadArray(['/:id',
     auth_guard_1.authGuard], posts_validation_1.postsValidation.update, false), posts_validation_1.postsValidation.inputBody, false), [input_validation_middleware_1.inputValidationMiddleware,
     posts_controller_1.PostsController.putPostById], false));

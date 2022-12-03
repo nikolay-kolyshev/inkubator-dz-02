@@ -42,6 +42,8 @@ var blogs_repository_1 = require("../blogs/blogs.repository");
 exports.postsValidation = {
     inputBody: [
         (0, express_validator_1.body)('title')
+            .exists()
+            .withMessage('title должен находиться в теле запроса')
             .isString()
             .withMessage('title должен быть строкой')
             .trim()
@@ -50,6 +52,8 @@ exports.postsValidation = {
             .isLength({ min: 1, max: 30 })
             .withMessage('title должен быть от 1 до 30 символов'),
         (0, express_validator_1.body)('shortDescription')
+            .exists()
+            .withMessage('title должен находиться в теле запроса')
             .isString()
             .withMessage('shortDescription должен быть строкой')
             .trim()
@@ -58,6 +62,8 @@ exports.postsValidation = {
             .isLength({ min: 1, max: 300 })
             .withMessage('shortDescription должен быть от 1 до 300 символов'),
         (0, express_validator_1.body)('content')
+            .exists()
+            .withMessage('content должен находиться в теле запроса')
             .isString()
             .withMessage('content должен быть строкой')
             .trim()
@@ -66,6 +72,8 @@ exports.postsValidation = {
             .isLength({ min: 1, max: 1000 })
             .withMessage('shortDescription должен быть от 1 до 1000 символов'),
         (0, express_validator_1.body)('blogId')
+            .exists()
+            .withMessage('blogId должен находиться в теле запроса')
             .isString()
             .withMessage('blogId должен быть строкой')
             .notEmpty()

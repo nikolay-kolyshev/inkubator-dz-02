@@ -3,6 +3,8 @@ import { body, param } from 'express-validator';
 export const blogsValidation = {
     inputBody: [
         body('name')
+            .exists()
+            .withMessage('name должен находиться в теле запроса')
             .isString()
             .withMessage('name должен быть строкой')
             .trim()
@@ -11,6 +13,8 @@ export const blogsValidation = {
             .isLength({ min: 1, max: 15 })
             .withMessage('name должен быть от 1 до 15 символов'),
         body('description')
+            .exists()
+            .withMessage('description должен находиться в теле запроса')
             .isString()
             .withMessage('description должен быть строкой')
             .trim()
@@ -19,6 +23,8 @@ export const blogsValidation = {
             .isLength({ min: 1, max: 500 })
             .withMessage('description должен быть от 1 до 500 символов'),
         body('websiteUrl')
+            .exists()
+            .withMessage('websiteUrl должен находиться в теле запроса')
             .isString()
             .withMessage('websiteUrl должен быть строкой')
             .trim()

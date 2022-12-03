@@ -4,6 +4,8 @@ import { BlogsRepository } from '../blogs/blogs.repository';
 export const postsValidation = {
     inputBody: [
         body('title')
+            .exists()
+            .withMessage('title должен находиться в теле запроса')
             .isString()
             .withMessage('title должен быть строкой')
             .trim()
@@ -12,6 +14,8 @@ export const postsValidation = {
             .isLength({ min: 1, max: 30 })
             .withMessage('title должен быть от 1 до 30 символов'),
         body('shortDescription')
+            .exists()
+            .withMessage('title должен находиться в теле запроса')
             .isString()
             .withMessage('shortDescription должен быть строкой')
             .trim()
@@ -20,6 +24,8 @@ export const postsValidation = {
             .isLength({ min: 1, max: 300 })
             .withMessage('shortDescription должен быть от 1 до 300 символов'),
         body('content')
+            .exists()
+            .withMessage('content должен находиться в теле запроса')
             .isString()
             .withMessage('content должен быть строкой')
             .trim()
@@ -28,6 +34,8 @@ export const postsValidation = {
             .isLength({ min: 1, max: 1000 })
             .withMessage('shortDescription должен быть от 1 до 1000 символов'),
         body('blogId')
+            .exists()
+            .withMessage('blogId должен находиться в теле запроса')
             .isString()
             .withMessage('blogId должен быть строкой')
             .notEmpty()

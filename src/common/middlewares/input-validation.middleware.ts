@@ -12,7 +12,7 @@ export const inputValidationMiddleware = (req: Request, res: Response, next: Nex
     };
     if (!errors.isEmpty()) {
         return res.status(STATUS_CODES.BAD_REQUEST).json({
-            errors: errors.array().map(errorFormatter),
+            errors: errors.array({ onlyFirstError: true }).map(errorFormatter),
         });
     }
     return next();

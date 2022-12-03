@@ -14,7 +14,7 @@ var inputValidationMiddleware = function (req, res, next) {
     };
     if (!errors.isEmpty()) {
         return res.status(constants_1.STATUS_CODES.BAD_REQUEST).json({
-            errors: errors.array().map(errorFormatter),
+            errors: errors.array({ onlyFirstError: true }).map(errorFormatter),
         });
     }
     return next();

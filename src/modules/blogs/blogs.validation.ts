@@ -24,7 +24,7 @@ export const blogsValidation = {
             .withMessage('description должен быть от 1 до 500 символов'),
         body('websiteUrl')
             .exists()
-            .withMessage('websiteUrl должен находиться в теле запроса')
+            .withMessage('websiteUrlпопр должен находиться в теле запроса')
             .isString()
             .withMessage('websiteUrl должен быть строкой')
             .trim()

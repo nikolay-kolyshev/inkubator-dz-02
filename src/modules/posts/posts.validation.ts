@@ -21,8 +21,8 @@ export const postsValidation = {
             .trim()
             .notEmpty()
             .withMessage('shortDescription не может быть пустым')
-            .isLength({ min: 1, max: 300 })
-            .withMessage('shortDescription должен быть от 1 до 300 символов'),
+            .isLength({ min: 1, max: 100 })
+            .withMessage('shortDescription должен быть от 1 до 100 символов'),
         body('content')
             .exists()
             .withMessage('content должен находиться в теле запроса')
@@ -32,7 +32,7 @@ export const postsValidation = {
             .notEmpty()
             .withMessage('content не может быть пустым')
             .isLength({ min: 1, max: 1000 })
-            .withMessage('shortDescription должен быть от 1 до 1000 символов'),
+            .withMessage('content должен быть от 1 до 1000 символов'),
         body('blogId')
             .exists()
             .withMessage('blogId должен находиться в теле запроса')

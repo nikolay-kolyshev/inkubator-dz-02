@@ -13,12 +13,9 @@
     "sourceMap": true,
     "strictNullChecks": true,
     "module": "commonjs",
+    "esModuleInterop": true,
     "lib": ["es6"],
-    "types": ["reflect-metadata"],
-    "target": "es5",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "useDefineForClassFields": true
+    "target": "es5"
   },
   "include": [
       "./src/**/*"

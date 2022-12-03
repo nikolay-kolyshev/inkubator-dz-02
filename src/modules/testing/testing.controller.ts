@@ -1,16 +1,13 @@
-import { Response } from 'express';
-import { inject } from 'inversify';
-import { controller, httpDelete, response } from 'inversify-express-utils';
-import { VIDEOS_IDS } from '../videos/videos.constants';
-import { VideosService } from '../videos/videos.service';
+import { Request, Response } from 'express';
+import { STATUS_CODES } from '../../common/constants';
+import { BlogsRepository } from '../blogs/blogs.repository';
+import { PostsRepository } from '../posts/posts.repository';
 
-@controller('/testing')
 export class TestingController {
-    constructor(@inject(VIDEOS_IDS.VideosService) private videosService: VideosService) {}
-
-    @httpDelete('/all-data')
-    public deleteAllVideos(@response() res: Response) {
-        this.videosService.getAllVideos();
-        return res.sendStatus(204);
+    static async deleteAllData(req: Request, res: Response): Promise<void> {
+        await BlogsRepository.deleteAllBlogs();
+        await PostsRepository.deleteAllPosts();
+        res.status(STATUS_CODES.NO_CONTENT);
+        return;
     }
 }

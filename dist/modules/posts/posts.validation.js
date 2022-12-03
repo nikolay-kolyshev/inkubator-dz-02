@@ -36,30 +36,58 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TestingController = void 0;
-var constants_1 = require("../../common/constants");
+exports.postsValidation = void 0;
+var express_validator_1 = require("express-validator");
 var blogs_repository_1 = require("../blogs/blogs.repository");
-var posts_repository_1 = require("../posts/posts.repository");
-var TestingController = /** @class */ (function () {
-    function TestingController() {
-    }
-    TestingController.deleteAllData = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
+exports.postsValidation = {
+    inputBody: [
+        (0, express_validator_1.body)('title')
+            .exists()
+            .withMessage('title обязательное поле')
+            .notEmpty()
+            .withMessage('title не может быть пустым')
+            .isString()
+            .withMessage('title должен быть строкой')
+            .trim()
+            .isLength({ min: 1, max: 300 })
+            .withMessage('title должен быть от 1 до 300 символов'),
+        (0, express_validator_1.body)('shortDescription')
+            .exists()
+            .withMessage('shortDescription обязательное поле')
+            .notEmpty()
+            .withMessage('shortDescription не может быть пустым')
+            .isString()
+            .withMessage('shortDescription должен быть строкой')
+            .trim()
+            .isLength({ min: 1, max: 100 }),
+        (0, express_validator_1.body)('content').exists().notEmpty().isString().trim().isLength({ min: 1, max: 1000 }),
+        (0, express_validator_1.body)('blogId')
+            .exists()
+            .withMessage('blogId обязательное поле')
+            .notEmpty()
+            .withMessage('blogId не может быть пустым')
+            .isString()
+            .withMessage('blogId должен быть строкой')
+            .trim()
+            .isLength({ min: 1 })
+            .withMessage('blogId должен иметь длину не менее 1 символа')
+            .isUUID()
+            .withMessage('blogId должен быть UUID')
+            .custom(function (id) { return __awaiter(void 0, void 0, void 0, function () {
+            var foundedBlog;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, blogs_repository_1.BlogsRepository.deleteAllBlogs()];
+                    case 0: return [4 /*yield*/, blogs_repository_1.BlogsRepository.findBlogById(id)];
                     case 1:
-                        _a.sent();
-                        return [4 /*yield*/, posts_repository_1.PostsRepository.deleteAllPosts()];
-                    case 2:
-                        _a.sent();
-                        res.status(constants_1.STATUS_CODES.NO_CONTENT);
-                        return [2 /*return*/];
+                        foundedBlog = _a.sent();
+                        if (!foundedBlog) {
+                            throw new Error('Блог с таким blogId не найден. Пожалуйста, проверьте blogId');
+                        }
+                        return [2 /*return*/, true];
                 }
             });
-        });
-    };
-    return TestingController;
-}());
-exports.TestingController = TestingController;
-//# sourceMappingURL=testing.controller.js.map
+        }); }),
+    ],
+    update: [(0, express_validator_1.param)('id').exists().notEmpty().isString().isLength({ min: 1 }).isUUID()],
+};
+//# sourceMappingURL=posts.validation.js.map

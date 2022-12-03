@@ -19,7 +19,7 @@ export class BlogsController {
     static async getBlogById(req: Request<{ id: string }, BlogScheme>, res: Response<BlogScheme>): Promise<void> {
         const blog = await BlogsRepository.findBlogById(req.params.id);
         if (!blog) {
-            res.status(STATUS_CODES.NOT_FOUND);
+            res.sendStatus(STATUS_CODES.NOT_FOUND);
             return;
         }
         res.status(STATUS_CODES.OK).json(blog);
@@ -29,19 +29,19 @@ export class BlogsController {
         const blogWithUpdate = req.body;
         const isBlogUpdated = await BlogsRepository.updateBlogById(req.params.id, blogWithUpdate);
         if (!isBlogUpdated) {
-            res.status(STATUS_CODES.NOT_FOUND);
+            res.sendStatus(STATUS_CODES.NOT_FOUND);
             return;
         }
-        res.status(STATUS_CODES.NO_CONTENT);
+        res.sendStatus(STATUS_CODES.NO_CONTENT);
         return;
     }
     static async deleteBlogById(req: Request<{ id: string }, void>, res: Response<void>): Promise<void> {
         const isBlogDeleted = await BlogsRepository.deleteBLogById(req.params.id);
         if (!isBlogDeleted) {
-            res.status(STATUS_CODES.NOT_FOUND);
+            res.sendStatus(STATUS_CODES.NOT_FOUND);
             return;
         }
-        res.status(STATUS_CODES.NO_CONTENT);
+        res.sendStatus(STATUS_CODES.NO_CONTENT);
         return;
     }
 }

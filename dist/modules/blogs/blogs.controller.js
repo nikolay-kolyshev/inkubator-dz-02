@@ -81,7 +81,7 @@ var BlogsController = /** @class */ (function () {
                     case 1:
                         blog = _a.sent();
                         if (!blog) {
-                            res.status(constants_1.STATUS_CODES.NOT_FOUND);
+                            res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
                             return [2 /*return*/];
                         }
                         res.status(constants_1.STATUS_CODES.OK).json(blog);
@@ -101,10 +101,10 @@ var BlogsController = /** @class */ (function () {
                     case 1:
                         isBlogUpdated = _a.sent();
                         if (!isBlogUpdated) {
-                            res.status(constants_1.STATUS_CODES.NOT_FOUND);
+                            res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
                             return [2 /*return*/];
                         }
-                        res.status(constants_1.STATUS_CODES.NO_CONTENT);
+                        res.sendStatus(constants_1.STATUS_CODES.NO_CONTENT);
                         return [2 /*return*/];
                 }
             });
@@ -119,10 +119,10 @@ var BlogsController = /** @class */ (function () {
                     case 1:
                         isBlogDeleted = _a.sent();
                         if (!isBlogDeleted) {
-                            res.status(constants_1.STATUS_CODES.NOT_FOUND);
+                            res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
                             return [2 /*return*/];
                         }
-                        res.status(constants_1.STATUS_CODES.NO_CONTENT);
+                        res.sendStatus(constants_1.STATUS_CODES.NO_CONTENT);
                         return [2 /*return*/];
                 }
             });

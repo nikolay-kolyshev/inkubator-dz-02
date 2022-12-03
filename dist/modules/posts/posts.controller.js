@@ -81,7 +81,7 @@ var PostsController = /** @class */ (function () {
                     case 1:
                         post = _a.sent();
                         if (!post) {
-                            res.status(constants_1.STATUS_CODES.NOT_FOUND);
+                            res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
                             return [2 /*return*/];
                         }
                         res.status(constants_1.STATUS_CODES.OK).json(post);
@@ -101,11 +101,11 @@ var PostsController = /** @class */ (function () {
                     case 1:
                         postUpdateResult = _a.sent();
                         if (postUpdateResult.error) {
-                            res.status(postUpdateResult.error.code);
+                            res.sendStatus(postUpdateResult.error.code);
                             res.statusMessage = postUpdateResult.error.message;
                             return [2 /*return*/];
                         }
-                        res.status(constants_1.STATUS_CODES.NO_CONTENT);
+                        res.sendStatus(constants_1.STATUS_CODES.NO_CONTENT);
                         return [2 /*return*/];
                 }
             });
@@ -120,10 +120,10 @@ var PostsController = /** @class */ (function () {
                     case 1:
                         isPostDeleted = _a.sent();
                         if (!isPostDeleted) {
-                            res.status(constants_1.STATUS_CODES.NOT_FOUND);
+                            res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
                             return [2 /*return*/];
                         }
-                        res.status(constants_1.STATUS_CODES.NO_CONTENT);
+                        res.sendStatus(constants_1.STATUS_CODES.NO_CONTENT);
                         return [2 /*return*/];
                 }
             });

@@ -19,7 +19,7 @@ export class PostsController {
     static async getPostById(req: Request<{ id: string }, PostScheme>, res: Response<PostScheme>): Promise<void> {
         const post = await PostsService.findPostById(req.params.id);
         if (!post) {
-            res.status(STATUS_CODES.NOT_FOUND);
+            res.sendStatus(STATUS_CODES.NOT_FOUND);
             return;
         }
         res.status(STATUS_CODES.OK).json(post);
@@ -29,20 +29,20 @@ export class PostsController {
         const postWithUpdate = req.body;
         const postUpdateResult = await PostsService.updatePostById(req.params.id, postWithUpdate);
         if (postUpdateResult.error) {
-            res.status(postUpdateResult.error.code);
+            res.sendStatus(postUpdateResult.error.code);
             res.statusMessage = postUpdateResult.error.message;
             return;
         }
-        res.status(STATUS_CODES.NO_CONTENT);
+        res.sendStatus(STATUS_CODES.NO_CONTENT);
         return;
     }
     static async deletePostById(req: Request<{ id: string }, void>, res: Response<void>): Promise<void> {
         const isPostDeleted = await PostsService.deleteBLogById(req.params.id);
         if (!isPostDeleted) {
-            res.status(STATUS_CODES.NOT_FOUND);
+            res.sendStatus(STATUS_CODES.NOT_FOUND);
             return;
         }
-        res.status(STATUS_CODES.NO_CONTENT);
+        res.sendStatus(STATUS_CODES.NO_CONTENT);
         return;
     }
 }

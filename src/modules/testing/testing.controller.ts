@@ -7,7 +7,7 @@ export class TestingController {
     static async deleteAllData(req: Request, res: Response): Promise<void> {
         await BlogsRepository.deleteAllBlogs();
         await PostsRepository.deleteAllPosts();
-        res.status(STATUS_CODES.NO_CONTENT);
+        res.sendStatus(STATUS_CODES.NO_CONTENT);
         return;
     }
 }

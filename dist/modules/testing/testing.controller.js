@@ -53,7 +53,7 @@ var TestingController = /** @class */ (function () {
                         return [4 /*yield*/, posts_repository_1.PostsRepository.deleteAllPosts()];
                     case 2:
                         _a.sent();
-                        res.status(constants_1.STATUS_CODES.NO_CONTENT);
+                        res.sendStatus(constants_1.STATUS_CODES.NO_CONTENT);
                         return [2 /*return*/];
                 }
             });

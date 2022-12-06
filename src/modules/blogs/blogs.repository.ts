@@ -13,7 +13,10 @@ export class BlogsRepository {
     static async findBlogById(id: string): Promise<Nullable<BlogScheme>> {
         return blogsCollection.findOne({ id });
     }
-    static async updateBlogById(id: string, blogWithUpdate: Omit<BlogsInputRepositoryDTO, 'id'>): Promise<void> {
+    static async updateBlogById(
+        id: string,
+        blogWithUpdate: Omit<BlogsInputRepositoryDTO, 'id' | 'createdAt'>,
+    ): Promise<void> {
         await blogsCollection.updateOne({ id }, { $set: blogWithUpdate });
     }
     static async deleteBLogById(id: string): Promise<void> {

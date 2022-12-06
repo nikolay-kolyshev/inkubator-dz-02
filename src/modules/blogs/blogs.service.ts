@@ -40,15 +40,15 @@ export class BlogsService {
         return await BlogsRepository.findBlogById(id);
     }
     static async updateBlogById(id: string, blogWithUpdate: BlogsInputDTO): Promise<boolean> {
-        const blogCandidate = BlogsRepository.findBlogById(id);
+        const blogCandidate = await BlogsRepository.findBlogById(id);
         if (!blogCandidate) {
             return false;
         }
-        await BlogsRepository.updateBlogById(id, { ...blogWithUpdate, createdAt: generateDate() });
+        await BlogsRepository.updateBlogById(id, { ...blogWithUpdate });
         return true;
     }
     static async deleteBLogById(id: string): Promise<boolean> {
-        const blogCandidate = BlogsRepository.findBlogById(id);
+        const blogCandidate = await BlogsRepository.findBlogById(id);
         if (!blogCandidate) {
             return false;
         }

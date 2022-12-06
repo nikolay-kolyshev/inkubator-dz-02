@@ -115,13 +115,14 @@ var BlogsService = /** @class */ (function () {
             var blogCandidate;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        blogCandidate = blogs_repository_1.BlogsRepository.findBlogById(id);
+                    case 0: return [4 /*yield*/, blogs_repository_1.BlogsRepository.findBlogById(id)];
+                    case 1:
+                        blogCandidate = _a.sent();
                         if (!blogCandidate) {
                             return [2 /*return*/, false];
                         }
-                        return [4 /*yield*/, blogs_repository_1.BlogsRepository.updateBlogById(id, __assign(__assign({}, blogWithUpdate), { createdAt: (0, generateDate_1.generateDate)() }))];
-                    case 1:
+                        return [4 /*yield*/, blogs_repository_1.BlogsRepository.updateBlogById(id, __assign({}, blogWithUpdate))];
+                    case 2:
                         _a.sent();
                         return [2 /*return*/, true];
                 }
@@ -133,13 +134,14 @@ var BlogsService = /** @class */ (function () {
             var blogCandidate;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        blogCandidate = blogs_repository_1.BlogsRepository.findBlogById(id);
+                    case 0: return [4 /*yield*/, blogs_repository_1.BlogsRepository.findBlogById(id)];
+                    case 1:
+                        blogCandidate = _a.sent();
                         if (!blogCandidate) {
                             return [2 /*return*/, false];
                         }
                         return [4 /*yield*/, blogs_repository_1.BlogsRepository.deleteBLogById(id)];
-                    case 1:
+                    case 2:
                         _a.sent();
                         return [2 /*return*/, true];
                 }

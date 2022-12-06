@@ -1,13 +1,31 @@
 import { Request, Response } from 'express';
 import { STATUS_CODES } from '../../common/constants';
+import { PostsInputDTO } from '../posts/posts.dto';
+import { PostEntity } from '../posts/posts.entities';
+import { PostsQueryRepository } from '../posts/posts.query-repository';
+import { PostScheme } from '../posts/posts.schemes';
+import { PostPaginationView } from '../posts/posts.view';
 import { BlogsInputDTO } from './blogs.dto';
 import { BlogEntity } from './blogs.entities';
+import { BlogsQueryRepository } from './blogs.query-repository';
 import { BlogScheme } from './blogs.schemes';
 import { BlogsService } from './blogs.service';
+import { BlogsQueryPaginationTerms, PostsQueryByBlogIdPaginationTerms } from './blogs.types';
+import { BlogPaginationView } from './blogs.view';
 
 export class BlogsController {
-    static async getAllBlogs(req: Request, res: Response<BlogEntity[]>): Promise<void> {
-        const blogs = await BlogsService.findAllBlogs();
+    static async getAllBlogs(
+        req: Request<{}, {}, {}, BlogsQueryPaginationTerms>,
+        res: Response<BlogPaginationView>,
+    ): Promise<void> {
+        const { searchNameTerm, sortBy, sortDirection, pageSize, pageNumber } = req.query;
+        const blogs = await BlogsQueryRepository.findAllBlogs({
+            searchNameTerm,
+            sortBy,
+            sortDirection,
+            pageSize,
+            pageNumber,
+        });
         res.status(STATUS_CODES.OK).json(blogs);
         return;
     }
@@ -18,7 +36,7 @@ export class BlogsController {
         return;
     }
     static async getBlogById(req: Request<{ id: string }, BlogScheme>, res: Response<BlogEntity>): Promise<void> {
-        const blog = await BlogsService.findBlogById(req.params.id);
+        const blog = await BlogsQueryRepository.findBlogById(req.params.id);
         if (!blog) {
             res.sendStatus(STATUS_CODES.NOT_FOUND);
             return;
@@ -30,6 +48,35 @@ export class BlogsController {
             websiteUrl: blog.websiteUrl,
             createdAt: blog.createdAt,
         });
+        return;
+    }
+    static async getPostsByBlogId(
+        req: Request<{}, {}, {}, PostsQueryByBlogIdPaginationTerms>,
+        res: Response<PostPaginationView>,
+    ): Promise<void> {
+        const { sortBy, sortDirection, pageSize, pageNumber, blogId } = req.query;
+        const posts = await PostsQueryRepository.findAllPosts({
+            sortBy,
+            sortDirection,
+            pageSize,
+            pageNumber,
+            blogId,
+        });
+        res.status(STATUS_CODES.OK).json(posts);
+        return;
+    }
+    static async postPostByBlogId(
+        req: Request<{ blogId: string }, PostScheme, PostsInputDTO>,
+        res: Response<PostEntity>,
+    ): Promise<void> {
+        const postCandidate = req.body;
+        const blogId = req.params.blogId;
+        const foundBlog = await BlogsQueryRepository.findBlogById(blogId);
+        if (foundBlog) {
+            res.sendStatus(STATUS_CODES.NOT_FOUND);
+        }
+        const post = await BlogsService.createPostByBlogId(blogId, postCandidate);
+        res.status(STATUS_CODES.CREATED).json(post);
         return;
     }
     static async putBlogById(req: Request<{ id: string }, void, BlogsInputDTO>, res: Response<void>): Promise<void> {

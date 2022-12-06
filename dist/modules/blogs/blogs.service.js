@@ -50,29 +50,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BlogsService = void 0;
 var generateDate_1 = require("../../common/utils/generateDate");
 var generateId_1 = require("../../common/utils/generateId");
+var posts_service_1 = require("../posts/posts.service");
+var blogs_query_repository_1 = require("./blogs.query-repository");
 var blogs_repository_1 = require("./blogs.repository");
 var BlogsService = /** @class */ (function () {
     function BlogsService() {
     }
-    BlogsService.findAllBlogs = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var blogs;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, blogs_repository_1.BlogsRepository.findAllBlogs()];
-                    case 1:
-                        blogs = _a.sent();
-                        return [2 /*return*/, blogs.map(function (blog) { return ({
-                                id: blog.id,
-                                name: blog.name,
-                                description: blog.description,
-                                createdAt: blog.createdAt,
-                                websiteUrl: blog.websiteUrl,
-                            }); })];
-                }
-            });
-        });
-    };
     BlogsService.createBlog = function (blogDTO) {
         return __awaiter(this, void 0, void 0, function () {
             var blogCandidate, createdBlog;
@@ -83,7 +66,7 @@ var BlogsService = /** @class */ (function () {
                         return [4 /*yield*/, blogs_repository_1.BlogsRepository.createBlog(blogCandidate)];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, blogs_repository_1.BlogsRepository.findBlogById(blogCandidate.id)];
+                        return [4 /*yield*/, blogs_query_repository_1.BlogsQueryRepository.findBlogById(blogCandidate.id)];
                     case 2:
                         createdBlog = _a.sent();
                         if (!createdBlog) {
@@ -100,11 +83,11 @@ var BlogsService = /** @class */ (function () {
             });
         });
     };
-    BlogsService.findBlogById = function (id) {
+    BlogsService.createPostByBlogId = function (blogId, postCandidate) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, blogs_repository_1.BlogsRepository.findBlogById(id)];
+                    case 0: return [4 /*yield*/, posts_service_1.PostsService.createPost(__assign(__assign({}, postCandidate), { blogId: blogId }))];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
@@ -115,7 +98,7 @@ var BlogsService = /** @class */ (function () {
             var blogCandidate;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, blogs_repository_1.BlogsRepository.findBlogById(id)];
+                    case 0: return [4 /*yield*/, blogs_query_repository_1.BlogsQueryRepository.findBlogById(id)];
                     case 1:
                         blogCandidate = _a.sent();
                         if (!blogCandidate) {
@@ -134,7 +117,7 @@ var BlogsService = /** @class */ (function () {
             var blogCandidate;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, blogs_repository_1.BlogsRepository.findBlogById(id)];
+                    case 0: return [4 /*yield*/, blogs_query_repository_1.BlogsQueryRepository.findBlogById(id)];
                     case 1:
                         blogCandidate = _a.sent();
                         if (!blogCandidate) {

@@ -38,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.postsValidation = void 0;
 var express_validator_1 = require("express-validator");
-var blogs_repository_1 = require("../blogs/blogs.repository");
+var blogs_query_repository_1 = require("../blogs/blogs.query-repository");
 exports.postsValidation = {
     inputBody: [
         (0, express_validator_1.body)('title')
@@ -87,7 +87,7 @@ exports.postsValidation = {
             var foundedBlog;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, blogs_repository_1.BlogsRepository.findBlogById(id)];
+                    case 0: return [4 /*yield*/, blogs_query_repository_1.BlogsQueryRepository.findBlogById(id)];
                     case 1:
                         foundedBlog = _a.sent();
                         if (!foundedBlog) {

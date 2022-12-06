@@ -41,13 +41,6 @@ var collections_1 = require("../../database/collections");
 var PostsRepository = /** @class */ (function () {
     function PostsRepository() {
     }
-    PostsRepository.findAllPosts = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/, collections_1.postsCollection.find().toArray()];
-            });
-        });
-    };
     PostsRepository.createPost = function (post) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -57,13 +50,6 @@ var PostsRepository = /** @class */ (function () {
                         _a.sent();
                         return [2 /*return*/];
                 }
-            });
-        });
-    };
-    PostsRepository.findPostById = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/, collections_1.postsCollection.findOne({ id: id })];
             });
         });
     };

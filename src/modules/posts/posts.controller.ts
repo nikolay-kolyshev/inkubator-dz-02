@@ -2,11 +2,23 @@ import { Request, Response } from 'express';
 import { STATUS_CODES } from '../../common/constants';
 import { PostsInputDTO } from './posts.dto';
 import { PostEntity } from './posts.entities';
+import { PostsQueryRepository } from './posts.query-repository';
 import { PostsService } from './posts.service';
+import { PostsQueryPaginationTerms } from './posts.types';
+import { PostPaginationView } from './posts.view';
 
 export class PostsController {
-    static async getAllPosts(req: Request, res: Response<PostEntity[]>): Promise<void> {
-        const posts = await PostsService.findAllPosts();
+    static async getAllPosts(
+        req: Request<{}, {}, {}, PostsQueryPaginationTerms>,
+        res: Response<PostPaginationView>,
+    ): Promise<void> {
+        const { sortBy, sortDirection, pageSize, pageNumber } = req.query;
+        const posts = await PostsQueryRepository.findAllPosts({
+            sortBy,
+            sortDirection,
+            pageSize,
+            pageNumber,
+        });
         res.status(STATUS_CODES.OK).json(posts);
         return;
     }
@@ -17,7 +29,7 @@ export class PostsController {
         return;
     }
     static async getPostById(req: Request<{ id: string }, PostEntity>, res: Response<PostEntity>): Promise<void> {
-        const post = await PostsService.findPostById(req.params.id);
+        const post = await PostsQueryRepository.findPostById(req.params.id);
         if (!post) {
             res.sendStatus(STATUS_CODES.NOT_FOUND);
             return;

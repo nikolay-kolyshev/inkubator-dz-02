@@ -83,11 +83,11 @@ var BlogsService = /** @class */ (function () {
             });
         });
     };
-    BlogsService.createPostByBlogId = function (blogId, postCandidate) {
+    BlogsService.createPostByBlogId = function (postCandidate) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, posts_service_1.PostsService.createPost(__assign(__assign({}, postCandidate), { blogId: blogId }))];
+                    case 0: return [4 /*yield*/, posts_service_1.PostsService.createPost(__assign({}, postCandidate))];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });

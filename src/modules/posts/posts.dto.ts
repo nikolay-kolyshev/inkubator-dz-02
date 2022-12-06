@@ -8,4 +8,5 @@ export type PostsInputDTO = {
 export type PostsInputRepositoryDTO = PostsInputDTO & {
     id: string;
     blogName: string;
+    createdAt: string;
 };

@@ -8,7 +8,7 @@ export class PostsRepository {
         return postsCollection.find().toArray();
     }
     static async createPost(post: PostsInputRepositoryDTO): Promise<void> {
-        await postsCollection.insertOne(post as PostScheme);
+        await postsCollection.insertOne(post);
     }
     static async findPostById(id: string): Promise<Nullable<PostScheme>> {
         return postsCollection.findOne({ id });

@@ -27,7 +27,12 @@ export class PostsService {
             throw new Error('Blog not found');
         }
         const id = generateId();
-        await PostsRepository.createPost({ id, ...postDTO, blogName: foundedBlog.name });
+        await PostsRepository.createPost({
+            id: generateId(),
+            blogName: foundedBlog.name,
+            createdAt: new Date().toISOString(),
+            ...postDTO,
+        });
         const createdPost = (await PostsRepository.findPostById(id)) as PostScheme;
         return {
             id: createdPost.id,
@@ -53,7 +58,11 @@ export class PostsService {
             };
         }
         const foundedBlog = (await BlogsRepository.findBlogById(postWithUpdate.blogId)) as BlogScheme;
-        await PostsRepository.updatePostById(id, { ...postWithUpdate, blogName: foundedBlog.name });
+        await PostsRepository.updatePostById(id, {
+            ...postWithUpdate,
+            blogName: foundedBlog.name,
+            createdAt: new Date().toISOString(),
+        });
         return {
             response: true,
         };

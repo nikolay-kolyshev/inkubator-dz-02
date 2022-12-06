@@ -1,6 +1,6 @@
 import { Nullable } from '../../common/types';
 import { blogsCollection } from '../../database/collections';
-import { BlogsInputDTO, BlogsInputRepositoryDTO } from './blogs.dto';
+import { BlogsInputRepositoryDTO } from './blogs.dto';
 import { BlogScheme } from './blogs.schemes';
 
 export class BlogsRepository {
@@ -8,12 +8,12 @@ export class BlogsRepository {
         return blogsCollection.find().toArray();
     }
     static async createBlog(blog: BlogsInputRepositoryDTO): Promise<void> {
-        await blogsCollection.insertOne(blog as BlogScheme);
+        await blogsCollection.insertOne(blog);
     }
     static async findBlogById(id: string): Promise<Nullable<BlogScheme>> {
         return blogsCollection.findOne({ id });
     }
-    static async updateBlogById(id: string, blogWithUpdate: BlogsInputDTO): Promise<void> {
+    static async updateBlogById(id: string, blogWithUpdate: Omit<BlogsInputRepositoryDTO, 'id'>): Promise<void> {
         await blogsCollection.updateOne({ id }, { $set: blogWithUpdate });
     }
     static async deleteBLogById(id: string): Promise<void> {

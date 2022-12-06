@@ -1,6 +1,7 @@
 import { Nullable } from '../../common/types';
+import { generateDate } from '../../common/utils/generateDate';
 import { generateId } from '../../common/utils/generateId';
-import { BlogsInputDTO } from './blogs.dto';
+import { BlogsInputDTO, BlogsInputRepositoryDTO } from './blogs.dto';
 import { BlogEntity } from './blogs.entities';
 import { BlogsRepository } from './blogs.repository';
 import { BlogScheme } from './blogs.schemes';
@@ -17,9 +18,9 @@ export class BlogsService {
         }));
     }
     static async createBlog(blogDTO: BlogsInputDTO): Promise<BlogEntity> {
-        const id = generateId();
-        const blogCandidate = {
-            id,
+        const blogCandidate: BlogsInputRepositoryDTO = {
+            id: generateId(),
+            createdAt: generateDate(),
             ...blogDTO,
         };
         await BlogsRepository.createBlog(blogCandidate);
@@ -43,7 +44,7 @@ export class BlogsService {
         if (!blogCandidate) {
             return false;
         }
-        await BlogsRepository.updateBlogById(id, blogWithUpdate);
+        await BlogsRepository.updateBlogById(id, { ...blogWithUpdate, createdAt: generateDate() });
         return true;
     }
     static async deleteBLogById(id: string): Promise<boolean> {

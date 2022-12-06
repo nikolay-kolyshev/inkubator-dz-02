@@ -59,6 +59,7 @@ export class BlogsController {
         const foundBlog = await BlogsQueryRepository.findBlogById(blogId);
         if (!foundBlog) {
             res.sendStatus(STATUS_CODES.NOT_FOUND);
+            return;
         }
         const posts = await PostsQueryRepository.findAllPosts({
             sortBy,
@@ -79,6 +80,7 @@ export class BlogsController {
         const foundBlog = await BlogsQueryRepository.findBlogById(blogId);
         if (!foundBlog) {
             res.sendStatus(STATUS_CODES.NOT_FOUND);
+            return;
         }
         const post = await BlogsService.createPostByBlogId(blogId, postCandidate);
         res.status(STATUS_CODES.CREATED).json(post);

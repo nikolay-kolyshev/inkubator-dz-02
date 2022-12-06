@@ -119,6 +119,7 @@ var BlogsController = /** @class */ (function () {
                         foundBlog = _b.sent();
                         if (!foundBlog) {
                             res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
+                            return [2 /*return*/];
                         }
                         return [4 /*yield*/, posts_query_repository_1.PostsQueryRepository.findAllPosts({
                                 sortBy: sortBy,
@@ -148,6 +149,7 @@ var BlogsController = /** @class */ (function () {
                         foundBlog = _a.sent();
                         if (!foundBlog) {
                             res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
+                            return [2 /*return*/];
                         }
                         return [4 /*yield*/, blogs_service_1.BlogsService.createPostByBlogId(blogId, postCandidate)];
                     case 2:

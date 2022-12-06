@@ -5,4 +5,4 @@ import { rootRouter } from './routing';
 export const app = express();
 
 app.use(bodyParser.json());
-app.use(rootRouter);
+app.use('/', rootRouter);

@@ -1,18 +1,43 @@
 import { STATUS_CODES } from '../../common/constants';
 import { Nullable, ServiceMethodResult } from '../../common/types';
+import { generateId } from '../../common/utils/generateId';
 import { BlogsRepository } from '../blogs/blogs.repository';
 import { BlogScheme } from '../blogs/blogs.schemes';
 import { PostsInputDTO } from './posts.dto';
+import { PostEntity } from './posts.entities';
 import { PostsRepository } from './posts.repository';
 import { PostScheme } from './posts.schemes';
 
 export class PostsService {
-    static async findAllPosts(): Promise<Array<PostScheme>> {
-        return PostsRepository.findAllPosts();
+    static async findAllPosts(): Promise<Array<PostEntity>> {
+        const posts = await PostsRepository.findAllPosts();
+        return posts.map((post) => ({
+            id: post.id,
+            title: post.title,
+            content: post.content,
+            shortDescription: post.shortDescription,
+            blogId: post.blogId,
+            blogName: post.blogName,
+            createdAt: post.createdAt,
+        }));
     }
-    static async createPost(postDTO: PostsInputDTO): Promise<PostScheme> {
+    static async createPost(postDTO: PostsInputDTO): Promise<PostEntity> {
         const foundedBlog = (await BlogsRepository.findBlogById(postDTO.blogId)) as BlogScheme;
-        return PostsRepository.createPost({ ...postDTO, blogName: foundedBlog.name });
+        if (!foundedBlog) {
+            throw new Error('Blog not found');
+        }
+        const id = generateId();
+        await PostsRepository.createPost({ id, ...postDTO, blogName: foundedBlog.name });
+        const createdPost = (await PostsRepository.findPostById(id)) as PostScheme;
+        return {
+            id: createdPost.id,
+            title: createdPost.title,
+            shortDescription: createdPost.shortDescription,
+            content: createdPost.content,
+            blogId: createdPost.blogId,
+            blogName: createdPost.blogName,
+            createdAt: createdPost.createdAt,
+        };
     }
     static async findPostById(id: string): Promise<Nullable<PostScheme>> {
         return PostsRepository.findPostById(id);
@@ -34,6 +59,11 @@ export class PostsService {
         };
     }
     static async deleteBLogById(id: string): Promise<boolean> {
-        return PostsRepository.deleteBLogById(id);
+        try {
+            await PostsRepository.deleteBLogById(id);
+            return true;
+        } catch (e) {
+            return false;
+        }
     }
 }

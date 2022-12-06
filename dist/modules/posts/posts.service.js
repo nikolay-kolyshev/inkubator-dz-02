@@ -49,6 +49,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostsService = void 0;
 var constants_1 = require("../../common/constants");
+var generateId_1 = require("../../common/utils/generateId");
 var blogs_repository_1 = require("../blogs/blogs.repository");
 var posts_repository_1 = require("./posts.repository");
 var PostsService = /** @class */ (function () {
@@ -56,20 +57,52 @@ var PostsService = /** @class */ (function () {
     }
     PostsService.findAllPosts = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var posts;
             return __generator(this, function (_a) {
-                return [2 /*return*/, posts_repository_1.PostsRepository.findAllPosts()];
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, posts_repository_1.PostsRepository.findAllPosts()];
+                    case 1:
+                        posts = _a.sent();
+                        return [2 /*return*/, posts.map(function (post) { return ({
+                                id: post.id,
+                                title: post.title,
+                                content: post.content,
+                                shortDescription: post.shortDescription,
+                                blogId: post.blogId,
+                                blogName: post.blogName,
+                                createdAt: post.createdAt,
+                            }); })];
+                }
             });
         });
     };
     PostsService.createPost = function (postDTO) {
         return __awaiter(this, void 0, void 0, function () {
-            var foundedBlog;
+            var foundedBlog, id, createdPost;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, blogs_repository_1.BlogsRepository.findBlogById(postDTO.blogId)];
                     case 1:
                         foundedBlog = (_a.sent());
-                        return [2 /*return*/, posts_repository_1.PostsRepository.createPost(__assign(__assign({}, postDTO), { blogName: foundedBlog.name }))];
+                        if (!foundedBlog) {
+                            throw new Error('Blog not found');
+                        }
+                        id = (0, generateId_1.generateId)();
+                        return [4 /*yield*/, posts_repository_1.PostsRepository.createPost(__assign(__assign({ id: id }, postDTO), { blogName: foundedBlog.name }))];
+                    case 2:
+                        _a.sent();
+                        return [4 /*yield*/, posts_repository_1.PostsRepository.findPostById(id)];
+                    case 3:
+                        createdPost = (_a.sent());
+                        return [2 /*return*/, {
+                                id: createdPost.id,
+                                title: createdPost.title,
+                                shortDescription: createdPost.shortDescription,
+                                content: createdPost.content,
+                                blogId: createdPost.blogId,
+                                blogName: createdPost.blogName,
+                                createdAt: createdPost.createdAt,
+                            }];
                 }
             });
         });
@@ -112,8 +145,20 @@ var PostsService = /** @class */ (function () {
     };
     PostsService.deleteBLogById = function (id) {
         return __awaiter(this, void 0, void 0, function () {
+            var e_1;
             return __generator(this, function (_a) {
-                return [2 /*return*/, posts_repository_1.PostsRepository.deleteBLogById(id)];
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, posts_repository_1.PostsRepository.deleteBLogById(id)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/, true];
+                    case 2:
+                        e_1 = _a.sent();
+                        return [2 /*return*/, false];
+                    case 3: return [2 /*return*/];
+                }
             });
         });
     };

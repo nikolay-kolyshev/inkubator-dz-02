@@ -13,7 +13,7 @@ exports.blogsValidation = {
             .notEmpty()
             .withMessage('name не может быть пустым')
             .isLength({ min: 1, max: 15 })
-            .withMessage('name должен быть от 1 до 15 символов'),
+            .withMessage('nameeyo должен быть от 1 до 15 символов'),
         (0, express_validator_1.body)('description')
             .exists()
             .withMessage('description должен находиться в теле запроса')
@@ -26,7 +26,7 @@ exports.blogsValidation = {
             .withMessage('description должен быть от 1 до 500 символов'),
         (0, express_validator_1.body)('websiteUrl')
             .exists()
-            .withMessage('websiteUrl должен находиться в теле запроса')
+            .withMessage('websiteUrlпопр должен находиться в теле запроса')
             .isString()
             .withMessage('websiteUrl должен быть строкой')
             .trim()

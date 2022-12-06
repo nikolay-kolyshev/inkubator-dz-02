@@ -1,15 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -48,68 +37,71 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostsRepository = void 0;
-var generateId_1 = require("../../common/utils/generateId");
-var posts = [];
+var collections_1 = require("../../database/collections");
 var PostsRepository = /** @class */ (function () {
     function PostsRepository() {
     }
     PostsRepository.findAllPosts = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, posts];
+                return [2 /*return*/, collections_1.postsCollection.find().toArray()];
             });
         });
     };
-    PostsRepository.createPost = function (postDTO) {
+    PostsRepository.createPost = function (post) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, postCandidate;
             return __generator(this, function (_a) {
-                id = (0, generateId_1.generateId)();
-                postCandidate = __assign({ id: id }, postDTO);
-                posts.push(postCandidate);
-                return [2 /*return*/, postCandidate];
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, collections_1.postsCollection.insertOne(post)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
             });
         });
     };
     PostsRepository.findPostById = function (id) {
-        var _a;
         return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_b) {
-                return [2 /*return*/, (_a = posts.find(function (post) { return post.id === id; })) !== null && _a !== void 0 ? _a : null];
+            return __generator(this, function (_a) {
+                return [2 /*return*/, collections_1.postsCollection.findOne({ id: id })];
             });
         });
     };
     PostsRepository.updatePostById = function (id, postWithUpdate) {
         return __awaiter(this, void 0, void 0, function () {
-            var postCandidateIndex;
             return __generator(this, function (_a) {
-                postCandidateIndex = PostsRepository.findPostIndexById(id);
-                if (postCandidateIndex === -1) {
-                    return [2 /*return*/, false];
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, collections_1.postsCollection.updateOne({ id: id }, { $set: postWithUpdate })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
                 }
-                posts[postCandidateIndex] = __assign(__assign({}, posts[postCandidateIndex]), postWithUpdate);
-                return [2 /*return*/, true];
             });
         });
     };
     PostsRepository.deleteBLogById = function (id) {
         return __awaiter(this, void 0, void 0, function () {
-            var postCandidateIndex;
             return __generator(this, function (_a) {
-                postCandidateIndex = PostsRepository.findPostIndexById(id);
-                if (postCandidateIndex === -1) {
-                    return [2 /*return*/, false];
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, collections_1.postsCollection.deleteOne({ id: id })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
                 }
-                posts.splice(postCandidateIndex, 1);
-                return [2 /*return*/, true];
             });
         });
     };
-    PostsRepository.findPostIndexById = function (id) {
-        return posts.findIndex(function (post) { return post.id === id; });
-    };
     PostsRepository.deleteAllPosts = function () {
-        posts.splice(0, posts.length);
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, collections_1.postsCollection.deleteMany({})];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     return PostsRepository;
 }());

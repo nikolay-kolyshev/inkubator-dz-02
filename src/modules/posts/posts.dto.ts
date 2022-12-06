@@ -3,12 +3,12 @@ export type PostsInputDTO = {
     shortDescription: string;
     content: string;
     blogId: string;
-    blogName: string;
 };
 
 export type PostsInputRepositoryDTO = PostsInputDTO & {
     id: string;
     createdAt: string;
+    blogName: string;
 };
 
 export type PostsQueryRepositoryDTO = {

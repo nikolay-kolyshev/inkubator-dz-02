@@ -28,7 +28,7 @@ export class BlogsService {
             createdAt: createdBlog.createdAt,
         };
     }
-    static async createPostByBlogId(postCandidate: PostsInputDTO): Promise<PostEntity> {
+    static async createPostByBlogId(postCandidate: PostsInputDTO & { blogName: string }): Promise<PostEntity> {
         return await PostsService.createPost({ ...postCandidate });
     }
     static async updateBlogById(id: string, blogWithUpdate: BlogsInputDTO): Promise<boolean> {

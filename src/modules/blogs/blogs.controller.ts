@@ -73,7 +73,7 @@ export class BlogsController {
         const blogId = req.params.blogId;
         const postCandidate = req.body;
         const foundBlog = await BlogsQueryRepository.findBlogById(blogId);
-        if (foundBlog) {
+        if (!foundBlog) {
             res.sendStatus(STATUS_CODES.NOT_FOUND);
         }
         const post = await BlogsService.createPostByBlogId(blogId, postCandidate);

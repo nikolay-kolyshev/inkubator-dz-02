@@ -140,7 +140,7 @@ var BlogsController = /** @class */ (function () {
                         return [4 /*yield*/, blogs_query_repository_1.BlogsQueryRepository.findBlogById(blogId)];
                     case 1:
                         foundBlog = _a.sent();
-                        if (foundBlog) {
+                        if (!foundBlog) {
                             res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
                         }
                         return [4 /*yield*/, blogs_service_1.BlogsService.createPostByBlogId(blogId, postCandidate)];

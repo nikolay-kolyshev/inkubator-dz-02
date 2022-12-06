@@ -106,7 +106,6 @@ var PostsController = /** @class */ (function () {
                             shortDescription: post.shortDescription,
                             content: post.content,
                             blogId: post.blogId,
-                            blogName: post.blogName,
                             createdAt: post.createdAt,
                         });
                         return [2 /*return*/];

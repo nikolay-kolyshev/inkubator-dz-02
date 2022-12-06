@@ -79,7 +79,6 @@ var PostsService = /** @class */ (function () {
                                 shortDescription: createdPost.shortDescription,
                                 content: createdPost.content,
                                 blogId: createdPost.blogId,
-                                blogName: createdPost.blogName,
                                 createdAt: createdPost.createdAt,
                             }];
                 }

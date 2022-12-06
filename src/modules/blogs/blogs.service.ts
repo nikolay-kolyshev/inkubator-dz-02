@@ -28,8 +28,8 @@ export class BlogsService {
             createdAt: createdBlog.createdAt,
         };
     }
-    static async createPostByBlogId(blogId: string, postCandidate: PostsInputDTO): Promise<PostEntity> {
-        return await PostsService.createPost({ ...postCandidate, blogId });
+    static async createPostByBlogId(postCandidate: PostsInputDTO): Promise<PostEntity> {
+        return await PostsService.createPost({ ...postCandidate });
     }
     static async updateBlogById(id: string, blogWithUpdate: BlogsInputDTO): Promise<boolean> {
         const blogCandidate = await BlogsQueryRepository.findBlogById(id);

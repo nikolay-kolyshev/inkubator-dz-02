@@ -59,18 +59,16 @@ var PostsService = /** @class */ (function () {
     }
     PostsService.createPost = function (postDTO) {
         return __awaiter(this, void 0, void 0, function () {
-            var foundedBlog, id, createdPost;
+            var id, createdPost;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, blogs_query_repository_1.BlogsQueryRepository.findBlogById(postDTO.blogId)];
-                    case 1:
-                        foundedBlog = _a.sent();
+                    case 0:
                         id = (0, generateId_1.generateId)();
-                        return [4 /*yield*/, posts_repository_1.PostsRepository.createPost(__assign({ id: id, blogName: foundedBlog.name, createdAt: (0, generateDate_1.generateDate)() }, postDTO))];
-                    case 2:
+                        return [4 /*yield*/, posts_repository_1.PostsRepository.createPost(__assign({ id: id, createdAt: (0, generateDate_1.generateDate)() }, postDTO))];
+                    case 1:
                         _a.sent();
                         return [4 /*yield*/, posts_query_repository_1.PostsQueryRepository.findPostById(id)];
-                    case 3:
+                    case 2:
                         createdPost = _a.sent();
                         if (!createdPost) {
                             throw new Error('Post was not created');

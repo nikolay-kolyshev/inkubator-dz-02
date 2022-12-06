@@ -1,5 +1,5 @@
 import { body, param } from 'express-validator';
-import { BlogsRepository } from '../blogs/blogs.repository';
+import { BlogsQueryRepository } from '../blogs/blogs.query-repository';
 
 export const postsValidation = {
     inputBody: [
@@ -46,7 +46,7 @@ export const postsValidation = {
             .isUUID()
             .withMessage('blogId должен быть UUID')
             .custom(async (id) => {
-                const foundedBlog = await BlogsRepository.findBlogById(id);
+                const foundedBlog = await BlogsQueryRepository.findBlogById(id);
                 if (!foundedBlog) {
                     throw new Error('Блог с таким blogId не найден. Пожалуйста, проверьте blogId');
                 }

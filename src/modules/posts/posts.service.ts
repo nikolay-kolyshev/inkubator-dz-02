@@ -1,29 +1,17 @@
 import { STATUS_CODES } from '../../common/constants';
-import { Nullable, ServiceMethodResult } from '../../common/types';
+import { ServiceMethodResult } from '../../common/types';
 import { generateDate } from '../../common/utils/generateDate';
 import { generateId } from '../../common/utils/generateId';
-import { BlogsRepository } from '../blogs/blogs.repository';
+import { BlogsQueryRepository } from '../blogs/blogs.query-repository';
 import { BlogScheme } from '../blogs/blogs.schemes';
 import { PostsInputDTO } from './posts.dto';
 import { PostEntity } from './posts.entities';
+import { PostsQueryRepository } from './posts.query-repository';
 import { PostsRepository } from './posts.repository';
-import { PostScheme } from './posts.schemes';
 
 export class PostsService {
-    static async findAllPosts(): Promise<Array<PostEntity>> {
-        const posts = await PostsRepository.findAllPosts();
-        return posts.map((post) => ({
-            id: post.id,
-            title: post.title,
-            content: post.content,
-            shortDescription: post.shortDescription,
-            blogId: post.blogId,
-            blogName: post.blogName,
-            createdAt: post.createdAt,
-        }));
-    }
     static async createPost(postDTO: PostsInputDTO): Promise<PostEntity> {
-        const foundedBlog = await BlogsRepository.findBlogById(postDTO.blogId);
+        const foundedBlog = await BlogsQueryRepository.findBlogById(postDTO.blogId);
         if (!foundedBlog) {
             throw new Error('Blog not found');
         }
@@ -34,7 +22,7 @@ export class PostsService {
             createdAt: generateDate(),
             ...postDTO,
         });
-        const createdPost = await PostsRepository.findPostById(id);
+        const createdPost = await PostsQueryRepository.findPostById(id);
         if (!createdPost) {
             throw new Error('Post was not created');
         }
@@ -48,11 +36,8 @@ export class PostsService {
             createdAt: createdPost.createdAt,
         };
     }
-    static async findPostById(id: string): Promise<Nullable<PostScheme>> {
-        return await PostsRepository.findPostById(id);
-    }
     static async updatePostById(id: string, postWithUpdate: PostsInputDTO): Promise<ServiceMethodResult<boolean>> {
-        const foundedPost = await PostsRepository.findPostById(id);
+        const foundedPost = await PostsQueryRepository.findPostById(id);
         if (!foundedPost) {
             return {
                 error: {
@@ -61,7 +46,7 @@ export class PostsService {
                 },
             };
         }
-        const foundedBlog = (await BlogsRepository.findBlogById(postWithUpdate.blogId)) as BlogScheme;
+        const foundedBlog = (await BlogsQueryRepository.findBlogById(postWithUpdate.blogId)) as BlogScheme;
         await PostsRepository.updatePostById(id, {
             ...postWithUpdate,
             blogName: foundedBlog.name,
@@ -71,7 +56,7 @@ export class PostsService {
         };
     }
     static async deleteBLogById(id: string): Promise<boolean> {
-        const foundedPost = await PostsRepository.findPostById(id);
+        const foundedPost = await PostsQueryRepository.findPostById(id);
         if (!foundedPost) {
             return false;
         }

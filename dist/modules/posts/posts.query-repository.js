@@ -36,60 +36,58 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PostsRepository = void 0;
+exports.PostsQueryRepository = void 0;
+var getCollectionItemsWithPagination_1 = require("../../common/utils/getCollectionItemsWithPagination");
 var collections_1 = require("../../database/collections");
-var PostsRepository = /** @class */ (function () {
-    function PostsRepository() {
+var PostsQueryRepository = /** @class */ (function () {
+    function PostsQueryRepository() {
     }
-    PostsRepository.createPost = function (post) {
+    PostsQueryRepository.findAllPosts = function (_a) {
+        var sortBy = _a.sortBy, sortDirection = _a.sortDirection, pageSize = _a.pageSize, pageNumber = _a.pageNumber, blogId = _a.blogId;
         return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, collections_1.postsCollection.insertOne(post)];
+            var filter, items, totalCount, pagesCount;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        filter = {};
+                        if (blogId) {
+                            filter.blogId = { $regex: blogId };
+                        }
+                        return [4 /*yield*/, (0, getCollectionItemsWithPagination_1.getCollectionItemsWithPagination)(collections_1.postsCollection, {
+                                filter: filter,
+                                sortBy: sortBy,
+                                sortDirection: sortDirection,
+                                pageSize: pageSize,
+                                pageNumber: pageNumber,
+                            })];
                     case 1:
-                        _a.sent();
-                        return [2 /*return*/];
+                        items = _b.sent();
+                        return [4 /*yield*/, collections_1.postsCollection.count(filter)];
+                    case 2:
+                        totalCount = _b.sent();
+                        pagesCount = Math.ceil(totalCount / pageSize);
+                        return [2 /*return*/, {
+                                pagesCount: pagesCount,
+                                page: pageNumber,
+                                pageSize: pageSize,
+                                totalCount: totalCount,
+                                items: items,
+                            }];
                 }
             });
         });
     };
-    PostsRepository.updatePostById = function (id, postWithUpdate) {
+    PostsQueryRepository.findPostById = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, collections_1.postsCollection.updateOne({ id: id }, { $set: postWithUpdate })];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
+                    case 0: return [4 /*yield*/, collections_1.postsCollection.findOne({ id: id }, { projection: { _id: false } })];
+                    case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
-    PostsRepository.deleteBLogById = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, collections_1.postsCollection.deleteOne({ id: id })];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    PostsRepository.deleteAllPosts = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, collections_1.postsCollection.deleteMany({})];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    return PostsRepository;
+    return PostsQueryRepository;
 }());
-exports.PostsRepository = PostsRepository;
-//# sourceMappingURL=posts.repository.js.map
+exports.PostsQueryRepository = PostsQueryRepository;
+//# sourceMappingURL=posts.query-repository.js.map

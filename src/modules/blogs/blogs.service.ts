@@ -1,22 +1,14 @@
-import { Nullable } from '../../common/types';
 import { generateDate } from '../../common/utils/generateDate';
 import { generateId } from '../../common/utils/generateId';
+import { PostsInputDTO } from '../posts/posts.dto';
+import { PostEntity } from '../posts/posts.entities';
+import { PostsService } from '../posts/posts.service';
 import { BlogsInputDTO, BlogsInputRepositoryDTO } from './blogs.dto';
 import { BlogEntity } from './blogs.entities';
+import { BlogsQueryRepository } from './blogs.query-repository';
 import { BlogsRepository } from './blogs.repository';
-import { BlogScheme } from './blogs.schemes';
 
 export class BlogsService {
-    static async findAllBlogs(): Promise<Array<BlogEntity>> {
-        const blogs = await BlogsRepository.findAllBlogs();
-        return blogs.map((blog) => ({
-            id: blog.id,
-            name: blog.name,
-            description: blog.description,
-            createdAt: blog.createdAt,
-            websiteUrl: blog.websiteUrl,
-        }));
-    }
     static async createBlog(blogDTO: BlogsInputDTO): Promise<BlogEntity> {
         const blogCandidate: BlogsInputRepositoryDTO = {
             id: generateId(),
@@ -24,7 +16,7 @@ export class BlogsService {
             ...blogDTO,
         };
         await BlogsRepository.createBlog(blogCandidate);
-        const createdBlog = await BlogsRepository.findBlogById(blogCandidate.id);
+        const createdBlog = await BlogsQueryRepository.findBlogById(blogCandidate.id);
         if (!createdBlog) {
             throw new Error('Blog was not created');
         }
@@ -36,11 +28,11 @@ export class BlogsService {
             createdAt: createdBlog.createdAt,
         };
     }
-    static async findBlogById(id: string): Promise<Nullable<BlogScheme>> {
-        return await BlogsRepository.findBlogById(id);
+    static async createPostByBlogId(blogId: string, postCandidate: PostsInputDTO): Promise<PostEntity> {
+        return await PostsService.createPost({ ...postCandidate, blogId });
     }
     static async updateBlogById(id: string, blogWithUpdate: BlogsInputDTO): Promise<boolean> {
-        const blogCandidate = await BlogsRepository.findBlogById(id);
+        const blogCandidate = await BlogsQueryRepository.findBlogById(id);
         if (!blogCandidate) {
             return false;
         }
@@ -48,7 +40,7 @@ export class BlogsService {
         return true;
     }
     static async deleteBLogById(id: string): Promise<boolean> {
-        const blogCandidate = await BlogsRepository.findBlogById(id);
+        const blogCandidate = await BlogsQueryRepository.findBlogById(id);
         if (!blogCandidate) {
             return false;
         }

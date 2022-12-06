@@ -1,17 +1,9 @@
-import { Nullable } from '../../common/types';
 import { postsCollection } from '../../database/collections';
 import { PostsInputRepositoryDTO } from './posts.dto';
-import { PostScheme } from './posts.schemes';
 
 export class PostsRepository {
-    static async findAllPosts(): Promise<Array<PostScheme>> {
-        return postsCollection.find().toArray();
-    }
     static async createPost(post: PostsInputRepositoryDTO): Promise<void> {
         await postsCollection.insertOne(post);
-    }
-    static async findPostById(id: string): Promise<Nullable<PostScheme>> {
-        return postsCollection.findOne({ id });
     }
     static async updatePostById(
         id: string,

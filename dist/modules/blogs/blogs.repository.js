@@ -41,13 +41,6 @@ var collections_1 = require("../../database/collections");
 var BlogsRepository = /** @class */ (function () {
     function BlogsRepository() {
     }
-    BlogsRepository.findAllBlogs = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/, collections_1.blogsCollection.find().toArray()];
-            });
-        });
-    };
     BlogsRepository.createBlog = function (blog) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -57,13 +50,6 @@ var BlogsRepository = /** @class */ (function () {
                         _a.sent();
                         return [2 /*return*/];
                 }
-            });
-        });
-    };
-    BlogsRepository.findBlogById = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/, collections_1.blogsCollection.findOne({ id: id })];
             });
         });
     };

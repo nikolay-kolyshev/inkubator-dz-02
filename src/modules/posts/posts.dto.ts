@@ -10,3 +10,11 @@ export type PostsInputRepositoryDTO = PostsInputDTO & {
     blogName: string;
     createdAt: string;
 };
+
+export type PostsQueryRepositoryDTO = {
+    pageNumber: number;
+    pageSize: number;
+    sortBy: string;
+    sortDirection: string;
+    blogId?: string;
+};

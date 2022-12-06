@@ -36,60 +36,20 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PostsRepository = void 0;
-var collections_1 = require("../../database/collections");
-var PostsRepository = /** @class */ (function () {
-    function PostsRepository() {
-    }
-    PostsRepository.createPost = function (post) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, collections_1.postsCollection.insertOne(post)];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    PostsRepository.updatePostById = function (id, postWithUpdate) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, collections_1.postsCollection.updateOne({ id: id }, { $set: postWithUpdate })];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    PostsRepository.deleteBLogById = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, collections_1.postsCollection.deleteOne({ id: id })];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    PostsRepository.deleteAllPosts = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, collections_1.postsCollection.deleteMany({})];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    return PostsRepository;
-}());
-exports.PostsRepository = PostsRepository;
-//# sourceMappingURL=posts.repository.js.map
+exports.getCollectionItemsWithPagination = void 0;
+var getCollectionItemsWithPagination = function (collection, paginationConfig) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0: return [4 /*yield*/, collection
+                    .find(paginationConfig.filter, { projection: { _id: false } })
+                    .sort((_a = {}, _a[paginationConfig.sortBy] = paginationConfig.sortDirection === 'asc' ? 1 : -1, _a))
+                    .skip((paginationConfig.pageNumber - 1) * paginationConfig.pageSize)
+                    .limit(paginationConfig.pageSize)
+                    .toArray()];
+            case 1: return [2 /*return*/, _b.sent()];
+        }
+    });
+}); };
+exports.getCollectionItemsWithPagination = getCollectionItemsWithPagination;
+//# sourceMappingURL=getCollectionItemsWithPagination.js.map

@@ -38,18 +38,28 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BlogsController = void 0;
 var constants_1 = require("../../common/constants");
+var posts_query_repository_1 = require("../posts/posts.query-repository");
+var blogs_query_repository_1 = require("./blogs.query-repository");
 var blogs_service_1 = require("./blogs.service");
 var BlogsController = /** @class */ (function () {
     function BlogsController() {
     }
     BlogsController.getAllBlogs = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var blogs;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, blogs_service_1.BlogsService.findAllBlogs()];
+            var _a, searchNameTerm, sortBy, sortDirection, pageSize, pageNumber, blogs;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = req.query, searchNameTerm = _a.searchNameTerm, sortBy = _a.sortBy, sortDirection = _a.sortDirection, pageSize = _a.pageSize, pageNumber = _a.pageNumber;
+                        return [4 /*yield*/, blogs_query_repository_1.BlogsQueryRepository.findAllBlogs({
+                                searchNameTerm: searchNameTerm,
+                                sortBy: sortBy,
+                                sortDirection: sortDirection,
+                                pageSize: pageSize,
+                                pageNumber: pageNumber,
+                            })];
                     case 1:
-                        blogs = _a.sent();
+                        blogs = _b.sent();
                         res.status(constants_1.STATUS_CODES.OK).json(blogs);
                         return [2 /*return*/];
                 }
@@ -77,7 +87,7 @@ var BlogsController = /** @class */ (function () {
             var blog;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, blogs_service_1.BlogsService.findBlogById(req.params.id)];
+                    case 0: return [4 /*yield*/, blogs_query_repository_1.BlogsQueryRepository.findBlogById(req.params.id)];
                     case 1:
                         blog = _a.sent();
                         if (!blog) {
@@ -91,6 +101,51 @@ var BlogsController = /** @class */ (function () {
                             websiteUrl: blog.websiteUrl,
                             createdAt: blog.createdAt,
                         });
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    BlogsController.getPostsByBlogId = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, sortBy, sortDirection, pageSize, pageNumber, blogId, posts;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = req.query, sortBy = _a.sortBy, sortDirection = _a.sortDirection, pageSize = _a.pageSize, pageNumber = _a.pageNumber, blogId = _a.blogId;
+                        return [4 /*yield*/, posts_query_repository_1.PostsQueryRepository.findAllPosts({
+                                sortBy: sortBy,
+                                sortDirection: sortDirection,
+                                pageSize: pageSize,
+                                pageNumber: pageNumber,
+                                blogId: blogId,
+                            })];
+                    case 1:
+                        posts = _b.sent();
+                        res.status(constants_1.STATUS_CODES.OK).json(posts);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    BlogsController.postPostByBlogId = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var postCandidate, blogId, foundBlog, post;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        postCandidate = req.body;
+                        blogId = req.params.blogId;
+                        return [4 /*yield*/, blogs_query_repository_1.BlogsQueryRepository.findBlogById(blogId)];
+                    case 1:
+                        foundBlog = _a.sent();
+                        if (foundBlog) {
+                            res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
+                        }
+                        return [4 /*yield*/, blogs_service_1.BlogsService.createPostByBlogId(blogId, postCandidate)];
+                    case 2:
+                        post = _a.sent();
+                        res.status(constants_1.STATUS_CODES.CREATED).json(post);
                         return [2 /*return*/];
                 }
             });

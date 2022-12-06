@@ -51,38 +51,18 @@ exports.PostsService = void 0;
 var constants_1 = require("../../common/constants");
 var generateDate_1 = require("../../common/utils/generateDate");
 var generateId_1 = require("../../common/utils/generateId");
-var blogs_repository_1 = require("../blogs/blogs.repository");
+var blogs_query_repository_1 = require("../blogs/blogs.query-repository");
+var posts_query_repository_1 = require("./posts.query-repository");
 var posts_repository_1 = require("./posts.repository");
 var PostsService = /** @class */ (function () {
     function PostsService() {
     }
-    PostsService.findAllPosts = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var posts;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, posts_repository_1.PostsRepository.findAllPosts()];
-                    case 1:
-                        posts = _a.sent();
-                        return [2 /*return*/, posts.map(function (post) { return ({
-                                id: post.id,
-                                title: post.title,
-                                content: post.content,
-                                shortDescription: post.shortDescription,
-                                blogId: post.blogId,
-                                blogName: post.blogName,
-                                createdAt: post.createdAt,
-                            }); })];
-                }
-            });
-        });
-    };
     PostsService.createPost = function (postDTO) {
         return __awaiter(this, void 0, void 0, function () {
             var foundedBlog, id, createdPost;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, blogs_repository_1.BlogsRepository.findBlogById(postDTO.blogId)];
+                    case 0: return [4 /*yield*/, blogs_query_repository_1.BlogsQueryRepository.findBlogById(postDTO.blogId)];
                     case 1:
                         foundedBlog = _a.sent();
                         if (!foundedBlog) {
@@ -92,7 +72,7 @@ var PostsService = /** @class */ (function () {
                         return [4 /*yield*/, posts_repository_1.PostsRepository.createPost(__assign({ id: id, blogName: foundedBlog.name, createdAt: (0, generateDate_1.generateDate)() }, postDTO))];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, posts_repository_1.PostsRepository.findPostById(id)];
+                        return [4 /*yield*/, posts_query_repository_1.PostsQueryRepository.findPostById(id)];
                     case 3:
                         createdPost = _a.sent();
                         if (!createdPost) {
@@ -111,22 +91,12 @@ var PostsService = /** @class */ (function () {
             });
         });
     };
-    PostsService.findPostById = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, posts_repository_1.PostsRepository.findPostById(id)];
-                    case 1: return [2 /*return*/, _a.sent()];
-                }
-            });
-        });
-    };
     PostsService.updatePostById = function (id, postWithUpdate) {
         return __awaiter(this, void 0, void 0, function () {
             var foundedPost, foundedBlog;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, posts_repository_1.PostsRepository.findPostById(id)];
+                    case 0: return [4 /*yield*/, posts_query_repository_1.PostsQueryRepository.findPostById(id)];
                     case 1:
                         foundedPost = _a.sent();
                         if (!foundedPost) {
@@ -137,7 +107,7 @@ var PostsService = /** @class */ (function () {
                                     },
                                 }];
                         }
-                        return [4 /*yield*/, blogs_repository_1.BlogsRepository.findBlogById(postWithUpdate.blogId)];
+                        return [4 /*yield*/, blogs_query_repository_1.BlogsQueryRepository.findBlogById(postWithUpdate.blogId)];
                     case 2:
                         foundedBlog = (_a.sent());
                         return [4 /*yield*/, posts_repository_1.PostsRepository.updatePostById(id, __assign(__assign({}, postWithUpdate), { blogName: foundedBlog.name }))];
@@ -155,7 +125,7 @@ var PostsService = /** @class */ (function () {
             var foundedPost, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, posts_repository_1.PostsRepository.findPostById(id)];
+                    case 0: return [4 /*yield*/, posts_query_repository_1.PostsQueryRepository.findPostById(id)];
                     case 1:
                         foundedPost = _a.sent();
                         if (!foundedPost) {

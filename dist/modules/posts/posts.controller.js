@@ -38,18 +38,26 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostsController = void 0;
 var constants_1 = require("../../common/constants");
+var posts_query_repository_1 = require("./posts.query-repository");
 var posts_service_1 = require("./posts.service");
 var PostsController = /** @class */ (function () {
     function PostsController() {
     }
     PostsController.getAllPosts = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var posts;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, posts_service_1.PostsService.findAllPosts()];
+            var _a, sortBy, sortDirection, pageSize, pageNumber, posts;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = req.query, sortBy = _a.sortBy, sortDirection = _a.sortDirection, pageSize = _a.pageSize, pageNumber = _a.pageNumber;
+                        return [4 /*yield*/, posts_query_repository_1.PostsQueryRepository.findAllPosts({
+                                sortBy: sortBy,
+                                sortDirection: sortDirection,
+                                pageSize: pageSize,
+                                pageNumber: pageNumber,
+                            })];
                     case 1:
-                        posts = _a.sent();
+                        posts = _b.sent();
                         res.status(constants_1.STATUS_CODES.OK).json(posts);
                         return [2 /*return*/];
                 }
@@ -77,7 +85,7 @@ var PostsController = /** @class */ (function () {
             var post;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, posts_service_1.PostsService.findPostById(req.params.id)];
+                    case 0: return [4 /*yield*/, posts_query_repository_1.PostsQueryRepository.findPostById(req.params.id)];
                     case 1:
                         post = _a.sent();
                         if (!post) {

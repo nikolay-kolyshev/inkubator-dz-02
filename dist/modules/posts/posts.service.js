@@ -65,9 +65,6 @@ var PostsService = /** @class */ (function () {
                     case 0: return [4 /*yield*/, blogs_query_repository_1.BlogsQueryRepository.findBlogById(postDTO.blogId)];
                     case 1:
                         foundedBlog = _a.sent();
-                        if (!foundedBlog) {
-                            throw new Error('Blog not found');
-                        }
                         id = (0, generateId_1.generateId)();
                         return [4 /*yield*/, posts_repository_1.PostsRepository.createPost(__assign({ id: id, blogName: foundedBlog.name, createdAt: (0, generateDate_1.generateDate)() }, postDTO))];
                     case 2:

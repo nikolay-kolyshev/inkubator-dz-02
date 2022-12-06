@@ -12,13 +12,10 @@ import { PostsRepository } from './posts.repository';
 export class PostsService {
     static async createPost(postDTO: PostsInputDTO): Promise<PostEntity> {
         const foundedBlog = await BlogsQueryRepository.findBlogById(postDTO.blogId);
-        if (!foundedBlog) {
-            throw new Error('Blog not found');
-        }
         const id = generateId();
         await PostsRepository.createPost({
             id,
-            blogName: foundedBlog.name,
+            blogName: foundedBlog!.name,
             createdAt: generateDate(),
             ...postDTO,
         });

@@ -38,16 +38,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getCollectionItemsWithPagination = void 0;
 var getCollectionItemsWithPagination = function (collection, paginationConfig) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0: return [4 /*yield*/, collection
-                    .find(paginationConfig.filter, { projection: { _id: false } })
-                    .sort((_a = {}, _a[paginationConfig.sortBy] = paginationConfig.sortDirection === 'asc' ? 1 : -1, _a))
-                    .skip((paginationConfig.pageNumber - 1) * paginationConfig.pageSize)
-                    .limit((paginationConfig.pageSize = 10))
-                    .toArray()];
-            case 1: return [2 /*return*/, _b.sent()];
+    var _a, filter, _b, sortBy, _c, sortDirection, _d, pageSize, _e, pageNumber;
+    var _f;
+    return __generator(this, function (_g) {
+        switch (_g.label) {
+            case 0:
+                _a = paginationConfig.filter, filter = _a === void 0 ? {} : _a, _b = paginationConfig.sortBy, sortBy = _b === void 0 ? '' : _b, _c = paginationConfig.sortDirection, sortDirection = _c === void 0 ? 'asc' : _c, _d = paginationConfig.pageSize, pageSize = _d === void 0 ? 10 : _d, _e = paginationConfig.pageNumber, pageNumber = _e === void 0 ? 0 : _e;
+                return [4 /*yield*/, collection
+                        .find(filter, { projection: { _id: false } })
+                        .sort((_f = {}, _f[sortBy] = sortDirection === 'asc' ? 1 : -1, _f))
+                        .skip((pageNumber - 1) * pageSize)
+                        .limit(pageSize)
+                        .toArray()];
+            case 1: return [2 /*return*/, _g.sent()];
         }
     });
 }); };

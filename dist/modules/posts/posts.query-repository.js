@@ -50,7 +50,6 @@ var PostsQueryRepository = /** @class */ (function () {
                 switch (_f.label) {
                     case 0:
                         filter = {};
-                        console.log(sortBy, sortDirection, pageSize, pageNumber, blogId);
                         if (blogId) {
                             filter.blogId = { $regex: blogId };
                         }

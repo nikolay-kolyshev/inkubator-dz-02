@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostsController = void 0;
 var constants_1 = require("../../common/constants");
+var blogs_query_repository_1 = require("../blogs/blogs.query-repository");
 var posts_query_repository_1 = require("./posts.query-repository");
 var posts_service_1 = require("./posts.service");
 var PostsController = /** @class */ (function () {
@@ -66,13 +67,20 @@ var PostsController = /** @class */ (function () {
     };
     PostsController.postPost = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var postCandidate, post;
+            var postCandidate, blog, post;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         postCandidate = req.body;
-                        return [4 /*yield*/, posts_service_1.PostsService.createPost(postCandidate)];
+                        return [4 /*yield*/, blogs_query_repository_1.BlogsQueryRepository.findBlogById(req.body.blogId)];
                     case 1:
+                        blog = _a.sent();
+                        if (!blog) {
+                            res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
+                            return [2 /*return*/];
+                        }
+                        return [4 /*yield*/, posts_service_1.PostsService.createPost(postCandidate)];
+                    case 2:
                         post = _a.sent();
                         res.status(constants_1.STATUS_CODES.CREATED).json(post);
                         return [2 /*return*/];

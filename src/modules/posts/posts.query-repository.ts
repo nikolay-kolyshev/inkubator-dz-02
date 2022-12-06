@@ -17,8 +17,6 @@ export class PostsQueryRepository {
     }: PostsQueryRepositoryDTO): Promise<PostPaginationView> {
         const filter: Filter<PostScheme> = {};
 
-        console.log(sortBy, sortDirection, pageSize, pageNumber, blogId);
-
         if (blogId) {
             filter.blogId = { $regex: blogId };
         }

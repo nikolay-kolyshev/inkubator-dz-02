@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { STATUS_CODES } from '../../common/constants';
+import { BlogsQueryRepository } from '../blogs/blogs.query-repository';
 import { PostsInputDTO } from './posts.dto';
 import { PostEntity } from './posts.entities';
 import { PostsQueryRepository } from './posts.query-repository';
@@ -24,6 +25,11 @@ export class PostsController {
     }
     static async postPost(req: Request<{}, PostEntity, PostsInputDTO>, res: Response<PostEntity>): Promise<void> {
         const postCandidate = req.body;
+        const blog = await BlogsQueryRepository.findBlogById(req.body.blogId);
+        if (!blog) {
+            res.sendStatus(STATUS_CODES.NOT_FOUND);
+            return;
+        }
         const post = await PostsService.createPost(postCandidate);
         res.status(STATUS_CODES.CREATED).json(post);
         return;

@@ -47,122 +47,115 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PostsService = void 0;
-var constants_1 = require("../../common/constants");
+exports.BlogsService = void 0;
+var generateDate_1 = require("../../common/utils/generateDate");
 var generateId_1 = require("../../common/utils/generateId");
-var blogs_repository_1 = require("../blogs/blogs.repository");
-var posts_repository_1 = require("./posts.repository");
-var PostsService = /** @class */ (function () {
-    function PostsService() {
+var blogs_repository_1 = require("./blogs.repository");
+var BlogsService = /** @class */ (function () {
+    function BlogsService() {
     }
-    PostsService.findAllPosts = function () {
+    BlogsService.findAllBlogs = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var posts;
+            var blogs;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, posts_repository_1.PostsRepository.findAllPosts()];
+                    case 0: return [4 /*yield*/, blogs_repository_1.BlogsRepository.findAllBlogs()];
                     case 1:
-                        posts = _a.sent();
-                        return [2 /*return*/, posts.map(function (post) { return ({
-                                id: post.id,
-                                title: post.title,
-                                content: post.content,
-                                shortDescription: post.shortDescription,
-                                blogId: post.blogId,
-                                blogName: post.blogName,
-                                createdAt: post.createdAt,
+                        blogs = _a.sent();
+                        return [2 /*return*/, blogs.map(function (blog) { return ({
+                                id: blog.id,
+                                name: blog.name,
+                                description: blog.description,
+                                createdAt: blog.createdAt,
+                                websiteUrl: blog.websiteUrl,
                             }); })];
                 }
             });
         });
     };
-    PostsService.createPost = function (postDTO) {
+    BlogsService.createBlog = function (blogDTO) {
         return __awaiter(this, void 0, void 0, function () {
-            var foundedBlog, id, createdPost;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, blogs_repository_1.BlogsRepository.findBlogById(postDTO.blogId)];
-                    case 1:
-                        foundedBlog = (_a.sent());
-                        if (!foundedBlog) {
-                            throw new Error('Blog not found');
-                        }
-                        id = (0, generateId_1.generateId)();
-                        return [4 /*yield*/, posts_repository_1.PostsRepository.createPost(__assign({ id: (0, generateId_1.generateId)(), blogName: foundedBlog.name, createdAt: new Date().toISOString() }, postDTO))];
-                    case 2:
-                        _a.sent();
-                        return [4 /*yield*/, posts_repository_1.PostsRepository.findPostById(id)];
-                    case 3:
-                        createdPost = (_a.sent());
-                        return [2 /*return*/, {
-                                id: createdPost.id,
-                                title: createdPost.title,
-                                shortDescription: createdPost.shortDescription,
-                                content: createdPost.content,
-                                blogId: createdPost.blogId,
-                                blogName: createdPost.blogName,
-                                createdAt: createdPost.createdAt,
-                            }];
-                }
-            });
-        });
-    };
-    PostsService.findPostById = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/, posts_repository_1.PostsRepository.findPostById(id)];
-            });
-        });
-    };
-    PostsService.updatePostById = function (id, postWithUpdate) {
-        return __awaiter(this, void 0, void 0, function () {
-            var foundedPost, foundedBlog;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, posts_repository_1.PostsRepository.findPostById(id)];
-                    case 1:
-                        foundedPost = _a.sent();
-                        if (!foundedPost) {
-                            return [2 /*return*/, {
-                                    error: {
-                                        message: 'Post not found',
-                                        code: constants_1.STATUS_CODES.NOT_FOUND,
-                                    },
-                                }];
-                        }
-                        return [4 /*yield*/, blogs_repository_1.BlogsRepository.findBlogById(postWithUpdate.blogId)];
-                    case 2:
-                        foundedBlog = (_a.sent());
-                        return [4 /*yield*/, posts_repository_1.PostsRepository.updatePostById(id, __assign(__assign({}, postWithUpdate), { blogName: foundedBlog.name, createdAt: new Date().toISOString() }))];
-                    case 3:
-                        _a.sent();
-                        return [2 /*return*/, {
-                                response: true,
-                            }];
-                }
-            });
-        });
-    };
-    PostsService.deleteBLogById = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            var e_1;
+            var blogCandidate, createdBlog;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, posts_repository_1.PostsRepository.deleteBLogById(id)];
+                        blogCandidate = __assign({ id: (0, generateId_1.generateId)(), createdAt: (0, generateDate_1.generateDate)() }, blogDTO);
+                        return [4 /*yield*/, blogs_repository_1.BlogsRepository.createBlog(blogCandidate)];
                     case 1:
                         _a.sent();
-                        return [2 /*return*/, true];
+                        return [4 /*yield*/, blogs_repository_1.BlogsRepository.findBlogById(blogCandidate.id)];
                     case 2:
-                        e_1 = _a.sent();
-                        return [2 /*return*/, false];
-                    case 3: return [2 /*return*/];
+                        createdBlog = _a.sent();
+                        if (!createdBlog) {
+                            throw new Error('Blog was not created');
+                        }
+                        return [2 /*return*/, {
+                                id: createdBlog.id,
+                                name: createdBlog.name,
+                                description: createdBlog.description,
+                                websiteUrl: createdBlog.websiteUrl,
+                                createdAt: createdBlog.createdAt,
+                            }];
                 }
             });
         });
     };
-    return PostsService;
+    BlogsService.findBlogById = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, blogs_repository_1.BlogsRepository.findBlogById(id)];
+            });
+        });
+    };
+    BlogsService.updateBlogById = function (id, blogWithUpdate) {
+        return __awaiter(this, void 0, void 0, function () {
+            var blogCandidate;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        blogCandidate = blogs_repository_1.BlogsRepository.findBlogById(id);
+                        if (!blogCandidate) {
+                            return [2 /*return*/, false];
+                        }
+                        return [4 /*yield*/, blogs_repository_1.BlogsRepository.updateBlogById(id, __assign(__assign({}, blogWithUpdate), { createdAt: (0, generateDate_1.generateDate)() }))];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/, true];
+                }
+            });
+        });
+    };
+    BlogsService.deleteBLogById = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var blogCandidate;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        blogCandidate = blogs_repository_1.BlogsRepository.findBlogById(id);
+                        if (!blogCandidate) {
+                            return [2 /*return*/, false];
+                        }
+                        return [4 /*yield*/, blogs_repository_1.BlogsRepository.deleteBLogById(id)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/, true];
+                }
+            });
+        });
+    };
+    BlogsService.deleteAllBlogs = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, blogs_repository_1.BlogsRepository.deleteAllBlogs()];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return BlogsService;
 }());
-exports.PostsService = PostsService;
-//# sourceMappingURL=posts.service.js.map
+exports.BlogsService = BlogsService;
+//# sourceMappingURL=blogs.service.js.map

@@ -11,7 +11,7 @@ export const blogsValidation = {
             .notEmpty()
             .withMessage('name не может быть пустым')
             .isLength({ min: 1, max: 15 })
-            .withMessage('name должен быть от 1 до 15 символов'),
+            .withMessage('nameeyo должен быть от 1 до 15 символов'),
         body('description')
             .exists()
             .withMessage('description должен находиться в теле запроса')

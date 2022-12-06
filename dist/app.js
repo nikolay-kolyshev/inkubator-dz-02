@@ -32,5 +32,5 @@ var express_1 = __importDefault(require("express"));
 var routing_1 = require("./routing");
 exports.app = (0, express_1.default)();
 exports.app.use(bodyParser.json());
-exports.app.use(routing_1.rootRouter);
+exports.app.use('/', routing_1.rootRouter);
 //# sourceMappingURL=app.js.map

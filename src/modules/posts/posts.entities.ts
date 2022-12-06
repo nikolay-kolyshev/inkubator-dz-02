@@ -1,6 +1,4 @@
-import { WithId } from 'mongodb';
-
-export type PostSchemeDefault = {
+export type PostEntity = {
     id: string;
     title: string;
     shortDescription: string;
@@ -9,5 +7,3 @@ export type PostSchemeDefault = {
     blogName: string;
     createdAt: string;
 };
-
-export type PostScheme = WithId<PostSchemeDefault>;

@@ -3,3 +3,10 @@ export type BlogsInputDTO = {
     description: string;
     websiteUrl: string;
 };
+
+export type BlogsInputRepositoryDTO = {
+    id: string;
+    name: string;
+    description: string;
+    websiteUrl: string;
+};

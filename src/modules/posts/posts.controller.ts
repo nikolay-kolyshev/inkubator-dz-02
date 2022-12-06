@@ -1,28 +1,36 @@
 import { Request, Response } from 'express';
 import { STATUS_CODES } from '../../common/constants';
 import { PostsInputDTO } from './posts.dto';
-import { PostScheme } from './posts.schemes';
+import { PostEntity } from './posts.entities';
 import { PostsService } from './posts.service';
 
 export class PostsController {
-    static async getAllPosts(req: Request, res: Response<PostScheme[]>): Promise<void> {
+    static async getAllPosts(req: Request, res: Response<PostEntity[]>): Promise<void> {
         const posts = await PostsService.findAllPosts();
         res.status(STATUS_CODES.OK).json(posts);
         return;
     }
-    static async postPost(req: Request<{}, PostScheme, PostsInputDTO>, res: Response<PostScheme>): Promise<void> {
+    static async postPost(req: Request<{}, PostEntity, PostsInputDTO>, res: Response<PostEntity>): Promise<void> {
         const postCandidate = req.body;
         const post = await PostsService.createPost(postCandidate);
         res.status(STATUS_CODES.CREATED).json(post);
         return;
     }
-    static async getPostById(req: Request<{ id: string }, PostScheme>, res: Response<PostScheme>): Promise<void> {
+    static async getPostById(req: Request<{ id: string }, PostEntity>, res: Response<PostEntity>): Promise<void> {
         const post = await PostsService.findPostById(req.params.id);
         if (!post) {
             res.sendStatus(STATUS_CODES.NOT_FOUND);
             return;
         }
-        res.status(STATUS_CODES.OK).json(post);
+        res.status(STATUS_CODES.OK).json({
+            id: post.id,
+            title: post.title,
+            shortDescription: post.shortDescription,
+            content: post.content,
+            blogId: post.blogId,
+            blogName: post.blogName,
+            createdAt: post.createdAt,
+        });
         return;
     }
     static async putPostById(req: Request<{ id: string }, void, PostsInputDTO>, res: Response<void>): Promise<void> {

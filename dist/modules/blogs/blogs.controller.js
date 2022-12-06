@@ -38,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BlogsController = void 0;
 var constants_1 = require("../../common/constants");
-var blogs_repository_1 = require("./blogs.repository");
+var blogs_service_1 = require("./blogs.service");
 var BlogsController = /** @class */ (function () {
     function BlogsController() {
     }
@@ -47,7 +47,7 @@ var BlogsController = /** @class */ (function () {
             var blogs;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, blogs_repository_1.BlogsRepository.findAllBlogs()];
+                    case 0: return [4 /*yield*/, blogs_service_1.BlogsService.findAllBlogs()];
                     case 1:
                         blogs = _a.sent();
                         res.status(constants_1.STATUS_CODES.OK).json(blogs);
@@ -63,7 +63,7 @@ var BlogsController = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         blogCandidate = req.body;
-                        return [4 /*yield*/, blogs_repository_1.BlogsRepository.createBlog(blogCandidate)];
+                        return [4 /*yield*/, blogs_service_1.BlogsService.createBlog(blogCandidate)];
                     case 1:
                         blog = _a.sent();
                         res.status(constants_1.STATUS_CODES.CREATED).json(blog);
@@ -77,14 +77,20 @@ var BlogsController = /** @class */ (function () {
             var blog;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, blogs_repository_1.BlogsRepository.findBlogById(req.params.id)];
+                    case 0: return [4 /*yield*/, blogs_service_1.BlogsService.findBlogById(req.params.id)];
                     case 1:
                         blog = _a.sent();
                         if (!blog) {
                             res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
                             return [2 /*return*/];
                         }
-                        res.status(constants_1.STATUS_CODES.OK).json(blog);
+                        res.status(constants_1.STATUS_CODES.OK).json({
+                            id: blog.id,
+                            name: blog.name,
+                            description: blog.description,
+                            websiteUrl: blog.websiteUrl,
+                            createdAt: blog.createdAt,
+                        });
                         return [2 /*return*/];
                 }
             });
@@ -97,7 +103,7 @@ var BlogsController = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         blogWithUpdate = req.body;
-                        return [4 /*yield*/, blogs_repository_1.BlogsRepository.updateBlogById(req.params.id, blogWithUpdate)];
+                        return [4 /*yield*/, blogs_service_1.BlogsService.updateBlogById(req.params.id, blogWithUpdate)];
                     case 1:
                         isBlogUpdated = _a.sent();
                         if (!isBlogUpdated) {
@@ -115,7 +121,7 @@ var BlogsController = /** @class */ (function () {
             var isBlogDeleted;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, blogs_repository_1.BlogsRepository.deleteBLogById(req.params.id)];
+                    case 0: return [4 /*yield*/, blogs_service_1.BlogsService.deleteBLogById(req.params.id)];
                     case 1:
                         isBlogDeleted = _a.sent();
                         if (!isBlogDeleted) {

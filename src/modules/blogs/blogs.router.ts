@@ -11,8 +11,19 @@ const blogsRouter = Router();
 blogsRouter.get('/', ...blogsValidation.pagination, BlogsController.getAllBlogs);
 blogsRouter.post('/', authGuard, ...blogsValidation.inputBody, inputValidationMiddleware, BlogsController.postBlog);
 blogsRouter.get('/:id', BlogsController.getBlogById);
-blogsRouter.get('/:blogId/posts', ...blogsValidation.pagination, BlogsController.getPostsByBlogId);
-blogsRouter.post('/:blogId/posts', authGuard, ...blogsValidation.newPost, BlogsController.postPostByBlogId);
+blogsRouter.get(
+    '/:blogId/posts',
+    ...blogsValidation.pagination,
+    inputValidationMiddleware,
+    BlogsController.getPostsByBlogId,
+);
+blogsRouter.post(
+    '/:blogId/posts',
+    authGuard,
+    ...blogsValidation.newPost,
+    inputValidationMiddleware,
+    BlogsController.postPostByBlogId,
+);
 blogsRouter.put(
     '/:id',
     authGuard,

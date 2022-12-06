@@ -23,18 +23,21 @@ export class PostsService {
         }));
     }
     static async createPost(postDTO: PostsInputDTO): Promise<PostEntity> {
-        const foundedBlog = (await BlogsRepository.findBlogById(postDTO.blogId)) as BlogScheme;
+        const foundedBlog = await BlogsRepository.findBlogById(postDTO.blogId);
         if (!foundedBlog) {
             throw new Error('Blog not found');
         }
         const id = generateId();
         await PostsRepository.createPost({
-            id: generateId(),
+            id,
             blogName: foundedBlog.name,
             createdAt: generateDate(),
             ...postDTO,
         });
-        const createdPost = (await PostsRepository.findPostById(id)) as PostScheme;
+        const createdPost = await PostsRepository.findPostById(id);
+        if (!createdPost) {
+            throw new Error('Post was not created');
+        }
         return {
             id: createdPost.id,
             title: createdPost.title,

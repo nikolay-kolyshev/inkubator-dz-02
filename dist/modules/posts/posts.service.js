@@ -84,17 +84,20 @@ var PostsService = /** @class */ (function () {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, blogs_repository_1.BlogsRepository.findBlogById(postDTO.blogId)];
                     case 1:
-                        foundedBlog = (_a.sent());
+                        foundedBlog = _a.sent();
                         if (!foundedBlog) {
                             throw new Error('Blog not found');
                         }
                         id = (0, generateId_1.generateId)();
-                        return [4 /*yield*/, posts_repository_1.PostsRepository.createPost(__assign({ id: (0, generateId_1.generateId)(), blogName: foundedBlog.name, createdAt: (0, generateDate_1.generateDate)() }, postDTO))];
+                        return [4 /*yield*/, posts_repository_1.PostsRepository.createPost(__assign({ id: id, blogName: foundedBlog.name, createdAt: (0, generateDate_1.generateDate)() }, postDTO))];
                     case 2:
                         _a.sent();
                         return [4 /*yield*/, posts_repository_1.PostsRepository.findPostById(id)];
                     case 3:
-                        createdPost = (_a.sent());
+                        createdPost = _a.sent();
+                        if (!createdPost) {
+                            throw new Error('Post was not created');
+                        }
                         return [2 /*return*/, {
                                 id: createdPost.id,
                                 title: createdPost.title,

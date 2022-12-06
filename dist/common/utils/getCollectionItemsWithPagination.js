@@ -45,7 +45,7 @@ var getCollectionItemsWithPagination = function (collection, paginationConfig) {
                     .find(paginationConfig.filter, { projection: { _id: false } })
                     .sort((_a = {}, _a[paginationConfig.sortBy] = paginationConfig.sortDirection === 'asc' ? 1 : -1, _a))
                     .skip((paginationConfig.pageNumber - 1) * paginationConfig.pageSize)
-                    .limit(paginationConfig.pageSize)
+                    .limit((paginationConfig.pageSize = 10))
                     .toArray()];
             case 1: return [2 /*return*/, _b.sent()];
         }

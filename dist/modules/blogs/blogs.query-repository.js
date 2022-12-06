@@ -43,11 +43,11 @@ var BlogsQueryRepository = /** @class */ (function () {
     function BlogsQueryRepository() {
     }
     BlogsQueryRepository.findAllBlogs = function (_a) {
-        var searchNameTerm = _a.searchNameTerm, sortBy = _a.sortBy, sortDirection = _a.sortDirection, pageSize = _a.pageSize, pageNumber = _a.pageNumber;
+        var searchNameTerm = _a.searchNameTerm, _b = _a.sortBy, sortBy = _b === void 0 ? 'createdAt' : _b, _c = _a.sortDirection, sortDirection = _c === void 0 ? 'esc' : _c, _d = _a.pageSize, pageSize = _d === void 0 ? 10 : _d, _e = _a.pageNumber, pageNumber = _e === void 0 ? 1 : _e;
         return __awaiter(this, void 0, void 0, function () {
             var filter, items, totalCount, pagesCount;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            return __generator(this, function (_f) {
+                switch (_f.label) {
                     case 0:
                         filter = {};
                         if (searchNameTerm) {
@@ -61,10 +61,10 @@ var BlogsQueryRepository = /** @class */ (function () {
                                 pageNumber: pageNumber,
                             })];
                     case 1:
-                        items = _b.sent();
+                        items = _f.sent();
                         return [4 /*yield*/, collections_1.blogsCollection.count(filter)];
                     case 2:
-                        totalCount = _b.sent();
+                        totalCount = _f.sent();
                         pagesCount = Math.ceil(totalCount / pageSize);
                         return [2 /*return*/, {
                                 pagesCount: pagesCount,

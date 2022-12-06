@@ -10,10 +10,10 @@ import { BlogPaginationView } from './blogs.view';
 export class BlogsQueryRepository {
     static async findAllBlogs({
         searchNameTerm,
-        sortBy,
-        sortDirection,
-        pageSize,
-        pageNumber,
+        sortBy = 'createdAt',
+        sortDirection = 'esc',
+        pageSize = 10,
+        pageNumber = 1,
     }: BlogsQueryRepositoryDTO): Promise<BlogPaginationView> {
         const filter: Filter<BlogScheme> = {};
 

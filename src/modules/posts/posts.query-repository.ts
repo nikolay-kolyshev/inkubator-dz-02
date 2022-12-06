@@ -9,13 +9,15 @@ import { PostPaginationView } from './posts.view';
 
 export class PostsQueryRepository {
     static async findAllPosts({
-        sortBy,
-        sortDirection,
-        pageSize,
-        pageNumber,
+        sortBy = 'createdAt',
+        sortDirection = 'esc',
+        pageSize = 10,
+        pageNumber = 1,
         blogId,
     }: PostsQueryRepositoryDTO): Promise<PostPaginationView> {
         const filter: Filter<PostScheme> = {};
+
+        console.log(sortBy, sortDirection, pageSize, pageNumber, blogId);
 
         if (blogId) {
             filter.blogId = { $regex: blogId };

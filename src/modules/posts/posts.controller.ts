@@ -30,8 +30,16 @@ export class PostsController {
             res.sendStatus(STATUS_CODES.NOT_FOUND);
             return;
         }
-        const post = await PostsService.createPost(postCandidate);
-        res.status(STATUS_CODES.CREATED).json(post);
+        const createdPost = await PostsService.createPost({
+            ...postCandidate,
+            blogName: blog.name,
+        });
+        const postView = await PostsQueryRepository.findPostById(createdPost.id);
+        if (!postView) {
+            res.sendStatus(STATUS_CODES.INTERNAL_SERVER_ERROR);
+            return;
+        }
+        res.status(STATUS_CODES.CREATED).json(postView);
         return;
     }
     static async getPostById(req: Request<{ id: string }, PostEntity>, res: Response<PostEntity>): Promise<void> {

@@ -48,14 +48,7 @@ export class PostsController {
             res.sendStatus(STATUS_CODES.NOT_FOUND);
             return;
         }
-        res.status(STATUS_CODES.OK).json({
-            id: post.id,
-            title: post.title,
-            shortDescription: post.shortDescription,
-            content: post.content,
-            blogId: post.blogId,
-            createdAt: post.createdAt,
-        });
+        res.status(STATUS_CODES.OK).json(post);
         return;
     }
     static async putPostById(req: Request<{ id: string }, void, PostsInputDTO>, res: Response<void>): Promise<void> {

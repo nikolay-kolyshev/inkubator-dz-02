@@ -118,14 +118,7 @@ var PostsController = /** @class */ (function () {
                             res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
                             return [2 /*return*/];
                         }
-                        res.status(constants_1.STATUS_CODES.OK).json({
-                            id: post.id,
-                            title: post.title,
-                            shortDescription: post.shortDescription,
-                            content: post.content,
-                            blogId: post.blogId,
-                            createdAt: post.createdAt,
-                        });
+                        res.status(constants_1.STATUS_CODES.OK).json(post);
                         return [2 /*return*/];
                 }
             });

@@ -140,7 +140,7 @@ var PostsService = /** @class */ (function () {
                         return [4 /*yield*/, blogs_repository_1.BlogsRepository.findBlogById(postWithUpdate.blogId)];
                     case 2:
                         foundedBlog = (_a.sent());
-                        return [4 /*yield*/, posts_repository_1.PostsRepository.updatePostById(id, __assign(__assign({}, postWithUpdate), { blogName: foundedBlog.name, createdAt: (0, generateDate_1.generateDate)() }))];
+                        return [4 /*yield*/, posts_repository_1.PostsRepository.updatePostById(id, __assign(__assign({}, postWithUpdate), { blogName: foundedBlog.name }))];
                     case 3:
                         _a.sent();
                         return [2 /*return*/, {

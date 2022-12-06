@@ -13,7 +13,10 @@ export class PostsRepository {
     static async findPostById(id: string): Promise<Nullable<PostScheme>> {
         return postsCollection.findOne({ id });
     }
-    static async updatePostById(id: string, postWithUpdate: Omit<PostsInputRepositoryDTO, 'id'>): Promise<void> {
+    static async updatePostById(
+        id: string,
+        postWithUpdate: Omit<PostsInputRepositoryDTO, 'id' | 'createdAt'>,
+    ): Promise<void> {
         await postsCollection.updateOne({ id }, { $set: postWithUpdate });
     }
     static async deleteBLogById(id: string): Promise<void> {

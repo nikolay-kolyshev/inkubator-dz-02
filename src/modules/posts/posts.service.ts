@@ -65,7 +65,6 @@ export class PostsService {
         await PostsRepository.updatePostById(id, {
             ...postWithUpdate,
             blogName: foundedBlog.name,
-            createdAt: generateDate(),
         });
         return {
             response: true,

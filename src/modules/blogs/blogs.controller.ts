@@ -82,11 +82,7 @@ export class BlogsController {
             res.sendStatus(STATUS_CODES.NOT_FOUND);
             return;
         }
-        const post = await BlogsService.createPostByBlogId({
-            ...postCandidate,
-            blogId,
-            blogName: foundBlog.name,
-        });
+        const post = await BlogsService.createPostByBlogId(blogId, postCandidate);
         res.status(STATUS_CODES.CREATED).json(post);
         return;
     }

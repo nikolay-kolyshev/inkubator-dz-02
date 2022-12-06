@@ -10,7 +10,13 @@ export const getCollectionItemsWithPagination = async <Scheme extends Document =
         pageNumber?: number;
     },
 ): Promise<Array<WithId<Scheme>>> => {
-    const { filter = {}, sortBy = '', sortDirection = 'asc', pageSize = 10, pageNumber = 1 } = paginationConfig;
+    const {
+        filter = {},
+        sortBy = 'createdAt',
+        sortDirection = 'asc',
+        pageSize = 10,
+        pageNumber = 1,
+    } = paginationConfig;
     return await collection
         .find(filter, { projection: { _id: false } })
         .sort({ [sortBy]: sortDirection === 'asc' ? 1 : -1 })

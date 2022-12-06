@@ -58,20 +58,18 @@ var BlogsService = /** @class */ (function () {
     }
     BlogsService.createBlog = function (blogDTO) {
         return __awaiter(this, void 0, void 0, function () {
-            var blogCandidate, createdBlog;
+            var id, blogCandidate, createdBlog;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        blogCandidate = __assign({ id: (0, generateId_1.generateId)(), createdAt: (0, generateDate_1.generateDate)() }, blogDTO);
+                        id = (0, generateId_1.generateId)();
+                        blogCandidate = __assign({ id: id, createdAt: (0, generateDate_1.generateDate)() }, blogDTO);
                         return [4 /*yield*/, blogs_repository_1.BlogsRepository.createBlog(blogCandidate)];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, blogs_query_repository_1.BlogsQueryRepository.findBlogById(blogCandidate.id)];
+                        return [4 /*yield*/, blogs_query_repository_1.BlogsQueryRepository.findBlogById(id)];
                     case 2:
                         createdBlog = _a.sent();
-                        if (!createdBlog) {
-                            throw new Error('Blog was not created');
-                        }
                         return [2 /*return*/, createdBlog];
                 }
             });

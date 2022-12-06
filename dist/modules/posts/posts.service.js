@@ -70,9 +70,6 @@ var PostsService = /** @class */ (function () {
                         return [4 /*yield*/, posts_query_repository_1.PostsQueryRepository.findPostById(id)];
                     case 2:
                         createdPost = _a.sent();
-                        if (!createdPost) {
-                            throw new Error('Post was not created');
-                        }
                         return [2 /*return*/, createdPost];
                 }
             });

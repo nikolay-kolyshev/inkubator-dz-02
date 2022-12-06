@@ -34,12 +34,7 @@ export class PostsController {
             ...postCandidate,
             blogName: blog.name,
         });
-        const postView = await PostsQueryRepository.findPostById(createdPost.id);
-        if (!postView) {
-            res.sendStatus(STATUS_CODES.INTERNAL_SERVER_ERROR);
-            return;
-        }
-        res.status(STATUS_CODES.CREATED).json(postView);
+        res.status(STATUS_CODES.CREATED).json(createdPost);
         return;
     }
     static async getPostById(req: Request<{ id: string }, PostEntity>, res: Response<PostEntity>): Promise<void> {

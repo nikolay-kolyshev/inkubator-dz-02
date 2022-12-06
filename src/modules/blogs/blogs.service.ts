@@ -10,17 +10,15 @@ import { BlogsRepository } from './blogs.repository';
 
 export class BlogsService {
     static async createBlog(blogDTO: BlogsInputDTO): Promise<BlogEntity> {
+        const id = generateId();
         const blogCandidate: BlogsInputRepositoryDTO = {
-            id: generateId(),
+            id,
             createdAt: generateDate(),
             ...blogDTO,
         };
         await BlogsRepository.createBlog(blogCandidate);
-        const createdBlog = await BlogsQueryRepository.findBlogById(blogCandidate.id);
-        if (!createdBlog) {
-            throw new Error('Blog was not created');
-        }
-        return createdBlog;
+        const createdBlog = await BlogsQueryRepository.findBlogById(id);
+        return createdBlog!;
     }
     static async createPostByBlogId(postCandidate: PostsInputDTO & { blogName: string }): Promise<PostEntity> {
         return await PostsService.createPost(postCandidate);

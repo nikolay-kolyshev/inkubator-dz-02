@@ -78,7 +78,7 @@ var PostsController = /** @class */ (function () {
     };
     PostsController.postPost = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var postCandidate, blog, createdPost, postView;
+            var postCandidate, blog, createdPost;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -93,14 +93,7 @@ var PostsController = /** @class */ (function () {
                         return [4 /*yield*/, posts_service_1.PostsService.createPost(__assign(__assign({}, postCandidate), { blogName: blog.name }))];
                     case 2:
                         createdPost = _a.sent();
-                        return [4 /*yield*/, posts_query_repository_1.PostsQueryRepository.findPostById(createdPost.id)];
-                    case 3:
-                        postView = _a.sent();
-                        if (!postView) {
-                            res.sendStatus(constants_1.STATUS_CODES.INTERNAL_SERVER_ERROR);
-                            return [2 /*return*/];
-                        }
-                        res.status(constants_1.STATUS_CODES.CREATED).json(postView);
+                        res.status(constants_1.STATUS_CODES.CREATED).json(createdPost);
                         return [2 /*return*/];
                 }
             });

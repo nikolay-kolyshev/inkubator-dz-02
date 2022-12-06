@@ -37,7 +37,7 @@ export class BlogsService {
         };
     }
     static async findBlogById(id: string): Promise<Nullable<BlogScheme>> {
-        return BlogsRepository.findBlogById(id);
+        return await BlogsRepository.findBlogById(id);
     }
     static async updateBlogById(id: string, blogWithUpdate: BlogsInputDTO): Promise<boolean> {
         const blogCandidate = BlogsRepository.findBlogById(id);

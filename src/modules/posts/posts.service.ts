@@ -1,5 +1,6 @@
 import { STATUS_CODES } from '../../common/constants';
 import { Nullable, ServiceMethodResult } from '../../common/types';
+import { generateDate } from '../../common/utils/generateDate';
 import { generateId } from '../../common/utils/generateId';
 import { BlogsRepository } from '../blogs/blogs.repository';
 import { BlogScheme } from '../blogs/blogs.schemes';
@@ -30,7 +31,7 @@ export class PostsService {
         await PostsRepository.createPost({
             id: generateId(),
             blogName: foundedBlog.name,
-            createdAt: new Date().toISOString(),
+            createdAt: generateDate(),
             ...postDTO,
         });
         const createdPost = (await PostsRepository.findPostById(id)) as PostScheme;
@@ -45,7 +46,7 @@ export class PostsService {
         };
     }
     static async findPostById(id: string): Promise<Nullable<PostScheme>> {
-        return PostsRepository.findPostById(id);
+        return await PostsRepository.findPostById(id);
     }
     static async updatePostById(id: string, postWithUpdate: PostsInputDTO): Promise<ServiceMethodResult<boolean>> {
         const foundedPost = await PostsRepository.findPostById(id);
@@ -61,13 +62,17 @@ export class PostsService {
         await PostsRepository.updatePostById(id, {
             ...postWithUpdate,
             blogName: foundedBlog.name,
-            createdAt: new Date().toISOString(),
+            createdAt: generateDate(),
         });
         return {
             response: true,
         };
     }
     static async deleteBLogById(id: string): Promise<boolean> {
+        const foundedPost = await PostsRepository.findPostById(id);
+        if (!foundedPost) {
+            return false;
+        }
         try {
             await PostsRepository.deleteBLogById(id);
             return true;

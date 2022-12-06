@@ -49,6 +49,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostsService = void 0;
 var constants_1 = require("../../common/constants");
+var generateDate_1 = require("../../common/utils/generateDate");
 var generateId_1 = require("../../common/utils/generateId");
 var blogs_repository_1 = require("../blogs/blogs.repository");
 var posts_repository_1 = require("./posts.repository");
@@ -88,7 +89,7 @@ var PostsService = /** @class */ (function () {
                             throw new Error('Blog not found');
                         }
                         id = (0, generateId_1.generateId)();
-                        return [4 /*yield*/, posts_repository_1.PostsRepository.createPost(__assign({ id: (0, generateId_1.generateId)(), blogName: foundedBlog.name, createdAt: new Date().toISOString() }, postDTO))];
+                        return [4 /*yield*/, posts_repository_1.PostsRepository.createPost(__assign({ id: (0, generateId_1.generateId)(), blogName: foundedBlog.name, createdAt: (0, generateDate_1.generateDate)() }, postDTO))];
                     case 2:
                         _a.sent();
                         return [4 /*yield*/, posts_repository_1.PostsRepository.findPostById(id)];
@@ -110,7 +111,10 @@ var PostsService = /** @class */ (function () {
     PostsService.findPostById = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, posts_repository_1.PostsRepository.findPostById(id)];
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, posts_repository_1.PostsRepository.findPostById(id)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
             });
         });
     };
@@ -133,7 +137,7 @@ var PostsService = /** @class */ (function () {
                         return [4 /*yield*/, blogs_repository_1.BlogsRepository.findBlogById(postWithUpdate.blogId)];
                     case 2:
                         foundedBlog = (_a.sent());
-                        return [4 /*yield*/, posts_repository_1.PostsRepository.updatePostById(id, __assign(__assign({}, postWithUpdate), { blogName: foundedBlog.name, createdAt: new Date().toISOString() }))];
+                        return [4 /*yield*/, posts_repository_1.PostsRepository.updatePostById(id, __assign(__assign({}, postWithUpdate), { blogName: foundedBlog.name, createdAt: (0, generateDate_1.generateDate)() }))];
                     case 3:
                         _a.sent();
                         return [2 /*return*/, {
@@ -145,19 +149,26 @@ var PostsService = /** @class */ (function () {
     };
     PostsService.deleteBLogById = function (id) {
         return __awaiter(this, void 0, void 0, function () {
-            var e_1;
+            var foundedPost, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, posts_repository_1.PostsRepository.deleteBLogById(id)];
+                    case 0: return [4 /*yield*/, posts_repository_1.PostsRepository.findPostById(id)];
                     case 1:
+                        foundedPost = _a.sent();
+                        if (!foundedPost) {
+                            return [2 /*return*/, false];
+                        }
+                        _a.label = 2;
+                    case 2:
+                        _a.trys.push([2, 4, , 5]);
+                        return [4 /*yield*/, posts_repository_1.PostsRepository.deleteBLogById(id)];
+                    case 3:
                         _a.sent();
                         return [2 /*return*/, true];
-                    case 2:
+                    case 4:
                         e_1 = _a.sent();
                         return [2 /*return*/, false];
-                    case 3: return [2 /*return*/];
+                    case 5: return [2 /*return*/];
                 }
             });
         });

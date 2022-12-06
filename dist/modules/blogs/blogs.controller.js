@@ -108,11 +108,12 @@ var BlogsController = /** @class */ (function () {
     };
     BlogsController.getPostsByBlogId = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, sortBy, sortDirection, pageSize, pageNumber, blogId, posts;
+            var blogId, _a, sortBy, sortDirection, pageSize, pageNumber, posts;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        _a = req.query, sortBy = _a.sortBy, sortDirection = _a.sortDirection, pageSize = _a.pageSize, pageNumber = _a.pageNumber, blogId = _a.blogId;
+                        blogId = req.params.blogId;
+                        _a = req.query, sortBy = _a.sortBy, sortDirection = _a.sortDirection, pageSize = _a.pageSize, pageNumber = _a.pageNumber;
                         return [4 /*yield*/, posts_query_repository_1.PostsQueryRepository.findAllPosts({
                                 sortBy: sortBy,
                                 sortDirection: sortDirection,
@@ -130,12 +131,12 @@ var BlogsController = /** @class */ (function () {
     };
     BlogsController.postPostByBlogId = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var postCandidate, blogId, foundBlog, post;
+            var blogId, postCandidate, foundBlog, post;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        postCandidate = req.body;
                         blogId = req.params.blogId;
+                        postCandidate = req.body;
                         return [4 /*yield*/, blogs_query_repository_1.BlogsQueryRepository.findBlogById(blogId)];
                     case 1:
                         foundBlog = _a.sent();

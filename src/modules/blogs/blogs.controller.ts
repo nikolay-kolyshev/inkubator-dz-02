@@ -51,10 +51,11 @@ export class BlogsController {
         return;
     }
     static async getPostsByBlogId(
-        req: Request<{}, {}, {}, PostsQueryByBlogIdPaginationTerms>,
+        req: Request<{ blogId: string }, {}, {}, PostsQueryByBlogIdPaginationTerms>,
         res: Response<PostPaginationView>,
     ): Promise<void> {
-        const { sortBy, sortDirection, pageSize, pageNumber, blogId } = req.query;
+        const blogId = req.params.blogId;
+        const { sortBy, sortDirection, pageSize, pageNumber } = req.query;
         const posts = await PostsQueryRepository.findAllPosts({
             sortBy,
             sortDirection,
@@ -69,8 +70,8 @@ export class BlogsController {
         req: Request<{ blogId: string }, PostScheme, PostsInputDTO>,
         res: Response<PostEntity>,
     ): Promise<void> {
-        const postCandidate = req.body;
         const blogId = req.params.blogId;
+        const postCandidate = req.body;
         const foundBlog = await BlogsQueryRepository.findBlogById(blogId);
         if (foundBlog) {
             res.sendStatus(STATUS_CODES.NOT_FOUND);

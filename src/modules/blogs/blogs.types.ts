@@ -13,5 +13,4 @@ export type PostsQueryByBlogIdPaginationTerms = {
     sortDirection: string;
     pageSize: number;
     pageNumber: number;
-    blogId: string;
 };

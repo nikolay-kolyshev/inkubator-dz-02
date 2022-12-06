@@ -73,14 +73,7 @@ var PostsService = /** @class */ (function () {
                         if (!createdPost) {
                             throw new Error('Post was not created');
                         }
-                        return [2 /*return*/, {
-                                id: createdPost.id,
-                                title: createdPost.title,
-                                shortDescription: createdPost.shortDescription,
-                                content: createdPost.content,
-                                blogId: createdPost.blogId,
-                                createdAt: createdPost.createdAt,
-                            }];
+                        return [2 /*return*/, createdPost];
                 }
             });
         });

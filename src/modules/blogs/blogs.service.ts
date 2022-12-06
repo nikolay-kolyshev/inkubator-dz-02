@@ -20,16 +20,10 @@ export class BlogsService {
         if (!createdBlog) {
             throw new Error('Blog was not created');
         }
-        return {
-            id: createdBlog.id,
-            name: createdBlog.name,
-            description: createdBlog.description,
-            websiteUrl: createdBlog.websiteUrl,
-            createdAt: createdBlog.createdAt,
-        };
+        return createdBlog;
     }
     static async createPostByBlogId(postCandidate: PostsInputDTO & { blogName: string }): Promise<PostEntity> {
-        return await PostsService.createPost({ ...postCandidate });
+        return await PostsService.createPost(postCandidate);
     }
     static async updateBlogById(id: string, blogWithUpdate: BlogsInputDTO): Promise<boolean> {
         const blogCandidate = await BlogsQueryRepository.findBlogById(id);

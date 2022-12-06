@@ -72,13 +72,7 @@ var BlogsService = /** @class */ (function () {
                         if (!createdBlog) {
                             throw new Error('Blog was not created');
                         }
-                        return [2 /*return*/, {
-                                id: createdBlog.id,
-                                name: createdBlog.name,
-                                description: createdBlog.description,
-                                websiteUrl: createdBlog.websiteUrl,
-                                createdAt: createdBlog.createdAt,
-                            }];
+                        return [2 /*return*/, createdBlog];
                 }
             });
         });
@@ -87,7 +81,7 @@ var BlogsService = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, posts_service_1.PostsService.createPost(__assign({}, postCandidate))];
+                    case 0: return [4 /*yield*/, posts_service_1.PostsService.createPost(postCandidate)];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });

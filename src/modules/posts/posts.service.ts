@@ -21,14 +21,7 @@ export class PostsService {
         if (!createdPost) {
             throw new Error('Post was not created');
         }
-        return {
-            id: createdPost.id,
-            title: createdPost.title,
-            shortDescription: createdPost.shortDescription,
-            content: createdPost.content,
-            blogId: createdPost.blogId,
-            createdAt: createdPost.createdAt,
-        };
+        return createdPost;
     }
     static async updatePostById(id: string, postWithUpdate: PostsInputDTO): Promise<ServiceMethodResult<boolean>> {
         const foundedPost = await PostsQueryRepository.findPostById(id);

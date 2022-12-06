@@ -56,6 +56,10 @@ export class BlogsController {
     ): Promise<void> {
         const blogId = req.params.blogId;
         const { sortBy, sortDirection, pageSize, pageNumber } = req.query;
+        const foundBlog = await BlogsQueryRepository.findBlogById(blogId);
+        if (!foundBlog) {
+            res.sendStatus(STATUS_CODES.NOT_FOUND);
+        }
         const posts = await PostsQueryRepository.findAllPosts({
             sortBy,
             sortDirection,

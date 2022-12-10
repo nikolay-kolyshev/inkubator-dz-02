@@ -100,8 +100,8 @@ exports.postsValidation = {
     ],
     update: [(0, express_validator_1.param)('id').exists().notEmpty().isString().isLength({ min: 1 }).isUUID()],
     pagination: [
-        (0, express_validator_1.query)('pageNumber').toInt().isInt({ min: 1 }).default(1),
-        (0, express_validator_1.query)('pageSize').toInt().isInt({ min: 1 }).default(10),
+        (0, express_validator_1.query)('pageNumber').toInt().default(1),
+        (0, express_validator_1.query)('pageSize').toInt().default(10),
         (0, express_validator_1.query)('sortBy').default('createdAt'),
     ],
 };

@@ -55,8 +55,8 @@ export const postsValidation = {
     ],
     update: [param('id').exists().notEmpty().isString().isLength({ min: 1 }).isUUID()],
     pagination: [
-        query('pageNumber').toInt().isInt({ min: 1 }).default(1),
-        query('pageSize').toInt().isInt({ min: 1 }).default(10),
+        query('pageNumber').toInt().default(1),
+        query('pageSize').toInt().default(10),
         query('sortBy').default('createdAt'),
     ],
 };

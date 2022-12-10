@@ -66,8 +66,8 @@ var BlogsController = /** @class */ (function () {
                                 searchNameTerm: searchNameTerm,
                                 sortBy: sortBy,
                                 sortDirection: sortDirection,
-                                pageSize: +pageSize,
-                                pageNumber: +pageNumber,
+                                pageSize: pageSize ? +pageSize : 10,
+                                pageNumber: +pageNumber ? +pageNumber : 1,
                             })];
                     case 1:
                         blogs = _b.sent();
@@ -135,8 +135,8 @@ var BlogsController = /** @class */ (function () {
                         return [4 /*yield*/, posts_query_repository_1.PostsQueryRepository.findAllPosts({
                                 sortBy: sortBy,
                                 sortDirection: sortDirection,
-                                pageSize: +pageSize,
-                                pageNumber: +pageNumber,
+                                pageSize: pageSize ? +pageSize : 10,
+                                pageNumber: +pageNumber ? +pageNumber : 1,
                                 blogId: blogId,
                             })];
                     case 2:

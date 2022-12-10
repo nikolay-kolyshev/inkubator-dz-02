@@ -18,8 +18,8 @@ export class PostsController {
         const posts = await PostsQueryRepository.findAllPosts({
             sortBy,
             sortDirection,
-            pageSize: +pageSize,
-            pageNumber: +pageNumber,
+            pageSize: pageSize ? +pageSize : 10,
+            pageNumber: +pageNumber ? +pageNumber : 1,
         });
         res.status(STATUS_CODES.OK).json(posts);
         return;

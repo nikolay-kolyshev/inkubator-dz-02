@@ -66,8 +66,8 @@ var PostsController = /** @class */ (function () {
                         return [4 /*yield*/, posts_query_repository_1.PostsQueryRepository.findAllPosts({
                                 sortBy: sortBy,
                                 sortDirection: sortDirection,
-                                pageSize: +pageSize,
-                                pageNumber: +pageNumber,
+                                pageSize: pageSize ? +pageSize : 10,
+                                pageNumber: +pageNumber ? +pageNumber : 1,
                             })];
                     case 1:
                         posts = _b.sent();

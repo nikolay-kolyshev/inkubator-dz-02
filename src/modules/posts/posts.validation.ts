@@ -1,4 +1,4 @@
-import { body, param } from 'express-validator';
+import { body, param, query } from 'express-validator';
 import { BlogsQueryRepository } from '../blogs/blogs.query-repository';
 
 export const postsValidation = {
@@ -54,4 +54,9 @@ export const postsValidation = {
             }),
     ],
     update: [param('id').exists().notEmpty().isString().isLength({ min: 1 }).isUUID()],
+    pagination: [
+        query('pageNumber').toInt().isInt({ min: 1 }).default(1),
+        query('pageSize').toInt().isInt({ min: 1 }).default(10),
+        query('sortBy').default('createdAt'),
+    ],
 };

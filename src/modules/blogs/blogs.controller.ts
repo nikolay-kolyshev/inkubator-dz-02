@@ -23,8 +23,8 @@ export class BlogsController {
             searchNameTerm,
             sortBy,
             sortDirection,
-            pageSize,
-            pageNumber,
+            pageSize: +pageSize,
+            pageNumber: +pageNumber,
         });
         res.status(STATUS_CODES.OK).json(blogs);
         return;
@@ -64,8 +64,8 @@ export class BlogsController {
         const posts = await PostsQueryRepository.findAllPosts({
             sortBy,
             sortDirection,
-            pageSize,
-            pageNumber,
+            pageSize: +pageSize,
+            pageNumber: +pageNumber,
             blogId,
         });
         res.status(STATUS_CODES.OK).json(posts);

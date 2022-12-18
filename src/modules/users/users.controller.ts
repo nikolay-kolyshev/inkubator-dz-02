@@ -53,15 +53,15 @@ export class UsersController {
         const id = req.params.id;
         const foundUser = await UsersQueryRepository.findUserById(id);
         if (!foundUser) {
-            res.status(STATUS_CODES.NOT_FOUND);
+            res.sendStatus(STATUS_CODES.NOT_FOUND);
             return;
         }
         const isUserDeleted = await UsersService.deleteUserById(req.params.id);
         if (isUserDeleted) {
-            res.status(STATUS_CODES.NO_CONTENT);
+            res.sendStatus(STATUS_CODES.NO_CONTENT);
             return;
         }
-        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR);
+        res.sendStatus(STATUS_CODES.INTERNAL_SERVER_ERROR);
         return;
     }
 

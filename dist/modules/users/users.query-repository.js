@@ -91,21 +91,10 @@ var UsersQueryRepository = /** @class */ (function () {
     };
     UsersQueryRepository.findUserByLoginOrEmail = function (loginOrEmail) {
         return __awaiter(this, void 0, void 0, function () {
-            var user;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, collections_1.usersCollection.findOne({ $or: [{ login: loginOrEmail }, { email: loginOrEmail }] })];
-                    case 1:
-                        user = _a.sent();
-                        if (!user) {
-                            return [2 /*return*/, null];
-                        }
-                        return [2 /*return*/, {
-                                id: user.id,
-                                login: user.login,
-                                email: user.email,
-                                createdAt: user.createdAt,
-                            }];
+                    case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });

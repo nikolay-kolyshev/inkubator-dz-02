@@ -59,17 +59,8 @@ export class UsersQueryRepository {
             items,
         };
     }
-    static async findUserByLoginOrEmail(loginOrEmail: string): Promise<Nullable<UserEntity>> {
-        const user = await usersCollection.findOne({ $or: [{ login: loginOrEmail }, { email: loginOrEmail }] });
-        if (!user) {
-            return null;
-        }
-        return {
-            id: user.id,
-            login: user.login,
-            email: user.email,
-            createdAt: user.createdAt,
-        };
+    static async findUserByLoginOrEmail(loginOrEmail: string): Promise<Nullable<UserSchema>> {
+        return await usersCollection.findOne({ $or: [{ login: loginOrEmail }, { email: loginOrEmail }] });
     }
 
     static async findUserById(id: string): Promise<Nullable<UserEntity>> {

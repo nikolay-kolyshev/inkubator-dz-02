@@ -109,17 +109,17 @@ var UsersController = /** @class */ (function () {
                     case 1:
                         foundUser = _a.sent();
                         if (!foundUser) {
-                            res.status(constants_1.STATUS_CODES.NOT_FOUND);
+                            res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
                             return [2 /*return*/];
                         }
                         return [4 /*yield*/, users_service_1.UsersService.deleteUserById(req.params.id)];
                     case 2:
                         isUserDeleted = _a.sent();
                         if (isUserDeleted) {
-                            res.status(constants_1.STATUS_CODES.NO_CONTENT);
+                            res.sendStatus(constants_1.STATUS_CODES.NO_CONTENT);
                             return [2 /*return*/];
                         }
-                        res.status(constants_1.STATUS_CODES.INTERNAL_SERVER_ERROR);
+                        res.sendStatus(constants_1.STATUS_CODES.INTERNAL_SERVER_ERROR);
                         return [2 /*return*/];
                 }
             });

@@ -19,7 +19,10 @@ export class UsersQueryRepository {
         const filter: Filter<UserSchemaDefault> & FilterOperators<UserSchemaDefault> = {};
 
         if (searchLoginTerm && searchEmailTerm) {
-            filter.$or = [{ login: { $regex: searchLoginTerm } }, { email: { $regex: searchEmailTerm } }];
+            filter.$or = [
+                { login: { $regex: searchLoginTerm, $options: 'i' } },
+                { email: { $regex: searchEmailTerm, $options: 'i' } },
+            ];
         } else if (searchLoginTerm) {
             filter.login = { $regex: searchLoginTerm };
         } else if (searchEmailTerm) {

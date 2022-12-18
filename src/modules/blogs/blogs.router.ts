@@ -2,14 +2,20 @@
 
 import { Router } from 'express';
 import { inputValidationMiddleware } from '../../common/middlewares/input-validation.middleware';
-import { authGuard } from '../auth/auth.guard';
+import { authBasicGuard } from '../auth/auth-basic.guard';
 import { BlogsController } from './blogs.controller';
 import { blogsValidation } from './blogs.validation';
 
 const blogsRouter = Router();
 
 blogsRouter.get('/', ...blogsValidation.pagination, BlogsController.getAllBlogs);
-blogsRouter.post('/', authGuard, ...blogsValidation.inputBody, inputValidationMiddleware, BlogsController.postBlog);
+blogsRouter.post(
+    '/',
+    authBasicGuard,
+    ...blogsValidation.inputBody,
+    inputValidationMiddleware,
+    BlogsController.postBlog,
+);
 blogsRouter.get('/:id', BlogsController.getBlogById);
 blogsRouter.get(
     '/:blogId/posts',
@@ -19,19 +25,19 @@ blogsRouter.get(
 );
 blogsRouter.post(
     '/:blogId/posts',
-    authGuard,
+    authBasicGuard,
     ...blogsValidation.newPost,
     inputValidationMiddleware,
     BlogsController.postPostByBlogId,
 );
 blogsRouter.put(
     '/:id',
-    authGuard,
+    authBasicGuard,
     ...blogsValidation.update,
     ...blogsValidation.inputBody,
     inputValidationMiddleware,
     BlogsController.putBlogById,
 );
-blogsRouter.delete('/:id', authGuard, BlogsController.deleteBlogById);
+blogsRouter.delete('/:id', authBasicGuard, BlogsController.deleteBlogById);
 
 export default blogsRouter;

@@ -15,6 +15,6 @@ export const runDatabase = async () => {
         await databaseClient.connect();
         console.log('👌Connected to database');
     } catch (error) {
-        console.log('👎 Error connecting to database', error);
+        console.log('👎Error connecting to database', error);
     }
 };

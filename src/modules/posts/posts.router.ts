@@ -2,23 +2,29 @@
 
 import { Router } from 'express';
 import { inputValidationMiddleware } from '../../common/middlewares/input-validation.middleware';
-import { authGuard } from '../auth/auth.guard';
+import { authBasicGuard } from '../auth/auth-basic.guard';
 import { PostsController } from './posts.controller';
 import { postsValidation } from './posts.validation';
 
 const postsRouter = Router();
 
 postsRouter.get('/', PostsController.getAllPosts);
-postsRouter.post('/', authGuard, ...postsValidation.inputBody, inputValidationMiddleware, PostsController.postPost);
+postsRouter.post(
+    '/',
+    authBasicGuard,
+    ...postsValidation.inputBody,
+    inputValidationMiddleware,
+    PostsController.postPost,
+);
 postsRouter.get('/:id', PostsController.getPostById);
 postsRouter.put(
     '/:id',
-    authGuard,
+    authBasicGuard,
     ...postsValidation.update,
     ...postsValidation.inputBody,
     inputValidationMiddleware,
     PostsController.putPostById,
 );
-postsRouter.delete('/:id', authGuard, PostsController.deletePostById);
+postsRouter.delete('/:id', authBasicGuard, PostsController.deletePostById);
 
 export default postsRouter;

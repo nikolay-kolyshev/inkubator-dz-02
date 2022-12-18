@@ -4,7 +4,7 @@ export enum AuthType {
     OAuth = 'oauth',
 }
 
-export const AUTH_CREDENTIALS = {
+export const BASIC_AUTH_CREDENTIALS = {
     username: 'admin',
     password: 'qwerty',
 };

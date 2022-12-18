@@ -57,7 +57,7 @@ var runDatabase = function () { return __awaiter(void 0, void 0, void 0, functio
                 return [3 /*break*/, 3];
             case 2:
                 error_1 = _a.sent();
-                console.log('👎 Error connecting to database', error_1);
+                console.log('👎Error connecting to database', error_1);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }

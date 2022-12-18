@@ -40,6 +40,7 @@ exports.TestingController = void 0;
 var constants_1 = require("../../common/constants");
 var blogs_repository_1 = require("../blogs/blogs.repository");
 var posts_repository_1 = require("../posts/posts.repository");
+var users_controller_1 = require("../users/users.controller");
 var TestingController = /** @class */ (function () {
     function TestingController() {
     }
@@ -52,6 +53,9 @@ var TestingController = /** @class */ (function () {
                         _a.sent();
                         return [4 /*yield*/, posts_repository_1.PostsRepository.deleteAllPosts()];
                     case 2:
+                        _a.sent();
+                        return [4 /*yield*/, users_controller_1.UsersController.deleteAllUsers()];
+                    case 3:
                         _a.sent();
                         res.sendStatus(constants_1.STATUS_CODES.NO_CONTENT);
                         return [2 /*return*/];

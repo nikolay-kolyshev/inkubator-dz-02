@@ -67,7 +67,7 @@ exports.usersValidation = {
             var foundedUser;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, users_query_repository_1.UsersQueryRepository.findUserByLoginOrEmail(login)];
+                    case 0: return [4 /*yield*/, users_query_repository_1.UsersQueryRepository.findUserSchemaByLoginOrEmail(login)];
                     case 1:
                         foundedUser = _a.sent();
                         if (foundedUser) {
@@ -93,7 +93,7 @@ exports.usersValidation = {
             var foundedUser;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, users_query_repository_1.UsersQueryRepository.findUserByLoginOrEmail(email)];
+                    case 0: return [4 /*yield*/, users_query_repository_1.UsersQueryRepository.findUserSchemaByLoginOrEmail(email)];
                     case 1:
                         foundedUser = _a.sent();
                         if (foundedUser) {

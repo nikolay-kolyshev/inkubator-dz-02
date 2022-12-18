@@ -28,7 +28,7 @@ export const usersValidation = {
                 'login может содержать только буквы латинские буквы, а также цифры, знак тире и знак нижнего подчеркивания',
             )
             .custom(async (login) => {
-                const foundedUser = await UsersQueryRepository.findUserByLoginOrEmail(login);
+                const foundedUser = await UsersQueryRepository.findUserSchemaByLoginOrEmail(login);
                 if (foundedUser) {
                     throw new Error('Юзер с таким login уже зарегестрирован в системе');
                 }
@@ -47,7 +47,7 @@ export const usersValidation = {
             .isEmail()
             .withMessage('email введен некорректно')
             .custom(async (email) => {
-                const foundedUser = await UsersQueryRepository.findUserByLoginOrEmail(email);
+                const foundedUser = await UsersQueryRepository.findUserSchemaByLoginOrEmail(email);
                 if (foundedUser) {
                     throw new Error('Юзер с таким email уже зарегестрирован в системе');
                 }

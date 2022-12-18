@@ -37,7 +37,7 @@ export class UsersController {
             password,
         });
         if (isCreatedUser) {
-            const user = await UsersQueryRepository.findUserByLoginOrEmail(login);
+            const user = await UsersQueryRepository.findUserEntityByLoginOrEmail(login);
             if (!user) {
                 res.sendStatus(STATUS_CODES.INTERNAL_SERVER_ERROR);
                 return;
@@ -51,7 +51,7 @@ export class UsersController {
 
     static async deleteUserById(req: Request<{ id: string }>, res: Response<UserEntity>) {
         const id = req.params.id;
-        const foundUser = await UsersQueryRepository.findUserById(id);
+        const foundUser = await UsersQueryRepository.findUserEntityById(id);
         if (!foundUser) {
             res.sendStatus(STATUS_CODES.NOT_FOUND);
             return;

@@ -7,7 +7,7 @@ import { UsersRepository } from './users.repository';
 
 export class UsersService {
     static async checkCredentials(dto: UsersCheckCredentialsDto): Promise<boolean> {
-        const foundedUser = await UsersQueryRepository.findUserByLoginOrEmail(dto.loginOrEmail);
+        const foundedUser = await UsersQueryRepository.findUserSchemaByLoginOrEmail(dto.loginOrEmail);
         if (!foundedUser) {
             return false;
         }

@@ -89,7 +89,7 @@ var UsersQueryRepository = /** @class */ (function () {
             });
         });
     };
-    UsersQueryRepository.findUserByLoginOrEmail = function (loginOrEmail) {
+    UsersQueryRepository.findUserSchemaByLoginOrEmail = function (loginOrEmail) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -99,12 +99,43 @@ var UsersQueryRepository = /** @class */ (function () {
             });
         });
     };
-    UsersQueryRepository.findUserById = function (id) {
+    UsersQueryRepository.findUserEntityByLoginOrEmail = function (loginOrEmail) {
         return __awaiter(this, void 0, void 0, function () {
             var user;
             return __generator(this, function (_a) {
                 switch (_a.label) {
+                    case 0: return [4 /*yield*/, UsersQueryRepository.findUserSchemaByLoginOrEmail(loginOrEmail)];
+                    case 1:
+                        user = _a.sent();
+                        if (!user) {
+                            return [2 /*return*/, null];
+                        }
+                        return [2 /*return*/, {
+                                id: user.id,
+                                login: user.login,
+                                email: user.email,
+                                createdAt: user.createdAt,
+                            }];
+                }
+            });
+        });
+    };
+    UsersQueryRepository.findUserSchemaById = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0: return [4 /*yield*/, collections_1.usersCollection.findOne({ id: id })];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    UsersQueryRepository.findUserEntityById = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var user;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, UsersQueryRepository.findUserSchemaById(id)];
                     case 1:
                         user = _a.sent();
                         if (!user) {

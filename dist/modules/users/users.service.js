@@ -50,7 +50,7 @@ var UsersService = /** @class */ (function () {
             var foundedUser, generatePasswordHash;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, users_query_repository_1.UsersQueryRepository.findUserByLoginOrEmail(dto.loginOrEmail)];
+                    case 0: return [4 /*yield*/, users_query_repository_1.UsersQueryRepository.findUserSchemaByLoginOrEmail(dto.loginOrEmail)];
                     case 1:
                         foundedUser = _a.sent();
                         if (!foundedUser) {

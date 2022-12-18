@@ -82,7 +82,7 @@ var UsersController = /** @class */ (function () {
                     case 1:
                         isCreatedUser = _b.sent();
                         if (!isCreatedUser) return [3 /*break*/, 3];
-                        return [4 /*yield*/, users_query_repository_1.UsersQueryRepository.findUserByLoginOrEmail(login)];
+                        return [4 /*yield*/, users_query_repository_1.UsersQueryRepository.findUserEntityByLoginOrEmail(login)];
                     case 2:
                         user = _b.sent();
                         if (!user) {
@@ -105,7 +105,7 @@ var UsersController = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         id = req.params.id;
-                        return [4 /*yield*/, users_query_repository_1.UsersQueryRepository.findUserById(id)];
+                        return [4 /*yield*/, users_query_repository_1.UsersQueryRepository.findUserEntityById(id)];
                     case 1:
                         foundUser = _a.sent();
                         if (!foundUser) {

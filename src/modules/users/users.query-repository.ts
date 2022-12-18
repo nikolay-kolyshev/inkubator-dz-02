@@ -1,4 +1,4 @@
-import { Filter } from 'mongodb';
+import { Filter, FilterOperators } from 'mongodb';
 import { Nullable } from '../../common/types';
 import { getCollectionItemsWithPagination } from '../../common/utils/getCollectionItemsWithPagination';
 import { usersCollection } from '../../database/collections';
@@ -16,13 +16,13 @@ export class UsersQueryRepository {
         searchLoginTerm,
         searchEmailTerm,
     }: UsersQueryRepositoryGetUsersDTO): Promise<UserPaginationView> {
-        const filter: Filter<UserSchemaDefault> = {};
+        const filter: Filter<UserSchemaDefault> & FilterOperators<UserSchemaDefault> = {};
 
-        if (searchLoginTerm) {
+        if (searchLoginTerm && searchEmailTerm) {
+            filter.$or = [{ login: { $regex: searchLoginTerm } }, { email: { $regex: searchEmailTerm } }];
+        } else if (searchLoginTerm) {
             filter.login = { $regex: searchLoginTerm };
-        }
-
-        if (searchEmailTerm) {
+        } else if (searchEmailTerm) {
             filter.email = { $regex: searchEmailTerm };
         }
 

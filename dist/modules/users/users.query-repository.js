@@ -50,10 +50,13 @@ var UsersQueryRepository = /** @class */ (function () {
                 switch (_f.label) {
                     case 0:
                         filter = {};
-                        if (searchLoginTerm) {
+                        if (searchLoginTerm && searchEmailTerm) {
+                            filter.$or = [{ login: { $regex: searchLoginTerm } }, { email: { $regex: searchEmailTerm } }];
+                        }
+                        else if (searchLoginTerm) {
                             filter.login = { $regex: searchLoginTerm };
                         }
-                        if (searchEmailTerm) {
+                        else if (searchEmailTerm) {
                             filter.email = { $regex: searchEmailTerm };
                         }
                         return [4 /*yield*/, (0, getCollectionItemsWithPagination_1.getCollectionItemsWithPagination)(collections_1.usersCollection, {

@@ -45,7 +45,7 @@ var UsersQueryRepository = /** @class */ (function () {
     UsersQueryRepository.findUsers = function (_a) {
         var _b = _a.sortBy, sortBy = _b === void 0 ? 'createdAt' : _b, _c = _a.sortDirection, sortDirection = _c === void 0 ? 'esc' : _c, _d = _a.pageSize, pageSize = _d === void 0 ? 10 : _d, _e = _a.pageNumber, pageNumber = _e === void 0 ? 1 : _e, searchLoginTerm = _a.searchLoginTerm, searchEmailTerm = _a.searchEmailTerm;
         return __awaiter(this, void 0, void 0, function () {
-            var filter, items, totalCount, pagesCount;
+            var filter, usersSchemes, items, totalCount, pagesCount;
             return __generator(this, function (_f) {
                 switch (_f.label) {
                     case 0:
@@ -64,7 +64,16 @@ var UsersQueryRepository = /** @class */ (function () {
                                 pageNumber: pageNumber,
                             })];
                     case 1:
-                        items = _f.sent();
+                        usersSchemes = _f.sent();
+                        items = [];
+                        if (Boolean(usersSchemes) && usersSchemes.length) {
+                            items = usersSchemes.map(function (item) { return ({
+                                id: item.id,
+                                login: item.login,
+                                email: item.email,
+                                createdAt: item.createdAt,
+                            }); });
+                        }
                         return [4 /*yield*/, collections_1.usersCollection.count(filter)];
                     case 2:
                         totalCount = _f.sent();
@@ -82,20 +91,42 @@ var UsersQueryRepository = /** @class */ (function () {
     };
     UsersQueryRepository.findUserByLoginOrEmail = function (loginOrEmail) {
         return __awaiter(this, void 0, void 0, function () {
+            var user;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, collections_1.usersCollection.findOne({ $or: [{ login: loginOrEmail }, { email: loginOrEmail }] })];
-                    case 1: return [2 /*return*/, _a.sent()];
+                    case 1:
+                        user = _a.sent();
+                        if (!user) {
+                            return [2 /*return*/, null];
+                        }
+                        return [2 /*return*/, {
+                                id: user.id,
+                                login: user.login,
+                                email: user.email,
+                                createdAt: user.createdAt,
+                            }];
                 }
             });
         });
     };
     UsersQueryRepository.findUserById = function (id) {
         return __awaiter(this, void 0, void 0, function () {
+            var user;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, collections_1.usersCollection.findOne({ id: id })];
-                    case 1: return [2 /*return*/, _a.sent()];
+                    case 1:
+                        user = _a.sent();
+                        if (!user) {
+                            return [2 /*return*/, null];
+                        }
+                        return [2 /*return*/, {
+                                id: user.id,
+                                login: user.login,
+                                email: user.email,
+                                createdAt: user.createdAt,
+                            }];
                 }
             });
         });

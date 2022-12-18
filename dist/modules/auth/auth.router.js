@@ -11,9 +11,10 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 Object.defineProperty(exports, "__esModule", { value: true });
 /** Auth router */
 var express_1 = require("express");
+var input_validation_middleware_1 = require("../../common/middlewares/input-validation.middleware");
 var auth_controller_1 = require("./auth.controller");
 var auth_validation_1 = require("./auth.validation");
 var authRouter = (0, express_1.Router)();
-authRouter.post.apply(authRouter, __spreadArray(__spreadArray(['/login'], auth_validation_1.authValidation.loginBody, false), [auth_controller_1.AuthController.postLogin], false));
+authRouter.post.apply(authRouter, __spreadArray(__spreadArray(['/login'], auth_validation_1.authValidation.loginBody, false), [input_validation_middleware_1.inputValidationMiddleware, auth_controller_1.AuthController.postLogin], false));
 exports.default = authRouter;
 //# sourceMappingURL=auth.router.js.map

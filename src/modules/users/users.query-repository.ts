@@ -3,6 +3,7 @@ import { Nullable } from '../../common/types';
 import { getCollectionItemsWithPagination } from '../../common/utils/getCollectionItemsWithPagination';
 import { usersCollection } from '../../database/collections';
 import { UsersQueryRepositoryGetUsersDTO } from './users.dto';
+import { UserEntity } from './users.entities';
 import { UserSchema, UserSchemaDefault } from './users.schemes';
 import { UserPaginationView } from './users.view';
 
@@ -25,13 +26,27 @@ export class UsersQueryRepository {
             filter.email = { $regex: searchEmailTerm };
         }
 
-        const items: Array<UserSchema> = await getCollectionItemsWithPagination<UserSchemaDefault>(usersCollection, {
-            filter,
-            sortBy,
-            sortDirection,
-            pageSize,
-            pageNumber,
-        });
+        const usersSchemes: Array<UserSchema> = await getCollectionItemsWithPagination<UserSchemaDefault>(
+            usersCollection,
+            {
+                filter,
+                sortBy,
+                sortDirection,
+                pageSize,
+                pageNumber,
+            },
+        );
+
+        let items: Array<UserEntity> = [];
+
+        if (Boolean(usersSchemes) && usersSchemes.length) {
+            items = usersSchemes.map((item) => ({
+                id: item.id,
+                login: item.login,
+                email: item.email,
+                createdAt: item.createdAt,
+            }));
+        }
 
         const totalCount = await usersCollection.count(filter);
         const pagesCount = Math.ceil(totalCount / pageSize);
@@ -44,11 +59,29 @@ export class UsersQueryRepository {
             items,
         };
     }
-    static async findUserByLoginOrEmail(loginOrEmail: string): Promise<Nullable<UserSchema>> {
-        return await usersCollection.findOne({ $or: [{ login: loginOrEmail }, { email: loginOrEmail }] });
+    static async findUserByLoginOrEmail(loginOrEmail: string): Promise<Nullable<UserEntity>> {
+        const user = await usersCollection.findOne({ $or: [{ login: loginOrEmail }, { email: loginOrEmail }] });
+        if (!user) {
+            return null;
+        }
+        return {
+            id: user.id,
+            login: user.login,
+            email: user.email,
+            createdAt: user.createdAt,
+        };
     }
 
-    static async findUserById(id: string): Promise<Nullable<UserSchema>> {
-        return await usersCollection.findOne({ id });
+    static async findUserById(id: string): Promise<Nullable<UserEntity>> {
+        const user = await usersCollection.findOne({ id });
+        if (!user) {
+            return null;
+        }
+        return {
+            id: user.id,
+            login: user.login,
+            email: user.email,
+            createdAt: user.createdAt,
+        };
     }
 }

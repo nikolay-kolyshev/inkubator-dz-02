@@ -1,4 +1,4 @@
-export const STATUS_CODES: Record<string, 200 | 201 | 204 | 400 | 401 | 404 | 500> = {
+export const STATUS_CODES = {
     OK: 200,
     CREATED: 201,
     NO_CONTENT: 204,

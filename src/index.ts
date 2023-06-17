@@ -1,7 +1,8 @@
 import { app } from './app';
 import { runDatabase } from './database';
+import { settings } from './settings';
 
-const PORT = process.env.PORT || 3500;
+const PORT = settings.port || 3500;
 
 app.listen(PORT, async () => {
     await runDatabase();

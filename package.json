@@ -8,10 +8,11 @@
   "private": true,
   "scripts": {
     "setup": "yarn install --frozen-lockfile",
+    "unsetup": "rm -rf node_modules",
     "start": "node dist/index.js",
     "watch": "tsc -w",
     "dev": "PORT=5555 nodemon --inspect dist/index.js",
-    "presetup": "rm -rf node_modules",
+    "presetup": "npm run unsetup",
     "reinstall": "rm -rf node_modules && yarn",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
@@ -20,11 +21,13 @@
     "test": "jest"
   },
   "dependencies": {
+    "@types/jsonwebtoken": "9.0.2",
     "bcrypt": "5.1.0",
     "date-fns": "2.29.3",
     "dotenv": "16.0.3",
     "express": "4.18.2",
     "express-validator": "6.14.2",
+    "jsonwebtoken": "9.0.0",
     "mongodb": "4.12.1",
     "uuid": "9.0.0"
   },

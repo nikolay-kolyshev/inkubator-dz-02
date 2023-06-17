@@ -1,5 +1,4 @@
 import { STATUS_CODES } from '../../common/constants';
-import { ServiceMethodResult } from '../../common/types';
 import { generateDate } from '../../common/utils/generateDate';
 import { generateId } from '../../common/utils/generateId';
 import { BlogsQueryRepository } from '../blogs/blogs.query-repository';
@@ -20,7 +19,7 @@ export class PostsService {
         const createdPost = await PostsQueryRepository.findPostById(id);
         return createdPost!;
     }
-    static async updatePostById(id: string, postWithUpdate: PostsInputDTO): Promise<ServiceMethodResult<boolean>> {
+    static async updatePostById(id: string, postWithUpdate: PostsInputDTO): Promise<ServiceMethod.Result<boolean>> {
         const foundedPost = await PostsQueryRepository.findPostById(id);
         if (!foundedPost) {
             return {

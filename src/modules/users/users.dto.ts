@@ -1,4 +1,7 @@
-import { Nullable } from '../../common/types';
+export type UsersLoginDto = {
+    loginOrEmail: string;
+    password: string;
+};
 
 export type UsersCheckCredentialsDto = {
     loginOrEmail: string;

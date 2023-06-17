@@ -8,3 +8,4 @@ const database = databaseClient.db();
 export const blogsCollection = database.collection<BlogSchemeDefault>('blogs');
 export const postsCollection = database.collection<PostSchemeDefault>('posts');
 export const usersCollection = database.collection<UserSchemaDefault>('users');
+export const commentsCollection = database.collection<UserSchemaDefault>('users');

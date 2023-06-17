@@ -3,6 +3,7 @@
 import { Router } from 'express';
 import authRouter from '../modules/auth/auth.router';
 import blogsRouter from '../modules/blogs/blogs.router';
+import commentsRouter from '../modules/comments/comments.router';
 import postsRouter from '../modules/posts/posts.router';
 import testingRouter from '../modules/testing/testing.router';
 import usersRouter from '../modules/users/users.router';
@@ -13,4 +14,5 @@ rootRouter.use('/blogs', blogsRouter);
 rootRouter.use('/posts', postsRouter);
 rootRouter.use('/auth', authRouter);
 rootRouter.use('/users', usersRouter);
+rootRouter.use('/comments', commentsRouter);
 rootRouter.use('/testing', testingRouter);

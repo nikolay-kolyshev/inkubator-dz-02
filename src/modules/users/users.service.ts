@@ -2,17 +2,26 @@ import { generateDate } from '../../common/utils/generateDate';
 import { generateId } from '../../common/utils/generateId';
 import { HashingUtils } from '../../common/utils/HashingUtils';
 import { UsersCheckCredentialsDto, UsersCreateUserServiceDTO } from './users.dto';
+import { UserEntity } from './users.entities';
 import { UsersQueryRepository } from './users.query-repository';
 import { UsersRepository } from './users.repository';
 
 export class UsersService {
-    static async checkCredentials(dto: UsersCheckCredentialsDto): Promise<boolean> {
+    static async getById(id: string) {
+        const foundedUser = await UsersQueryRepository.findUserSchemaById(id);
+        if (!foundedUser) {
+            return null;
+        }
+        return foundedUser;
+    }
+
+    static async checkCredentials(dto: UsersCheckCredentialsDto): Promise<Nullable<UserEntity>> {
         const foundedUser = await UsersQueryRepository.findUserSchemaByLoginOrEmail(dto.loginOrEmail);
         if (!foundedUser) {
-            return false;
+            return null;
         }
         const generatePasswordHash = await HashingUtils.generateHash(dto.password, foundedUser.passwordSalt);
-        return generatePasswordHash === foundedUser.passwordHash;
+        return generatePasswordHash === foundedUser.passwordHash ? foundedUser : null;
     }
 
     static async createUser(dto: UsersCreateUserServiceDTO): Promise<boolean> {

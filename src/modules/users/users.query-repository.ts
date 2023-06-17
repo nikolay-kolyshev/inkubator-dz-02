@@ -1,5 +1,4 @@
 import { Filter, FilterOperators } from 'mongodb';
-import { Nullable } from '../../common/types';
 import { getCollectionItemsWithPagination } from '../../common/utils/getCollectionItemsWithPagination';
 import { usersCollection } from '../../database/collections';
 import { UsersQueryRepositoryGetUsersDTO } from './users.dto';

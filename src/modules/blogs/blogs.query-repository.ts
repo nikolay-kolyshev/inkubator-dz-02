@@ -1,5 +1,4 @@
 import { Filter } from 'mongodb';
-import { Nullable } from '../../common/types';
 import { getCollectionItemsWithPagination } from '../../common/utils/getCollectionItemsWithPagination';
 import { blogsCollection } from '../../database/collections';
 import { BlogsQueryRepositoryDTO } from './blogs.dto';

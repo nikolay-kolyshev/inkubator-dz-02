@@ -5,6 +5,7 @@ export type BlogSchemeDefault = {
     name: string;
     description: string;
     websiteUrl: string;
+    isMembership: boolean;
     createdAt: string;
 };
 

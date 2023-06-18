@@ -3,7 +3,10 @@ import { BlogsInputRepositoryDTO } from './blogs.dto';
 
 export class BlogsRepository {
     static async createBlog(blog: BlogsInputRepositoryDTO): Promise<void> {
-        await blogsCollection.insertOne(blog);
+        await blogsCollection.insertOne({
+            ...blog,
+            isMembership: true,
+        });
     }
     static async updateBlogById(
         id: string,

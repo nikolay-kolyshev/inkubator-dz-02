@@ -5,7 +5,7 @@ export class BlogsRepository {
     static async createBlog(blog: BlogsInputRepositoryDTO): Promise<void> {
         await blogsCollection.insertOne({
             ...blog,
-            isMembership: true,
+            isMembership: false,
         });
     }
     static async updateBlogById(

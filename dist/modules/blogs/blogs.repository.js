@@ -56,7 +56,7 @@ var BlogsRepository = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, collections_1.blogsCollection.insertOne(__assign(__assign({}, blog), { isMembership: true }))];
+                    case 0: return [4 /*yield*/, collections_1.blogsCollection.insertOne(__assign(__assign({}, blog), { isMembership: false }))];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];

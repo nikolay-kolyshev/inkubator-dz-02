@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var testing_controller_1 = require("./testing.controller");
-var blogsRouter = (0, express_1.Router)();
-blogsRouter.delete('/all-data', testing_controller_1.TestingController.deleteAllData);
-exports.default = blogsRouter;
+var testingRouter = (0, express_1.Router)();
+testingRouter.delete('/all-data', testing_controller_1.TestingController.deleteAllData);
+exports.default = testingRouter;
 //# sourceMappingURL=testing.router.js.map

@@ -36,38 +36,49 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TestingController = void 0;
-var constants_1 = require("../../common/constants");
-var blogs_repository_1 = require("../blogs/blogs.repository");
-var comments_controller_1 = require("../comments/comments.controller");
-var posts_repository_1 = require("../posts/posts.repository");
-var users_controller_1 = require("../users/users.controller");
-var TestingController = /** @class */ (function () {
-    function TestingController() {
+exports.CommentsService = void 0;
+var comments_query_repository_1 = require("./comments.query-repository");
+var comments_repository_1 = require("./comments.repository");
+var CommentsService = /** @class */ (function () {
+    function CommentsService() {
     }
-    TestingController.deleteAllData = function (req, res) {
+    CommentsService.getById = function (id) {
         return __awaiter(this, void 0, void 0, function () {
+            var foundedComment;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, blogs_repository_1.BlogsRepository.deleteAllBlogs()];
+                    case 0: return [4 /*yield*/, comments_query_repository_1.CommentsQueryRepository.findCommentEntityById(id)];
                     case 1:
-                        _a.sent();
-                        return [4 /*yield*/, posts_repository_1.PostsRepository.deleteAllPosts()];
-                    case 2:
-                        _a.sent();
-                        return [4 /*yield*/, users_controller_1.UsersController.deleteAllUsers()];
-                    case 3:
-                        _a.sent();
-                        return [4 /*yield*/, comments_controller_1.CommentsController.deleteAllComments()];
-                    case 4:
-                        _a.sent();
-                        res.sendStatus(constants_1.STATUS_CODES.NO_CONTENT);
-                        return [2 /*return*/];
+                        foundedComment = _a.sent();
+                        if (!foundedComment) {
+                            return [2 /*return*/, null];
+                        }
+                        return [2 /*return*/, foundedComment];
                 }
             });
         });
     };
-    return TestingController;
+    CommentsService.updateById = function (id, dto) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, comments_repository_1.CommentsRepository.updateCommentById(id, dto)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    CommentsService.deleteById = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, comments_repository_1.CommentsRepository.deleteCommentById(id)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    return CommentsService;
 }());
-exports.TestingController = TestingController;
-//# sourceMappingURL=testing.controller.js.map
+exports.CommentsService = CommentsService;
+//# sourceMappingURL=comments.service.js.map

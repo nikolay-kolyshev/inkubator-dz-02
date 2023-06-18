@@ -35,39 +35,44 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TestingController = void 0;
-var constants_1 = require("../../common/constants");
-var blogs_repository_1 = require("../blogs/blogs.repository");
-var comments_controller_1 = require("../comments/comments.controller");
-var posts_repository_1 = require("../posts/posts.repository");
-var users_controller_1 = require("../users/users.controller");
-var TestingController = /** @class */ (function () {
-    function TestingController() {
+exports.JwtService = void 0;
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+var mongodb_1 = require("mongodb");
+var settings_1 = require("../../settings");
+var JwtService = /** @class */ (function () {
+    function JwtService() {
     }
-    TestingController.deleteAllData = function (req, res) {
+    JwtService.createJwt = function (user) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
+                return [2 /*return*/, jsonwebtoken_1.default.sign({ userId: user.id }, settings_1.settings.jwtSecret, { expiresIn: '1h' })];
+            });
+        });
+    };
+    JwtService.getUserIdFromJwt = function (token) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userId, error_1;
+            return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, blogs_repository_1.BlogsRepository.deleteAllBlogs()];
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, jsonwebtoken_1.default.verify(token, settings_1.settings.jwtSecret)];
                     case 1:
-                        _a.sent();
-                        return [4 /*yield*/, posts_repository_1.PostsRepository.deleteAllPosts()];
+                        userId = (_a.sent()).userId;
+                        return [2 /*return*/, new mongodb_1.ObjectId(userId)];
                     case 2:
-                        _a.sent();
-                        return [4 /*yield*/, users_controller_1.UsersController.deleteAllUsers()];
-                    case 3:
-                        _a.sent();
-                        return [4 /*yield*/, comments_controller_1.CommentsController.deleteAllComments()];
-                    case 4:
-                        _a.sent();
-                        res.sendStatus(constants_1.STATUS_CODES.NO_CONTENT);
-                        return [2 /*return*/];
+                        error_1 = _a.sent();
+                        return [2 /*return*/, null];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    return TestingController;
+    return JwtService;
 }());
-exports.TestingController = TestingController;
-//# sourceMappingURL=testing.controller.js.map
+exports.JwtService = JwtService;
+//# sourceMappingURL=jwt.service.js.map

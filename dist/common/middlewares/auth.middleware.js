@@ -36,38 +36,31 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TestingController = void 0;
-var constants_1 = require("../../common/constants");
-var blogs_repository_1 = require("../blogs/blogs.repository");
-var comments_controller_1 = require("../comments/comments.controller");
-var posts_repository_1 = require("../posts/posts.repository");
-var users_controller_1 = require("../users/users.controller");
-var TestingController = /** @class */ (function () {
-    function TestingController() {
-    }
-    TestingController.deleteAllData = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, blogs_repository_1.BlogsRepository.deleteAllBlogs()];
-                    case 1:
-                        _a.sent();
-                        return [4 /*yield*/, posts_repository_1.PostsRepository.deleteAllPosts()];
-                    case 2:
-                        _a.sent();
-                        return [4 /*yield*/, users_controller_1.UsersController.deleteAllUsers()];
-                    case 3:
-                        _a.sent();
-                        return [4 /*yield*/, comments_controller_1.CommentsController.deleteAllComments()];
-                    case 4:
-                        _a.sent();
-                        res.sendStatus(constants_1.STATUS_CODES.NO_CONTENT);
-                        return [2 /*return*/];
+exports.authMiddleware = void 0;
+var jwt_service_1 = require("../../application/jwt/jwt.service");
+var constants_1 = require("../constants");
+var authMiddleware = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, token, userId;
+    var _b;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
+            case 0:
+                if (!((_b = req.headers) === null || _b === void 0 ? void 0 : _b.authorization)) {
+                    res.send(constants_1.STATUS_CODES.UNAUTHORIZED);
+                    return [2 /*return*/];
                 }
-            });
-        });
-    };
-    return TestingController;
-}());
-exports.TestingController = TestingController;
-//# sourceMappingURL=testing.controller.js.map
+                _a = req.headers.authorization.split(' '), token = _a[1];
+                return [4 /*yield*/, jwt_service_1.JwtService.getUserIdFromJwt(token)];
+            case 1:
+                userId = _c.sent();
+                if (userId) {
+                    req.userId = userId.toString();
+                    next();
+                }
+                res.send(constants_1.STATUS_CODES.UNAUTHORIZED);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.authMiddleware = authMiddleware;
+//# sourceMappingURL=auth.middleware.js.map

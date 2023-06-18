@@ -36,38 +36,38 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TestingController = void 0;
-var constants_1 = require("../../common/constants");
-var blogs_repository_1 = require("../blogs/blogs.repository");
-var comments_controller_1 = require("../comments/comments.controller");
-var posts_repository_1 = require("../posts/posts.repository");
-var users_controller_1 = require("../users/users.controller");
-var TestingController = /** @class */ (function () {
-    function TestingController() {
+exports.CommentsQueryRepository = void 0;
+var collections_1 = require("../../database/collections");
+var CommentsQueryRepository = /** @class */ (function () {
+    function CommentsQueryRepository() {
     }
-    TestingController.deleteAllData = function (req, res) {
+    CommentsQueryRepository.findCommentEntityById = function (id) {
         return __awaiter(this, void 0, void 0, function () {
+            var comment;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, blogs_repository_1.BlogsRepository.deleteAllBlogs()];
+                    case 0: return [4 /*yield*/, collections_1.commentsCollection.findOne({
+                            id: id,
+                        })];
                     case 1:
-                        _a.sent();
-                        return [4 /*yield*/, posts_repository_1.PostsRepository.deleteAllPosts()];
-                    case 2:
-                        _a.sent();
-                        return [4 /*yield*/, users_controller_1.UsersController.deleteAllUsers()];
-                    case 3:
-                        _a.sent();
-                        return [4 /*yield*/, comments_controller_1.CommentsController.deleteAllComments()];
-                    case 4:
-                        _a.sent();
-                        res.sendStatus(constants_1.STATUS_CODES.NO_CONTENT);
-                        return [2 /*return*/];
+                        comment = _a.sent();
+                        if (!comment) {
+                            return [2 /*return*/, null];
+                        }
+                        return [2 /*return*/, {
+                                id: comment.id,
+                                content: comment.content,
+                                commentatorInfo: {
+                                    userId: comment.commentator.id,
+                                    userLogin: comment.commentator.login,
+                                },
+                                createdAt: comment.createdAt,
+                            }];
                 }
             });
         });
     };
-    return TestingController;
+    return CommentsQueryRepository;
 }());
-exports.TestingController = TestingController;
-//# sourceMappingURL=testing.controller.js.map
+exports.CommentsQueryRepository = CommentsQueryRepository;
+//# sourceMappingURL=comments.query-repository.js.map

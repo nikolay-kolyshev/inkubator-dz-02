@@ -3,8 +3,8 @@
 import { Router } from 'express';
 import { TestingController } from './testing.controller';
 
-const blogsRouter = Router();
+const testingRouter = Router();
 
-blogsRouter.delete('/all-data', TestingController.deleteAllData);
+testingRouter.delete('/all-data', TestingController.deleteAllData);
 
-export default blogsRouter;
+export default testingRouter;

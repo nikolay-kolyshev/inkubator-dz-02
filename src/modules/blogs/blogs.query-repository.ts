@@ -20,7 +20,7 @@ export class BlogsQueryRepository {
             filter.name = { $regex: new RegExp(searchNameTerm, 'i') };
         }
 
-        const items: Array<BlogEntity> = await getCollectionItemsWithPagination<BlogSchemeDefault>(blogsCollection, {
+        const items: Array<BlogScheme> = await getCollectionItemsWithPagination<BlogSchemeDefault>(blogsCollection, {
             filter,
             sortBy,
             sortDirection,

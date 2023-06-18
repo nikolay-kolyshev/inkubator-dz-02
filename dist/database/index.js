@@ -38,12 +38,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.runDatabase = exports.databaseClient = void 0;
 var mongodb_1 = require("mongodb");
-require("../environment");
-var databaseUrl = process.env.DATABASE_URL;
-if (!databaseUrl) {
+var settings_1 = require("../settings");
+if (!settings_1.settings.databaseUrl) {
     throw new Error('DATABASE_URL must be defined');
 }
-exports.databaseClient = new mongodb_1.MongoClient(databaseUrl);
+exports.databaseClient = new mongodb_1.MongoClient(settings_1.settings.databaseUrl);
 var runDatabase = function () { return __awaiter(void 0, void 0, void 0, function () {
     var error_1;
     return __generator(this, function (_a) {

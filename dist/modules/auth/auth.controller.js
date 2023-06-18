@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
+var jwt_service_1 = require("../../application/jwt/jwt.service");
 var constants_1 = require("../../common/constants");
 var users_service_1 = require("../users/users.service");
 var AuthController = /** @class */ (function () {
@@ -44,20 +45,45 @@ var AuthController = /** @class */ (function () {
     }
     AuthController.postLogin = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, loginOrEmail, password, isAuth;
+            var _a, loginOrEmail, password, user, token;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         _a = req.body, loginOrEmail = _a.loginOrEmail, password = _a.password;
                         return [4 /*yield*/, users_service_1.UsersService.checkCredentials({ loginOrEmail: loginOrEmail, password: password })];
                     case 1:
-                        isAuth = _b.sent();
-                        if (!isAuth) {
+                        user = _b.sent();
+                        if (user === null) {
                             res.sendStatus(constants_1.STATUS_CODES.UNAUTHORIZED);
                             return [2 /*return*/];
                         }
-                        res.sendStatus(constants_1.STATUS_CODES.NO_CONTENT);
+                        token = jwt_service_1.JwtService.createJwt(user);
+                        res.status(constants_1.STATUS_CODES.CREATED).send({
+                            accessToken: token,
+                        });
                         return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AuthController.getMe = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userId, user;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        userId = req.userId.toString();
+                        return [4 /*yield*/, users_service_1.UsersService.getById(userId)];
+                    case 1:
+                        user = _a.sent();
+                        if (!user) {
+                            res.sendStatus(constants_1.STATUS_CODES.UNAUTHORIZED);
+                        }
+                        return [2 /*return*/, {
+                                email: user === null || user === void 0 ? void 0 : user.email,
+                                login: user === null || user === void 0 ? void 0 : user.login,
+                                userId: user === null || user === void 0 ? void 0 : user.id,
+                            }];
                 }
             });
         });

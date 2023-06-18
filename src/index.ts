@@ -1,3 +1,6 @@
+/// required first import
+import 'dotenv/config';
+/////////////////////////////
 import { app } from './app';
 import { runDatabase } from './database';
 import { settings } from './settings';

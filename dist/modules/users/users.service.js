@@ -45,6 +45,22 @@ var users_repository_1 = require("./users.repository");
 var UsersService = /** @class */ (function () {
     function UsersService() {
     }
+    UsersService.getById = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var foundedUser;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, users_query_repository_1.UsersQueryRepository.findUserSchemaById(id)];
+                    case 1:
+                        foundedUser = _a.sent();
+                        if (!foundedUser) {
+                            return [2 /*return*/, null];
+                        }
+                        return [2 /*return*/, foundedUser];
+                }
+            });
+        });
+    };
     UsersService.checkCredentials = function (dto) {
         return __awaiter(this, void 0, void 0, function () {
             var foundedUser, generatePasswordHash;
@@ -54,12 +70,12 @@ var UsersService = /** @class */ (function () {
                     case 1:
                         foundedUser = _a.sent();
                         if (!foundedUser) {
-                            return [2 /*return*/, false];
+                            return [2 /*return*/, null];
                         }
                         return [4 /*yield*/, HashingUtils_1.HashingUtils.generateHash(dto.password, foundedUser.passwordSalt)];
                     case 2:
                         generatePasswordHash = _a.sent();
-                        return [2 /*return*/, generatePasswordHash === foundedUser.passwordHash];
+                        return [2 /*return*/, generatePasswordHash === foundedUser.passwordHash ? foundedUser : null];
                 }
             });
         });

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { STATUS_CODES } from '../../common/constants';
+import { commentsCollection } from '../../database/collections';
 import { UserEntity } from '../users/users.entities';
 import { CommentsPutCommentByIdDto } from './comments.dto';
 import { CommentsEntity } from './comments.entities';
@@ -47,5 +48,9 @@ export class CommentsController {
         }
         res.sendStatus(STATUS_CODES.NO_CONTENT);
         return;
+    }
+
+    static async deleteAllComments(): Promise<void> {
+        await commentsCollection.deleteMany({});
     }
 }

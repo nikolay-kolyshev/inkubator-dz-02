@@ -25,4 +25,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var dotenv = __importStar(require("dotenv"));
 dotenv.config();
+console.log('ENV CONFIG INIT');
+console.log(process.env.DATABASE_URL);
 //# sourceMappingURL=index.js.map

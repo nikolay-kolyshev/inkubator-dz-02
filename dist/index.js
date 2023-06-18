@@ -36,9 +36,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/// required first import
+require("dotenv/config");
+/////////////////////////////
 var app_1 = require("./app");
 var database_1 = require("./database");
-var PORT = process.env.PORT || 3500;
+var settings_1 = require("./settings");
+var PORT = settings_1.settings.port || 3500;
 app_1.app.listen(PORT, function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {

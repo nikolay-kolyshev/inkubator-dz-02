@@ -1,6 +1,4 @@
 import { MongoClient } from 'mongodb';
-
-import '../environment';
 import { settings } from '../settings';
 
 if (!settings.databaseUrl) {

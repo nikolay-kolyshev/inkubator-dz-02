@@ -2,13 +2,13 @@ import { Request, Response } from 'express';
 import { STATUS_CODES } from '../../common/constants';
 import { commentsCollection } from '../../database/collections';
 import { UserEntity } from '../users/users.entities';
-import { CommentsPutCommentByIdDto } from './comments.dto';
-import { CommentsEntity } from './comments.entities';
+import { CommentsInputDto } from './comments.dto';
+import { CommentEntity } from './comments.entities';
 import { CommentsQueryRepository } from './comments.query-repository';
 import { CommentsService } from './comments.service';
 
 export class CommentsController {
-    static async getCommentById(req: Request<{ id: string }>, res: Response<CommentsEntity>) {
+    static async getCommentById(req: Request<{ id: string }>, res: Response<CommentEntity>) {
         const id = req.params.id;
         const foundComment = await CommentsService.getById(id);
         if (!foundComment) {
@@ -19,7 +19,7 @@ export class CommentsController {
         return;
     }
 
-    static async putCommentById(req: Request<{ commentId: string }, CommentsPutCommentByIdDto>, res: Response<void>) {
+    static async putCommentById(req: Request<{ commentId: string }, CommentsInputDto>, res: Response<void>) {
         const id = req.params.commentId;
         const foundComment = await CommentsQueryRepository.findCommentEntityById(id);
         if (!foundComment) {

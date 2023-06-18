@@ -1,17 +1,19 @@
 import { commentsCollection, usersCollection } from '../../database/collections';
-import { CommentsPutCommentByIdDto } from './comments.dto';
+import { CommentsInputDto, CommentsInputRepositoryDto } from './comments.dto';
 
 export class CommentsRepository {
-    static async updateCommentById(id: string, dto: CommentsPutCommentByIdDto): Promise<boolean> {
+    static async create(comment: CommentsInputRepositoryDto): Promise<void> {
+        await commentsCollection.insertOne(comment);
+    }
+
+    static async updateById(id: string, dto: CommentsInputDto): Promise<boolean> {
         try {
             const updateResult = await commentsCollection.updateOne(
                 {
                     id,
                 },
                 {
-                    $set: {
-                        content: dto.content,
-                    },
+                    $set: dto,
                 },
             );
             return updateResult.acknowledged;
@@ -20,7 +22,7 @@ export class CommentsRepository {
         }
     }
 
-    static async deleteCommentById(id: string): Promise<boolean> {
+    static async deleteById(id: string): Promise<boolean> {
         return (await usersCollection.deleteOne({ id })).acknowledged;
     }
 }

@@ -1,4 +1,4 @@
-export type CommentsEntity = {
+export type CommentEntity = {
     id: string;
     content: string;
     commentatorInfo: {

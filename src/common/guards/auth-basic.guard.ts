@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { STATUS_CODES } from '../../common/constants';
-import { AuthType, BASIC_AUTH_CREDENTIALS } from './auth.constants';
+import { STATUS_CODES } from '../constants';
+import { AuthType, BASIC_AUTH_CREDENTIALS } from '../../modules/auth/auth.constants';
 
 export const authBasicGuard = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;

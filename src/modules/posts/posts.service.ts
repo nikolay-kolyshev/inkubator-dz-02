@@ -3,6 +3,10 @@ import { generateDate } from '../../common/utils/generateDate';
 import { generateId } from '../../common/utils/generateId';
 import { BlogsQueryRepository } from '../blogs/blogs.query-repository';
 import { BlogScheme } from '../blogs/blogs.schemes';
+import { CommentsInputDto } from '../comments/comments.dto';
+import { CommentEntity } from '../comments/comments.entities';
+import { CommentsService } from '../comments/comments.service';
+import { UserSchema } from '../users/users.schemes';
 import { PostsInputDTO } from './posts.dto';
 import { PostEntity } from './posts.entities';
 import { PostsQueryRepository } from './posts.query-repository';
@@ -17,6 +21,7 @@ export class PostsService {
             ...postDTO,
         });
         const createdPost = await PostsQueryRepository.findPostById(id);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return createdPost!;
     }
     static async updatePostById(id: string, postWithUpdate: PostsInputDTO): Promise<ServiceMethod.Result<boolean>> {
@@ -49,5 +54,13 @@ export class PostsService {
         } catch (e) {
             return false;
         }
+    }
+
+    static async createCommentByPostId(
+        commentCandidate: CommentsInputDto,
+        commentator: UserSchema,
+        postId: string,
+    ): Promise<Nullable<CommentEntity>> {
+        return await CommentsService.create(commentCandidate, commentator, postId);
     }
 }

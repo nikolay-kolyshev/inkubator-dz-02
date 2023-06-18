@@ -37,10 +37,55 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommentsQueryRepository = void 0;
+var getCollectionItemsWithPagination_1 = require("../../common/utils/getCollectionItemsWithPagination");
 var collections_1 = require("../../database/collections");
 var CommentsQueryRepository = /** @class */ (function () {
     function CommentsQueryRepository() {
     }
+    CommentsQueryRepository.findAllComments = function (_a) {
+        var _b = _a.sortBy, sortBy = _b === void 0 ? 'createdAt' : _b, _c = _a.sortDirection, sortDirection = _c === void 0 ? 'esc' : _c, _d = _a.pageSize, pageSize = _d === void 0 ? 10 : _d, _e = _a.pageNumber, pageNumber = _e === void 0 ? 1 : _e, postId = _a.postId;
+        return __awaiter(this, void 0, void 0, function () {
+            var filter, items, mappedItems, totalCount, pagesCount;
+            return __generator(this, function (_f) {
+                switch (_f.label) {
+                    case 0:
+                        filter = {};
+                        if (postId) {
+                            filter.postId = { $regex: postId };
+                        }
+                        return [4 /*yield*/, (0, getCollectionItemsWithPagination_1.getCollectionItemsWithPagination)(collections_1.commentsCollection, {
+                                filter: filter,
+                                sortBy: sortBy,
+                                sortDirection: sortDirection,
+                                pageSize: pageSize,
+                                pageNumber: pageNumber,
+                            })];
+                    case 1:
+                        items = _f.sent();
+                        mappedItems = items.map(function (item) { return ({
+                            id: item.id,
+                            content: item.content,
+                            commentatorInfo: {
+                                userId: item.commentator.id,
+                                userLogin: item.commentator.login,
+                            },
+                            createdAt: item.createdAt,
+                        }); });
+                        return [4 /*yield*/, collections_1.commentsCollection.count(filter)];
+                    case 2:
+                        totalCount = _f.sent();
+                        pagesCount = Math.ceil(totalCount / pageSize);
+                        return [2 /*return*/, {
+                                pagesCount: pagesCount,
+                                page: pageNumber,
+                                pageSize: pageSize,
+                                totalCount: totalCount,
+                                items: mappedItems,
+                            }];
+                }
+            });
+        });
+    };
     CommentsQueryRepository.findCommentEntityById = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             var comment;

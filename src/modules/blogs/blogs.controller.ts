@@ -41,13 +41,7 @@ export class BlogsController {
             res.sendStatus(STATUS_CODES.NOT_FOUND);
             return;
         }
-        res.status(STATUS_CODES.OK).json({
-            id: blog.id,
-            name: blog.name,
-            description: blog.description,
-            websiteUrl: blog.websiteUrl,
-            createdAt: blog.createdAt,
-        });
+        res.status(STATUS_CODES.OK).json(blog);
         return;
     }
     static async getPostsByBlogId(

@@ -105,13 +105,7 @@ var BlogsController = /** @class */ (function () {
                             res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
                             return [2 /*return*/];
                         }
-                        res.status(constants_1.STATUS_CODES.OK).json({
-                            id: blog.id,
-                            name: blog.name,
-                            description: blog.description,
-                            websiteUrl: blog.websiteUrl,
-                            createdAt: blog.createdAt,
-                        });
+                        res.status(constants_1.STATUS_CODES.OK).json(blog);
                         return [2 /*return*/];
                 }
             });

@@ -1,9 +1,4 @@
+import { PaginationView } from '../../common/views/pagination.view';
 import { PostEntity } from './posts.entities';
 
-export type PostPaginationView = {
-    pagesCount: number;
-    page: number;
-    pageSize: number;
-    totalCount: number;
-    items: Array<PostEntity>;
-};
+export type PostPaginationView = PaginationView<PostEntity>;

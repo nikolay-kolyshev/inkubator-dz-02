@@ -12,7 +12,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var input_validation_middleware_1 = require("../../common/middlewares/input-validation.middleware");
-var auth_basic_guard_1 = require("../auth/auth-basic.guard");
+var auth_basic_guard_1 = require("../../common/guards/auth-basic.guard");
 var users_controller_1 = require("./users.controller");
 var users_validation_1 = require("./users.validation");
 var usersRouter = (0, express_1.Router)();

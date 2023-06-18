@@ -1,6 +1,6 @@
 /** Auth router */
 import { Router } from 'express';
-import { authMiddleware } from '../../common/middlewares/auth.middleware';
+import { authJwtGuard } from '../../common/guards/auth-jwt.guard';
 import { inputValidationMiddleware } from '../../common/middlewares/input-validation.middleware';
 import { AuthController } from './auth.controller';
 import { authValidation } from './auth.validation';
@@ -8,6 +8,6 @@ import { authValidation } from './auth.validation';
 const authRouter = Router();
 
 authRouter.post('/login', ...authValidation.loginBody, inputValidationMiddleware, AuthController.postLogin);
-authRouter.get('/me', authMiddleware, AuthController.getMe);
+authRouter.get('/me', authJwtGuard, AuthController.getMe);
 
 export default authRouter;

@@ -1,9 +1,4 @@
+import { PaginationView } from '../../common/views/pagination.view';
 import { BlogEntity } from './blogs.entities';
 
-export type BlogPaginationView = {
-    pagesCount: number;
-    page: number;
-    pageSize: number;
-    totalCount: number;
-    items: Array<BlogEntity>;
-};
+export type BlogPaginationView = PaginationView<BlogEntity>;

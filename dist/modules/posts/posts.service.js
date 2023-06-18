@@ -52,6 +52,7 @@ var constants_1 = require("../../common/constants");
 var generateDate_1 = require("../../common/utils/generateDate");
 var generateId_1 = require("../../common/utils/generateId");
 var blogs_query_repository_1 = require("../blogs/blogs.query-repository");
+var comments_service_1 = require("../comments/comments.service");
 var posts_query_repository_1 = require("./posts.query-repository");
 var posts_repository_1 = require("./posts.repository");
 var PostsService = /** @class */ (function () {
@@ -70,6 +71,7 @@ var PostsService = /** @class */ (function () {
                         return [4 /*yield*/, posts_query_repository_1.PostsQueryRepository.findPostById(id)];
                     case 2:
                         createdPost = _a.sent();
+                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                         return [2 /*return*/, createdPost];
                 }
             });
@@ -126,6 +128,16 @@ var PostsService = /** @class */ (function () {
                         e_1 = _a.sent();
                         return [2 /*return*/, false];
                     case 5: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    PostsService.createCommentByPostId = function (commentCandidate, commentator, postId) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, comments_service_1.CommentsService.create(commentCandidate, commentator, postId)];
+                    case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });

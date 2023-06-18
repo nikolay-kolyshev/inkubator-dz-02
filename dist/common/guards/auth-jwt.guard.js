@@ -36,57 +36,31 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CommentsRepository = void 0;
-var collections_1 = require("../../database/collections");
-var CommentsRepository = /** @class */ (function () {
-    function CommentsRepository() {
-    }
-    CommentsRepository.create = function (comment) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, collections_1.commentsCollection.insertOne(comment)];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
+exports.authJwtGuard = void 0;
+var jwt_service_1 = require("../../application/jwt/jwt.service");
+var constants_1 = require("../constants");
+var authJwtGuard = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, token, userId;
+    var _b;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
+            case 0:
+                if (!((_b = req.headers) === null || _b === void 0 ? void 0 : _b.authorization)) {
+                    res.send(constants_1.STATUS_CODES.UNAUTHORIZED);
+                    return [2 /*return*/];
                 }
-            });
-        });
-    };
-    CommentsRepository.updateById = function (id, dto) {
-        return __awaiter(this, void 0, void 0, function () {
-            var updateResult, _1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, collections_1.commentsCollection.updateOne({
-                                id: id,
-                            }, {
-                                $set: dto,
-                            })];
-                    case 1:
-                        updateResult = _a.sent();
-                        return [2 /*return*/, updateResult.acknowledged];
-                    case 2:
-                        _1 = _a.sent();
-                        return [2 /*return*/, false];
-                    case 3: return [2 /*return*/];
+                _a = req.headers.authorization.split(' '), token = _a[1];
+                return [4 /*yield*/, jwt_service_1.JwtService.getUserIdFromJwt(token)];
+            case 1:
+                userId = _c.sent();
+                if (userId) {
+                    req.userId = userId.toString();
+                    next();
                 }
-            });
-        });
-    };
-    CommentsRepository.deleteById = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, collections_1.usersCollection.deleteOne({ id: id })];
-                    case 1: return [2 /*return*/, (_a.sent()).acknowledged];
-                }
-            });
-        });
-    };
-    return CommentsRepository;
-}());
-exports.CommentsRepository = CommentsRepository;
-//# sourceMappingURL=comments.repository.js.map
+                res.send(constants_1.STATUS_CODES.UNAUTHORIZED);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.authJwtGuard = authJwtGuard;
+//# sourceMappingURL=auth-jwt.guard.js.map

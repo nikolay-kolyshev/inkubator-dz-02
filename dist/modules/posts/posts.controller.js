@@ -50,6 +50,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostsController = void 0;
 var constants_1 = require("../../common/constants");
 var blogs_query_repository_1 = require("../blogs/blogs.query-repository");
+var comments_query_repository_1 = require("../comments/comments.query-repository");
+var users_service_1 = require("../users/users.service");
 var posts_query_repository_1 = require("./posts.query-repository");
 var posts_service_1 = require("./posts.service");
 var PostsController = /** @class */ (function () {
@@ -152,6 +154,72 @@ var PostsController = /** @class */ (function () {
                             return [2 /*return*/];
                         }
                         res.sendStatus(constants_1.STATUS_CODES.NO_CONTENT);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    PostsController.getCommentsByPostId = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var postId, _a, sortBy, sortDirection, pageSize, pageNumber, foundPost, comments;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        postId = req.params.postId;
+                        _a = req.query, sortBy = _a.sortBy, sortDirection = _a.sortDirection, pageSize = _a.pageSize, pageNumber = _a.pageNumber;
+                        return [4 /*yield*/, posts_query_repository_1.PostsQueryRepository.findPostById(postId)];
+                    case 1:
+                        foundPost = _b.sent();
+                        if (!foundPost) {
+                            res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
+                            return [2 /*return*/];
+                        }
+                        return [4 /*yield*/, comments_query_repository_1.CommentsQueryRepository.findAllComments({
+                                sortBy: sortBy,
+                                sortDirection: sortDirection,
+                                pageSize: pageSize ? +pageSize : 10,
+                                pageNumber: +pageNumber ? +pageNumber : 1,
+                                postId: postId,
+                            })];
+                    case 2:
+                        comments = _b.sent();
+                        res.status(constants_1.STATUS_CODES.OK).json(comments);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    PostsController.postCommentByPostId = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var postId, commentatorId, commentCandidate, foundPost, foundCommentator, comment;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        postId = req.params.postId;
+                        commentatorId = req.userId;
+                        commentCandidate = req.body;
+                        return [4 /*yield*/, posts_query_repository_1.PostsQueryRepository.findPostById(postId)];
+                    case 1:
+                        foundPost = _a.sent();
+                        if (!foundPost) {
+                            res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
+                            return [2 /*return*/];
+                        }
+                        return [4 /*yield*/, users_service_1.UsersService.getById(commentatorId.toString())];
+                    case 2:
+                        foundCommentator = _a.sent();
+                        if (!foundCommentator) {
+                            res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
+                            return [2 /*return*/];
+                        }
+                        return [4 /*yield*/, posts_service_1.PostsService.createCommentByPostId(__assign({}, commentCandidate), foundCommentator, postId)];
+                    case 3:
+                        comment = _a.sent();
+                        if (!comment) {
+                            res.sendStatus(constants_1.STATUS_CODES.INTERNAL_SERVER_ERROR);
+                            return [2 /*return*/];
+                        }
+                        res.status(constants_1.STATUS_CODES.CREATED).json(comment);
                         return [2 /*return*/];
                 }
             });

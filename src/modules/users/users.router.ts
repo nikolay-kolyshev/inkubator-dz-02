@@ -2,7 +2,7 @@
 
 import { Router } from 'express';
 import { inputValidationMiddleware } from '../../common/middlewares/input-validation.middleware';
-import { authBasicGuard } from '../auth/auth-basic.guard';
+import { authBasicGuard } from '../../common/guards/auth-basic.guard';
 import { UsersController } from './users.controller';
 import { usersValidation } from './users.validation';
 

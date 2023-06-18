@@ -37,6 +37,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommentsService = void 0;
+var generateDate_1 = require("../../common/utils/generateDate");
+var generateId_1 = require("../../common/utils/generateId");
 var comments_query_repository_1 = require("./comments.query-repository");
 var comments_repository_1 = require("./comments.repository");
 var CommentsService = /** @class */ (function () {
@@ -58,11 +60,40 @@ var CommentsService = /** @class */ (function () {
             });
         });
     };
+    CommentsService.create = function (dto, commentator, postId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var id, err_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        id = (0, generateId_1.generateId)();
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 4, , 5]);
+                        return [4 /*yield*/, comments_repository_1.CommentsRepository.create({
+                                id: id,
+                                createdAt: (0, generateDate_1.generateDate)(),
+                                content: dto.content,
+                                commentator: commentator,
+                                postId: postId,
+                            })];
+                    case 2:
+                        _a.sent();
+                        return [4 /*yield*/, comments_query_repository_1.CommentsQueryRepository.findCommentEntityById(id)];
+                    case 3: return [2 /*return*/, _a.sent()];
+                    case 4:
+                        err_1 = _a.sent();
+                        return [2 /*return*/, null];
+                    case 5: return [2 /*return*/];
+                }
+            });
+        });
+    };
     CommentsService.updateById = function (id, dto) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, comments_repository_1.CommentsRepository.updateCommentById(id, dto)];
+                    case 0: return [4 /*yield*/, comments_repository_1.CommentsRepository.updateById(id, dto)];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
@@ -72,7 +103,7 @@ var CommentsService = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, comments_repository_1.CommentsRepository.deleteCommentById(id)];
+                    case 0: return [4 /*yield*/, comments_repository_1.CommentsRepository.deleteById(id)];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });

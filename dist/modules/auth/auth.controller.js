@@ -57,8 +57,11 @@ var AuthController = /** @class */ (function () {
                             res.sendStatus(constants_1.STATUS_CODES.UNAUTHORIZED);
                             return [2 /*return*/];
                         }
-                        token = jwt_service_1.JwtService.createJwt(user);
-                        res.status(constants_1.STATUS_CODES.CREATED).send({
+                        console.log(user);
+                        return [4 /*yield*/, jwt_service_1.JwtService.createJwt(user)];
+                    case 2:
+                        token = _b.sent();
+                        res.status(constants_1.STATUS_CODES.OK).send({
                             accessToken: token,
                         });
                         return [2 /*return*/];

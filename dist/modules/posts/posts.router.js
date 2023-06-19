@@ -9,15 +9,11 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var auth_basic_guard_1 = require("../../common/guards/auth-basic.guard");
 var auth_jwt_guard_1 = require("../../common/guards/auth-jwt.guard");
 var input_validation_middleware_1 = require("../../common/middlewares/input-validation.middleware");
-var blogs_router_1 = __importDefault(require("../blogs/blogs.router"));
 var blogs_validation_1 = require("../blogs/blogs.validation");
 var posts_controller_1 = require("./posts.controller");
 var posts_validation_1 = require("./posts.validation");
@@ -27,9 +23,9 @@ postsRouter.post.apply(postsRouter, __spreadArray(__spreadArray(['/',
     auth_basic_guard_1.authBasicGuard], posts_validation_1.postsValidation.inputBody, false), [input_validation_middleware_1.inputValidationMiddleware,
     posts_controller_1.PostsController.postPost], false));
 postsRouter.get('/:id', posts_controller_1.PostsController.getPostById);
-blogs_router_1.default.get.apply(blogs_router_1.default, __spreadArray(__spreadArray(['/:postId/comments'], blogs_validation_1.blogsValidation.pagination, false), [input_validation_middleware_1.inputValidationMiddleware,
+postsRouter.get.apply(postsRouter, __spreadArray(__spreadArray(['/:postId/comments'], blogs_validation_1.blogsValidation.pagination, false), [input_validation_middleware_1.inputValidationMiddleware,
     posts_controller_1.PostsController.getCommentsByPostId], false));
-blogs_router_1.default.post.apply(blogs_router_1.default, __spreadArray(__spreadArray(['/:postId/comments',
+postsRouter.post.apply(postsRouter, __spreadArray(__spreadArray(['/:postId/comments',
     auth_jwt_guard_1.authJwtGuard], blogs_validation_1.blogsValidation.newPost, false), [input_validation_middleware_1.inputValidationMiddleware,
     posts_controller_1.PostsController.postCommentByPostId], false));
 postsRouter.put.apply(postsRouter, __spreadArray(__spreadArray(__spreadArray(['/:id',

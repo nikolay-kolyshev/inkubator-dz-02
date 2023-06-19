@@ -56,8 +56,9 @@ var authJwtGuard = function (req, res, next) { return __awaiter(void 0, void 0, 
                 if (userId) {
                     req.userId = userId.toString();
                     next();
+                    return [2 /*return*/];
                 }
-                res.send(constants_1.STATUS_CODES.UNAUTHORIZED);
+                res.sendStatus(constants_1.STATUS_CODES.UNAUTHORIZED);
                 return [2 /*return*/];
         }
     });

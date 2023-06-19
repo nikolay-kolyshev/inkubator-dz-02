@@ -41,7 +41,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JwtService = void 0;
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-var mongodb_1 = require("mongodb");
 var settings_1 = require("../../settings");
 var JwtService = /** @class */ (function () {
     function JwtService() {
@@ -63,7 +62,8 @@ var JwtService = /** @class */ (function () {
                         return [4 /*yield*/, jsonwebtoken_1.default.verify(token, settings_1.settings.jwtSecret)];
                     case 1:
                         userId = (_a.sent()).userId;
-                        return [2 /*return*/, new mongodb_1.ObjectId(userId)];
+                        console.log('firstUserId', token, userId);
+                        return [2 /*return*/, userId];
                     case 2:
                         error_1 = _a.sent();
                         return [2 /*return*/, null];

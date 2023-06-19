@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authBasicGuard = void 0;
-var constants_1 = require("../constants");
 var auth_constants_1 = require("../../modules/auth/auth.constants");
+var constants_1 = require("../constants");
 var authBasicGuard = function (req, res, next) {
     var authHeader = req.headers.authorization;
     if (!authHeader) {

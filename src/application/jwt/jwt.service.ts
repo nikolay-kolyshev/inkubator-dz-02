@@ -9,7 +9,6 @@ export class JwtService {
     static async getUserIdFromJwt(token: string): Promise<Nullable<string>> {
         try {
             const { userId } = (await jwt.verify(token, settings.jwtSecret)) as { userId: string };
-            console.log('firstUserId', token, userId);
             return userId;
         } catch (error) {
             return null;

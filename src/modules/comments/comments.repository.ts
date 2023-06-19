@@ -13,11 +13,14 @@ export class CommentsRepository {
                     id,
                 },
                 {
-                    $set: dto,
+                    $set: {
+                        content: dto.content,
+                    },
                 },
             );
             return updateResult.acknowledged;
-        } catch (_) {
+        } catch (error) {
+            console.error('comments update failed', `\n`, error);
             return false;
         }
     }

@@ -20,7 +20,6 @@ export class PostsController {
         res: Response<PostPaginationView>,
     ): Promise<void> {
         const { sortBy, sortDirection, pageSize, pageNumber } = req.query;
-        console.log('query', sortBy, sortDirection, pageSize, pageNumber);
         const posts = await PostsQueryRepository.findAllPosts({
             sortBy,
             sortDirection,

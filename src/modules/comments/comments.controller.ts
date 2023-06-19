@@ -8,8 +8,8 @@ import { CommentsQueryRepository } from './comments.query-repository';
 import { CommentsService } from './comments.service';
 
 export class CommentsController {
-    static async getCommentById(req: Request<{ id: string }>, res: Response<CommentEntity>) {
-        const id = req.params.id;
+    static async getCommentById(req: Request<{ commentId: string }>, res: Response<CommentEntity>) {
+        const id = req.params.commentId;
         const foundComment = await CommentsService.getById(id);
         if (!foundComment) {
             res.sendStatus(STATUS_CODES.NOT_FOUND);
@@ -26,16 +26,17 @@ export class CommentsController {
             res.sendStatus(STATUS_CODES.NOT_FOUND);
             return;
         }
-        const isCommentUpdated = await CommentsService.updateById(id, req.body.dto);
+        const isCommentUpdated = await CommentsService.updateById(id, req.body);
         if (!isCommentUpdated) {
             res.sendStatus(STATUS_CODES.INTERNAL_SERVER_ERROR);
+            return;
         }
         res.sendStatus(STATUS_CODES.NO_CONTENT);
         return;
     }
 
-    static async deleteCommentById(req: Request<{ commentId: string }>, res: Response<UserEntity>) {
-        const id = req.params.commentId;
+    static async deleteCommentById(req: Request<{ id: string }>, res: Response<UserEntity>) {
+        const id = req.params.id;
         const foundComment = await CommentsQueryRepository.findCommentEntityById(id);
         if (!foundComment) {
             res.sendStatus(STATUS_CODES.NOT_FOUND);

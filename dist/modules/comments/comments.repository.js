@@ -55,7 +55,7 @@ var CommentsRepository = /** @class */ (function () {
     };
     CommentsRepository.updateById = function (id, dto) {
         return __awaiter(this, void 0, void 0, function () {
-            var updateResult, _1;
+            var updateResult, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -63,13 +63,16 @@ var CommentsRepository = /** @class */ (function () {
                         return [4 /*yield*/, collections_1.commentsCollection.updateOne({
                                 id: id,
                             }, {
-                                $set: dto,
+                                $set: {
+                                    content: dto.content,
+                                },
                             })];
                     case 1:
                         updateResult = _a.sent();
                         return [2 /*return*/, updateResult.acknowledged];
                     case 2:
-                        _1 = _a.sent();
+                        error_1 = _a.sent();
+                        console.error('comments update failed', "\n", error_1);
                         return [2 /*return*/, false];
                     case 3: return [2 /*return*/];
                 }

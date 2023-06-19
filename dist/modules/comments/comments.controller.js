@@ -50,7 +50,7 @@ var CommentsController = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        id = req.params.id;
+                        id = req.params.commentId;
                         return [4 /*yield*/, comments_service_1.CommentsService.getById(id)];
                     case 1:
                         foundComment = _a.sent();
@@ -78,11 +78,12 @@ var CommentsController = /** @class */ (function () {
                             res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
                             return [2 /*return*/];
                         }
-                        return [4 /*yield*/, comments_service_1.CommentsService.updateById(id, req.body.dto)];
+                        return [4 /*yield*/, comments_service_1.CommentsService.updateById(id, req.body)];
                     case 2:
                         isCommentUpdated = _a.sent();
                         if (!isCommentUpdated) {
                             res.sendStatus(constants_1.STATUS_CODES.INTERNAL_SERVER_ERROR);
+                            return [2 /*return*/];
                         }
                         res.sendStatus(constants_1.STATUS_CODES.NO_CONTENT);
                         return [2 /*return*/];
@@ -96,7 +97,7 @@ var CommentsController = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        id = req.params.commentId;
+                        id = req.params.id;
                         return [4 /*yield*/, comments_query_repository_1.CommentsQueryRepository.findCommentEntityById(id)];
                     case 1:
                         foundComment = _a.sent();

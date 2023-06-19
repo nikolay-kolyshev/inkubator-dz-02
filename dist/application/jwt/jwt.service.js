@@ -62,7 +62,6 @@ var JwtService = /** @class */ (function () {
                         return [4 /*yield*/, jsonwebtoken_1.default.verify(token, settings_1.settings.jwtSecret)];
                     case 1:
                         userId = (_a.sent()).userId;
-                        console.log('firstUserId', token, userId);
                         return [2 /*return*/, userId];
                     case 2:
                         error_1 = _a.sent();

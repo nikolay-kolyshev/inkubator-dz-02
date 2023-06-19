@@ -73,4 +73,14 @@ export const blogsValidation = {
             .isLength({ min: 1, max: 1000 })
             .withMessage('content должен быть от 1 до 1000 символов'),
     ],
+    newComment: [
+        body('content')
+            .exists()
+            .withMessage('content должен находиться в теле запроса')
+            .isString()
+            .withMessage('content должен быть строкой')
+            .trim()
+            .notEmpty()
+            .withMessage('content не может быть пустым'),
+    ],
 };

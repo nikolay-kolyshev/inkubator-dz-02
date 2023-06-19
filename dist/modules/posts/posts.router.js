@@ -26,7 +26,7 @@ postsRouter.get('/:id', posts_controller_1.PostsController.getPostById);
 postsRouter.get.apply(postsRouter, __spreadArray(__spreadArray(['/:postId/comments'], blogs_validation_1.blogsValidation.pagination, false), [input_validation_middleware_1.inputValidationMiddleware,
     posts_controller_1.PostsController.getCommentsByPostId], false));
 postsRouter.post.apply(postsRouter, __spreadArray(__spreadArray(['/:postId/comments',
-    auth_jwt_guard_1.authJwtGuard], blogs_validation_1.blogsValidation.newPost, false), [input_validation_middleware_1.inputValidationMiddleware,
+    auth_jwt_guard_1.authJwtGuard], blogs_validation_1.blogsValidation.newComment, false), [input_validation_middleware_1.inputValidationMiddleware,
     posts_controller_1.PostsController.postCommentByPostId], false));
 postsRouter.put.apply(postsRouter, __spreadArray(__spreadArray(__spreadArray(['/:id',
     auth_basic_guard_1.authBasicGuard], posts_validation_1.postsValidation.update, false), posts_validation_1.postsValidation.inputBody, false), [input_validation_middleware_1.inputValidationMiddleware,

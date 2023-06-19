@@ -28,7 +28,7 @@ postsRouter.get(
 postsRouter.post(
     '/:postId/comments',
     authJwtGuard,
-    ...blogsValidation.newPost,
+    ...blogsValidation.newComment,
     inputValidationMiddleware,
     PostsController.postCommentByPostId,
 );

@@ -26,6 +26,10 @@ export class CommentsController {
             res.sendStatus(STATUS_CODES.NOT_FOUND);
             return;
         }
+        if (foundComment.commentatorInfo.userId !== req.userId) {
+            res.sendStatus(STATUS_CODES.FORBIDDEN);
+            return;
+        }
         const isCommentUpdated = await CommentsService.updateById(id, req.body);
         if (!isCommentUpdated) {
             res.sendStatus(STATUS_CODES.INTERNAL_SERVER_ERROR);
@@ -40,6 +44,10 @@ export class CommentsController {
         const foundComment = await CommentsQueryRepository.findCommentEntityById(id);
         if (!foundComment) {
             res.sendStatus(STATUS_CODES.NOT_FOUND);
+            return;
+        }
+        if (foundComment.commentatorInfo.userId !== req.userId) {
+            res.sendStatus(STATUS_CODES.FORBIDDEN);
             return;
         }
         const isCommentDeleted = await CommentsService.deleteById(id);

@@ -78,6 +78,10 @@ var CommentsController = /** @class */ (function () {
                             res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
                             return [2 /*return*/];
                         }
+                        if (foundComment.commentatorInfo.userId !== req.userId) {
+                            res.sendStatus(constants_1.STATUS_CODES.FORBIDDEN);
+                            return [2 /*return*/];
+                        }
                         return [4 /*yield*/, comments_service_1.CommentsService.updateById(id, req.body)];
                     case 2:
                         isCommentUpdated = _a.sent();
@@ -103,6 +107,10 @@ var CommentsController = /** @class */ (function () {
                         foundComment = _a.sent();
                         if (!foundComment) {
                             res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
+                            return [2 /*return*/];
+                        }
+                        if (foundComment.commentatorInfo.userId !== req.userId) {
+                            res.sendStatus(constants_1.STATUS_CODES.FORBIDDEN);
                             return [2 /*return*/];
                         }
                         return [4 /*yield*/, comments_service_1.CommentsService.deleteById(id)];

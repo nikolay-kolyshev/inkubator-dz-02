@@ -57,7 +57,6 @@ var AuthController = /** @class */ (function () {
                             res.sendStatus(constants_1.STATUS_CODES.UNAUTHORIZED);
                             return [2 /*return*/];
                         }
-                        console.log(user);
                         return [4 /*yield*/, jwt_service_1.JwtService.createJwt(user)];
                     case 2:
                         token = _b.sent();
@@ -70,23 +69,25 @@ var AuthController = /** @class */ (function () {
         });
     };
     AuthController.getMe = function (req, res) {
+        var _a, _b, _c;
         return __awaiter(this, void 0, void 0, function () {
             var userId, user;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            return __generator(this, function (_d) {
+                switch (_d.label) {
                     case 0:
                         userId = req.userId.toString();
                         return [4 /*yield*/, users_service_1.UsersService.getById(userId)];
                     case 1:
-                        user = _a.sent();
+                        user = _d.sent();
                         if (!user) {
                             res.sendStatus(constants_1.STATUS_CODES.UNAUTHORIZED);
                         }
-                        return [2 /*return*/, {
-                                email: user === null || user === void 0 ? void 0 : user.email,
-                                login: user === null || user === void 0 ? void 0 : user.login,
-                                userId: user === null || user === void 0 ? void 0 : user.id,
-                            }];
+                        res.status(constants_1.STATUS_CODES.OK).json({
+                            email: (_a = user === null || user === void 0 ? void 0 : user.email) !== null && _a !== void 0 ? _a : '',
+                            login: (_b = user === null || user === void 0 ? void 0 : user.login) !== null && _b !== void 0 ? _b : '',
+                            userId: (_c = user === null || user === void 0 ? void 0 : user.id) !== null && _c !== void 0 ? _c : '',
+                        });
+                        return [2 /*return*/];
                 }
             });
         });

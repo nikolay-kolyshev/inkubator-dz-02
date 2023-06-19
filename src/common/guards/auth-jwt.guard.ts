@@ -14,7 +14,8 @@ export const authJwtGuard = async (req: Request, res: Response, next: NextFuncti
     if (userId) {
         req.userId = userId.toString();
         next();
+        return;
     }
-    res.send(STATUS_CODES.UNAUTHORIZED);
+    res.sendStatus(STATUS_CODES.UNAUTHORIZED);
     return;
 };

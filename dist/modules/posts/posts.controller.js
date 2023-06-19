@@ -64,7 +64,6 @@ var PostsController = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         _a = req.query, sortBy = _a.sortBy, sortDirection = _a.sortDirection, pageSize = _a.pageSize, pageNumber = _a.pageNumber;
-                        console.log('query', sortBy, sortDirection, pageSize, pageNumber);
                         return [4 /*yield*/, posts_query_repository_1.PostsQueryRepository.findAllPosts({
                                 sortBy: sortBy,
                                 sortDirection: sortDirection,

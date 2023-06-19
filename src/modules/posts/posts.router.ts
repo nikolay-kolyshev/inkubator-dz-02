@@ -7,6 +7,7 @@ import { inputValidationMiddleware } from '../../common/middlewares/input-valida
 import { blogsValidation } from '../blogs/blogs.validation';
 import { PostsController } from './posts.controller';
 import { postsValidation } from './posts.validation';
+import {commentsValidation} from "../comments/comments.validation";
 
 const postsRouter = Router();
 
@@ -28,7 +29,7 @@ postsRouter.get(
 postsRouter.post(
     '/:postId/comments',
     authJwtGuard,
-    ...blogsValidation.newComment,
+    ...commentsValidation.inputBody,
     inputValidationMiddleware,
     PostsController.postCommentByPostId,
 );

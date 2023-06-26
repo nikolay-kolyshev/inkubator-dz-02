@@ -120,13 +120,13 @@ exports.authValidation = {
             .notEmpty()
             .withMessage('code не должен быть пустым')
             .custom(function (code) { return __awaiter(void 0, void 0, void 0, function () {
-            var isEmailConfirmed;
+            var isUserAlreadyConfirmEmail;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, users_query_repository_1.UsersQueryRepository.checkUserEmailConfirmationByEmail(code)];
+                    case 0: return [4 /*yield*/, users_query_repository_1.UsersQueryRepository.checkUserEmailConfirmationByConfirmationCode(code)];
                     case 1:
-                        isEmailConfirmed = _a.sent();
-                        if (isEmailConfirmed) {
+                        isUserAlreadyConfirmEmail = _a.sent();
+                        if (isUserAlreadyConfirmEmail) {
                             throw new Error();
                         }
                         return [2 /*return*/];
@@ -174,13 +174,13 @@ exports.authValidation = {
         }); })
             .withMessage('Пользователь с этим email не существует')
             .custom(function (email) { return __awaiter(void 0, void 0, void 0, function () {
-            var isEmailConfirmed;
+            var isUserAlreadyConfirmEmail;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, users_query_repository_1.UsersQueryRepository.checkUserEmailConfirmationByEmail(email)];
                     case 1:
-                        isEmailConfirmed = _a.sent();
-                        if (isEmailConfirmed) {
+                        isUserAlreadyConfirmEmail = _a.sent();
+                        if (isUserAlreadyConfirmEmail) {
                             throw new Error();
                         }
                         return [2 /*return*/];

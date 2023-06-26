@@ -67,8 +67,8 @@ export const authValidation = {
             .notEmpty()
             .withMessage('code не должен быть пустым')
             .custom(async (code) => {
-                const isEmailConfirmed = await UsersQueryRepository.checkUserEmailConfirmationByEmail(code);
-                if (isEmailConfirmed) {
+                const isUserAlreadyConfirmEmail = await UsersQueryRepository.checkUserEmailConfirmationByConfirmationCode(code);
+                if (isUserAlreadyConfirmEmail) {
                     throw new Error();
                 }
             })
@@ -97,8 +97,8 @@ export const authValidation = {
             })
             .withMessage('Пользователь с этим email не существует')
             .custom(async (email) => {
-                const isEmailConfirmed = await UsersQueryRepository.checkUserEmailConfirmationByEmail(email);
-                if (isEmailConfirmed) {
+                const isUserAlreadyConfirmEmail = await UsersQueryRepository.checkUserEmailConfirmationByEmail(email);
+                if (isUserAlreadyConfirmEmail) {
                     throw new Error();
                 }
             })

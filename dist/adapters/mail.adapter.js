@@ -53,11 +53,11 @@ var MailAdapter = /** @class */ (function () {
      */
     MailAdapter.sendMessage = function (to, subject, message) {
         return __awaiter(this, void 0, void 0, function () {
-            var transport, info, error_1;
+            var transporter, mailData, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        transport = nodemailer_1.default.createTransport({
+                        transporter = nodemailer_1.default.createTransport({
                             host: settings_1.settings.mailTransport.host,
                             port: settings_1.settings.mailTransport.port,
                             secure: true,
@@ -66,23 +66,48 @@ var MailAdapter = /** @class */ (function () {
                                 pass: settings_1.settings.mailTransport.password,
                             },
                         });
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, transport.sendMail({
-                                from: settings_1.settings.mailTransport.user,
-                                to: to,
-                                subject: subject,
-                                html: message,
+                        return [4 /*yield*/, new Promise(function (resolve, reject) {
+                                transporter.verify(function (error, success) {
+                                    if (error) {
+                                        console.log(error);
+                                        reject(error);
+                                    }
+                                    else {
+                                        console.log('Сервер готов отправлять сообщения');
+                                        resolve(success);
+                                    }
+                                });
                             })];
+                    case 1:
+                        _a.sent();
+                        mailData = {
+                            from: {
+                                name: "\u041D\u0438\u043A\u043E\u043B\u0430\u0439 \u041A\u043E\u043B\u044B\u0448\u0435\u0432",
+                                address: settings_1.settings.mailTransport.user,
+                            },
+                            to: to,
+                            html: message,
+                        };
+                        _a.label = 2;
                     case 2:
-                        info = _a.sent();
-                        return [2 /*return*/, info.messageId];
-                    case 3:
+                        _a.trys.push([2, 4, , 5]);
+                        return [4 /*yield*/, new Promise(function (resolve, reject) {
+                                transporter.sendMail(mailData, function (err, info) {
+                                    if (err) {
+                                        console.error(err);
+                                        reject(null);
+                                    }
+                                    else {
+                                        resolve(info.messageId);
+                                    }
+                                });
+                            })];
+                    case 3: return [2 /*return*/, _a.sent()];
+                    case 4:
                         error_1 = _a.sent();
                         console.error('[MailAdapter.sendMessage]', error_1);
                         return [2 /*return*/, null];
-                    case 4: return [2 /*return*/];
+                    case 5: return [2 /*return*/];
                 }
             });
         });

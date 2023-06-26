@@ -84,20 +84,19 @@ var UsersService = /** @class */ (function () {
      * @return {string} userId
      */
     UsersService.create = function (dto) {
-        var _a;
         return __awaiter(this, void 0, void 0, function () {
             var id, createdAt, passwordSalt, passwordHash, userCreationResult;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
                         id = (0, generateId_1.generateId)();
                         createdAt = (0, generateDate_1.generateDate)();
                         return [4 /*yield*/, HashingUtils_1.HashingUtils.generateSalt()];
                     case 1:
-                        passwordSalt = _b.sent();
+                        passwordSalt = _a.sent();
                         return [4 /*yield*/, HashingUtils_1.HashingUtils.generateHash(dto.password, passwordSalt)];
                     case 2:
-                        passwordHash = _b.sent();
+                        passwordHash = _a.sent();
                         return [4 /*yield*/, users_repository_1.UsersRepository.createUser({
                                 id: id,
                                 email: dto.email,
@@ -106,10 +105,9 @@ var UsersService = /** @class */ (function () {
                                 passwordHash: passwordHash,
                                 passwordSalt: passwordSalt,
                                 isEmailConfirmed: false,
-                                emailConfirmationCode: (_a = dto === null || dto === void 0 ? void 0 : dto.emailConfirmationCode) !== null && _a !== void 0 ? _a : (0, generateId_1.generateId)(),
                             })];
                     case 3:
-                        userCreationResult = _b.sent();
+                        userCreationResult = _a.sent();
                         if (!userCreationResult) {
                             return [2 /*return*/, null];
                         }

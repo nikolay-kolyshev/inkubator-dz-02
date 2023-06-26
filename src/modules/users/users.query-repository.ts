@@ -82,6 +82,19 @@ export class UsersQueryRepository {
         return await usersCollection.findOne({ id });
     }
 
+    static async findUserSchemaByLogin(login: string): Promise<Nullable<UserSchema>> {
+        return await usersCollection.findOne({ login });
+    }
+
+    static async findUserSchemaByEmail(email: string): Promise<Nullable<UserSchema>> {
+        return await usersCollection.findOne({ email });
+    }
+
+    static async checkUserEmailConfirmationByEmail(email: string): Promise<Nullable<boolean>> {
+        const user = await usersCollection.findOne({ email, isEmailConfirmed: true });
+        return Boolean(user);
+    }
+
     static async findUserEntityById(id: string): Promise<Nullable<UserEntity>> {
         const user = await UsersQueryRepository.findUserSchemaById(id);
         if (!user) {

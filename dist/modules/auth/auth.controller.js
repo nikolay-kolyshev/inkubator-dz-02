@@ -116,7 +116,7 @@ var AuthController = /** @class */ (function () {
             var emailConfirmationResult;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, auth_service_1.AuthService.registrationConfirmation(req.body.code, req.userId)];
+                    case 0: return [4 /*yield*/, auth_service_1.AuthService.registrationConfirmation(req.body.code)];
                     case 1:
                         emailConfirmationResult = _a.sent();
                         if (emailConfirmationResult === null) {
@@ -134,7 +134,7 @@ var AuthController = /** @class */ (function () {
             var emailResendingResult;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, auth_service_1.AuthService.registrationEmailResendingByUserId(req.body.email, req.userId)];
+                    case 0: return [4 /*yield*/, auth_service_1.AuthService.registrationEmailResending(req.body.email)];
                     case 1:
                         emailResendingResult = _a.sent();
                         if (emailResendingResult === null) {

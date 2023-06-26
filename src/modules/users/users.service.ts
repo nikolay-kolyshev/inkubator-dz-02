@@ -40,7 +40,6 @@ export class UsersService {
             passwordHash,
             passwordSalt,
             isEmailConfirmed: false,
-            emailConfirmationCode: dto?.emailConfirmationCode ?? generateId(),
         });
         if (!userCreationResult) {
             return null;

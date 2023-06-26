@@ -53,7 +53,7 @@ export class AuthController {
         req: Request<{}, void, AuthRegistrationConfirmationInputDto>,
         res: Response<void>,
     ) {
-        const emailConfirmationResult = await AuthService.registrationConfirmation(req.body.code, req.userId);
+        const emailConfirmationResult = await AuthService.registrationConfirmation(req.body.code);
         if (emailConfirmationResult === null) {
             res.sendStatus(STATUS_CODES.BAD_REQUEST);
             return;
@@ -66,7 +66,7 @@ export class AuthController {
         req: Request<{}, void, AuthRegistrationEmailResendingInputDto>,
         res: Response<void>,
     ) {
-        const emailResendingResult = await AuthService.registrationEmailResendingByUserId(req.body.email, req.userId);
+        const emailResendingResult = await AuthService.registrationEmailResending(req.body.email);
         if (emailResendingResult === null) {
             res.sendStatus(STATUS_CODES.BAD_REQUEST);
             return;

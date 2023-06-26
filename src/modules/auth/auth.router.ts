@@ -17,14 +17,12 @@ authRouter.post(
 );
 authRouter.post(
     '/registration-confirmation',
-    authJwtGuard,
     ...authValidation.registrationConfirmationBody,
     inputValidationMiddleware,
     AuthController.registrationConfirmation,
 );
 authRouter.post(
     '/registration-email-resending',
-    authJwtGuard,
     ...authValidation.registrationEmailResendingBody,
     inputValidationMiddleware,
     AuthController.registrationEmailResending,

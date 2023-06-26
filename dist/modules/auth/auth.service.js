@@ -37,31 +37,28 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
-var generateId_1 = require("../../common/utils/generateId");
 var mail_manager_1 = require("../../managers/mail.manager");
+var users_query_repository_1 = require("../users/users.query-repository");
 var users_service_1 = require("../users/users.service");
 var AuthService = /** @class */ (function () {
     function AuthService() {
     }
     AuthService.registration = function (dto) {
         return __awaiter(this, void 0, void 0, function () {
-            var emailConfirmationCode, userId, emailSendingResult;
+            var userId, emailSendingResult;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        emailConfirmationCode = (0, generateId_1.generateId)();
-                        return [4 /*yield*/, users_service_1.UsersService.create({
-                                login: dto.login,
-                                email: dto.email,
-                                password: dto.password,
-                                emailConfirmationCode: emailConfirmationCode,
-                            })];
+                    case 0: return [4 /*yield*/, users_service_1.UsersService.create({
+                            login: dto.login,
+                            email: dto.email,
+                            password: dto.password,
+                        })];
                     case 1:
                         userId = _a.sent();
                         if (!userId) {
                             return [2 /*return*/, null];
                         }
-                        return [4 /*yield*/, mail_manager_1.MailManager.sendRegistrationConfirmationMessage(dto.email, emailConfirmationCode)];
+                        return [4 /*yield*/, mail_manager_1.MailManager.sendRegistrationConfirmationMessage(dto.email, userId)];
                     case 2:
                         emailSendingResult = _a.sent();
                         if (!(emailSendingResult === null)) return [3 /*break*/, 4];
@@ -74,18 +71,18 @@ var AuthService = /** @class */ (function () {
             });
         });
     };
-    AuthService.registrationConfirmation = function (code, userId) {
+    AuthService.registrationConfirmation = function (code) {
         return __awaiter(this, void 0, void 0, function () {
             var foundUser, userEmailConfirmationResult;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, users_service_1.UsersService.getById(userId)];
+                    case 0: return [4 /*yield*/, users_service_1.UsersService.getById(code)];
                     case 1:
                         foundUser = _a.sent();
                         if (!foundUser) {
                             return [2 /*return*/, null];
                         }
-                        if (foundUser.emailConfirmationCode !== code) {
+                        if (foundUser.id !== code) {
                             return [2 /*return*/, null];
                         }
                         return [4 /*yield*/, users_service_1.UsersService.confirmUserEmailByUserId(foundUser.id)];
@@ -99,18 +96,18 @@ var AuthService = /** @class */ (function () {
             });
         });
     };
-    AuthService.registrationEmailResendingByUserId = function (email, userId) {
+    AuthService.registrationEmailResending = function (email) {
         return __awaiter(this, void 0, void 0, function () {
             var foundUser, emailSendingResult;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, users_service_1.UsersService.getById(userId)];
+                    case 0: return [4 /*yield*/, users_query_repository_1.UsersQueryRepository.findUserSchemaByEmail(email)];
                     case 1:
                         foundUser = _a.sent();
                         if (!foundUser) {
                             return [2 /*return*/, null];
                         }
-                        return [4 /*yield*/, mail_manager_1.MailManager.sendRegistrationConfirmationMessage(email, foundUser.emailConfirmationCode)];
+                        return [4 /*yield*/, mail_manager_1.MailManager.sendRegistrationConfirmationMessage(email, foundUser.id)];
                     case 2:
                         emailSendingResult = _a.sent();
                         if (emailSendingResult === null) {

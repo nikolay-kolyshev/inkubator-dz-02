@@ -1,24 +1,19 @@
-import { generateId } from '../../common/utils/generateId';
 import { MailManager } from '../../managers/mail.manager';
+import { UsersQueryRepository } from '../users/users.query-repository';
 import { UsersService } from '../users/users.service';
 import { AuthRegistrationInputDto } from './auth.dto';
 
 export class AuthService {
     static async registration(dto: AuthRegistrationInputDto): Promise<Nullable<boolean>> {
-        const emailConfirmationCode = generateId();
         const userId = await UsersService.create({
             login: dto.login,
             email: dto.email,
             password: dto.password,
-            emailConfirmationCode,
         });
         if (!userId) {
             return null;
         }
-        const emailSendingResult = await MailManager.sendRegistrationConfirmationMessage(
-            dto.email,
-            emailConfirmationCode,
-        );
+        const emailSendingResult = await MailManager.sendRegistrationConfirmationMessage(dto.email, userId);
         if (emailSendingResult === null) {
             await UsersService.deleteById(userId);
             return null;
@@ -26,12 +21,12 @@ export class AuthService {
         return true;
     }
 
-    static async registrationConfirmation(code: string, userId: string): Promise<Nullable<boolean>> {
-        const foundUser = await UsersService.getById(userId);
+    static async registrationConfirmation(code: string): Promise<Nullable<boolean>> {
+        const foundUser = await UsersService.getById(code);
         if (!foundUser) {
             return null;
         }
-        if (foundUser.emailConfirmationCode !== code) {
+        if (foundUser.id !== code) {
             return null;
         }
         const userEmailConfirmationResult = await UsersService.confirmUserEmailByUserId(foundUser.id);
@@ -41,15 +36,12 @@ export class AuthService {
         return true;
     }
 
-    static async registrationEmailResendingByUserId(email: string, userId: string): Promise<Nullable<boolean>> {
-        const foundUser = await UsersService.getById(userId);
+    static async registrationEmailResending(email: string): Promise<Nullable<boolean>> {
+        const foundUser = await UsersQueryRepository.findUserSchemaByEmail(email);
         if (!foundUser) {
             return null;
         }
-        const emailSendingResult = await MailManager.sendRegistrationConfirmationMessage(
-            email,
-            foundUser.emailConfirmationCode,
-        );
+        const emailSendingResult = await MailManager.sendRegistrationConfirmationMessage(email, foundUser.id);
         if (emailSendingResult === null) {
             return null;
         }

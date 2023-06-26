@@ -136,6 +136,39 @@ var UsersQueryRepository = /** @class */ (function () {
             });
         });
     };
+    UsersQueryRepository.findUserSchemaByLogin = function (login) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, collections_1.usersCollection.findOne({ login: login })];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    UsersQueryRepository.findUserSchemaByEmail = function (email) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, collections_1.usersCollection.findOne({ email: email })];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    UsersQueryRepository.checkUserEmailConfirmationByEmail = function (email) {
+        return __awaiter(this, void 0, void 0, function () {
+            var user;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, collections_1.usersCollection.findOne({ email: email, isEmailConfirmed: true })];
+                    case 1:
+                        user = _a.sent();
+                        return [2 /*return*/, Boolean(user)];
+                }
+            });
+        });
+    };
     UsersQueryRepository.findUserEntityById = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             var user;

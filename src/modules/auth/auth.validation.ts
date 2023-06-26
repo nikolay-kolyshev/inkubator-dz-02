@@ -1,4 +1,5 @@
 import { body } from 'express-validator';
+import { UsersQueryRepository } from '../users/users.query-repository';
 
 export const authValidation = {
     loginBody: [
@@ -26,7 +27,14 @@ export const authValidation = {
             })
             .withMessage('login должен быть от 3 до 10 символов')
             .matches(/^[a-zA-Z0-9_-]*$/)
-            .withMessage('login должен содержать либо буквы латинского алфавита, либо цифры, либо символы - и _'),
+            .withMessage('login должен содержать либо буквы латинского алфавита, либо цифры, либо символы - и _')
+            .custom(async (login) => {
+                const foundUser = await UsersQueryRepository.findUserSchemaByLogin(login);
+                if (foundUser) {
+                    throw new Error();
+                }
+            })
+            .withMessage('пользователь с таким login уже существует!'),
         body('password')
             .exists()
             .withMessage('password должен быть передан')
@@ -43,7 +51,14 @@ export const authValidation = {
             .notEmpty()
             .withMessage('email не должен быть пустым')
             .isEmail()
-            .withMessage('email должен быть валидным'),
+            .withMessage('email должен быть валидным')
+            .custom(async (email) => {
+                const foundUser = await UsersQueryRepository.findUserSchemaByEmail(email);
+                if (foundUser) {
+                    throw new Error();
+                }
+            })
+            .withMessage('пользователь с таким email уже существует!'),
     ],
     registrationConfirmationBody: [
         body('code')
@@ -59,6 +74,13 @@ export const authValidation = {
             .notEmpty()
             .withMessage('email не должен быть пустым')
             .isEmail()
-            .withMessage('email должен быть валидным'),
+            .withMessage('email должен быть валидным')
+            .custom(async (email) => {
+                const isEmailConfirmed = await UsersQueryRepository.checkUserEmailConfirmationByEmail(email);
+                if (isEmailConfirmed) {
+                    throw new Error();
+                }
+            })
+            .withMessage('Пользователь с этим email уже подтвердил свой аккаунт'),
     ],
 };

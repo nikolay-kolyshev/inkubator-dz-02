@@ -9,5 +9,25 @@ const authRouter = Router();
 
 authRouter.post('/login', ...authValidation.loginBody, inputValidationMiddleware, AuthController.postLogin);
 authRouter.get('/me', authJwtGuard, AuthController.getMe);
+authRouter.post(
+    '/registration',
+    ...authValidation.registrationBody,
+    inputValidationMiddleware,
+    AuthController.registration,
+);
+authRouter.post(
+    '/registration-confirmation',
+    authJwtGuard,
+    ...authValidation.registrationConfirmationBody,
+    inputValidationMiddleware,
+    AuthController.registrationConfirmation,
+);
+authRouter.post(
+    '/registration-email-resending',
+    authJwtGuard,
+    ...authValidation.registrationEmailResendingBody,
+    inputValidationMiddleware,
+    AuthController.registrationEmailResending,
+);
 
 export default authRouter;

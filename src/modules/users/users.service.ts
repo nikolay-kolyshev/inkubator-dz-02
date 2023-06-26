@@ -24,22 +24,35 @@ export class UsersService {
         return generatePasswordHash === foundedUser.passwordHash ? foundedUser : null;
     }
 
-    static async createUser(dto: UsersCreateUserServiceDTO): Promise<boolean> {
+    /**
+     * @return {string} userId
+     */
+    static async create(dto: UsersCreateUserServiceDTO): Promise<Nullable<string>> {
         const id = generateId();
         const createdAt = generateDate();
         const passwordSalt = await HashingUtils.generateSalt();
         const passwordHash = await HashingUtils.generateHash(dto.password, passwordSalt);
-        return await UsersRepository.createUser({
+        const userCreationResult = await UsersRepository.createUser({
             id,
             email: dto.email,
             login: dto.login,
             createdAt,
             passwordHash,
             passwordSalt,
+            isEmailConfirmed: false,
+            emailConfirmationCode: dto?.emailConfirmationCode ?? generateId(),
         });
+        if (!userCreationResult) {
+            return null;
+        }
+        return id;
     }
 
-    static async deleteUserById(id: string): Promise<boolean> {
+    static async confirmUserEmailByUserId(id: string): Promise<Nullable<boolean>> {
+        return await UsersRepository.confirmUserEmailByUserId(id);
+    }
+
+    static async deleteById(id: string): Promise<boolean> {
         return await UsersRepository.deleteUserById(id);
     }
 }

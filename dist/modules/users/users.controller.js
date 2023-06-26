@@ -74,7 +74,7 @@ var UsersController = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         _a = req.body, login = _a.login, password = _a.password, email = _a.email;
-                        return [4 /*yield*/, users_service_1.UsersService.createUser({
+                        return [4 /*yield*/, users_service_1.UsersService.create({
                                 login: login,
                                 email: email,
                                 password: password,
@@ -112,7 +112,7 @@ var UsersController = /** @class */ (function () {
                             res.sendStatus(constants_1.STATUS_CODES.NOT_FOUND);
                             return [2 /*return*/];
                         }
-                        return [4 /*yield*/, users_service_1.UsersService.deleteUserById(req.params.id)];
+                        return [4 /*yield*/, users_service_1.UsersService.deleteById(req.params.id)];
                     case 2:
                         isUserDeleted = _a.sent();
                         if (isUserDeleted) {

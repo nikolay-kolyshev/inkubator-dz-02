@@ -18,5 +18,13 @@ var auth_validation_1 = require("./auth.validation");
 var authRouter = (0, express_1.Router)();
 authRouter.post.apply(authRouter, __spreadArray(__spreadArray(['/login'], auth_validation_1.authValidation.loginBody, false), [input_validation_middleware_1.inputValidationMiddleware, auth_controller_1.AuthController.postLogin], false));
 authRouter.get('/me', auth_jwt_guard_1.authJwtGuard, auth_controller_1.AuthController.getMe);
+authRouter.post.apply(authRouter, __spreadArray(__spreadArray(['/registration'], auth_validation_1.authValidation.registrationBody, false), [input_validation_middleware_1.inputValidationMiddleware,
+    auth_controller_1.AuthController.registration], false));
+authRouter.post.apply(authRouter, __spreadArray(__spreadArray(['/registration-confirmation',
+    auth_jwt_guard_1.authJwtGuard], auth_validation_1.authValidation.registrationConfirmationBody, false), [input_validation_middleware_1.inputValidationMiddleware,
+    auth_controller_1.AuthController.registrationConfirmation], false));
+authRouter.post.apply(authRouter, __spreadArray(__spreadArray(['/registration-email-resending',
+    auth_jwt_guard_1.authJwtGuard], auth_validation_1.authValidation.registrationEmailResendingBody, false), [input_validation_middleware_1.inputValidationMiddleware,
+    auth_controller_1.AuthController.registrationEmailResending], false));
 exports.default = authRouter;
 //# sourceMappingURL=auth.router.js.map

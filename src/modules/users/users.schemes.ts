@@ -7,6 +7,8 @@ export type UserSchemaDefault = {
     createdAt: string;
     passwordHash: string;
     passwordSalt: string;
+    isEmailConfirmed: boolean;
+    emailConfirmationCode: string;
 };
 
 export type UserSchema = WithId<UserSchemaDefault>;

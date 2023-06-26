@@ -4,7 +4,7 @@ import { settings } from '../../settings';
 
 export class JwtService {
     static async createJwt(user: UserEntity): Promise<string> {
-        return jwt.sign({ userId: user.id }, settings.jwtSecret, { expiresIn: '1h' });
+        return jwt.sign({ userId: user.id }, settings.jwtSecret, { expiresIn: '1000000h' });
     }
     static async getUserIdFromJwt(token: string): Promise<Nullable<string>> {
         try {

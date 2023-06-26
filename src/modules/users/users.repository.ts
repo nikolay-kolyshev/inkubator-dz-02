@@ -6,6 +6,17 @@ export class UsersRepository {
         const insertRes = await usersCollection.insertOne(dto);
         return insertRes.acknowledged;
     }
+    static async confirmUserEmailByUserId(id: string): Promise<boolean> {
+        const updateRes = await usersCollection.updateOne(
+            {
+                id,
+            },
+            {
+                $set: { isEmailConfirmed: true },
+            },
+        );
+        return updateRes.acknowledged;
+    }
     static async deleteUserById(id: string): Promise<boolean> {
         return (await usersCollection.deleteOne({ id })).acknowledged;
     }

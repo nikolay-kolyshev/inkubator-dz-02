@@ -39,39 +39,55 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JwtService = void 0;
-var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-var settings_1 = require("../../settings");
-var JwtService = /** @class */ (function () {
-    function JwtService() {
+exports.MailAdapter = void 0;
+var nodemailer_1 = __importDefault(require("nodemailer"));
+var settings_1 = require("../settings");
+var MailAdapter = /** @class */ (function () {
+    function MailAdapter() {
     }
-    JwtService.createJwt = function (user) {
+    /**
+     * @param to
+     * @param subject
+     * @param message
+     * @returns {Promise<string>} messageId
+     */
+    MailAdapter.sendMessage = function (to, subject, message) {
         return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/, jsonwebtoken_1.default.sign({ userId: user.id }, settings_1.settings.jwtSecret, { expiresIn: '1000000h' })];
-            });
-        });
-    };
-    JwtService.getUserIdFromJwt = function (token) {
-        return __awaiter(this, void 0, void 0, function () {
-            var userId, error_1;
+            var transport, info, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, jsonwebtoken_1.default.verify(token, settings_1.settings.jwtSecret)];
+                        transport = nodemailer_1.default.createTransport({
+                            host: settings_1.settings.mailTransport.host,
+                            port: settings_1.settings.mailTransport.port,
+                            secure: true,
+                            auth: {
+                                user: settings_1.settings.mailTransport.user,
+                                pass: settings_1.settings.mailTransport.password,
+                            },
+                        });
+                        _a.label = 1;
                     case 1:
-                        userId = (_a.sent()).userId;
-                        return [2 /*return*/, userId];
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, transport.sendMail({
+                                from: settings_1.settings.mailTransport.user,
+                                to: to,
+                                subject: subject,
+                                html: message,
+                            })];
                     case 2:
+                        info = _a.sent();
+                        return [2 /*return*/, info.messageId];
+                    case 3:
                         error_1 = _a.sent();
+                        console.error('[MailAdapter.sendMessage]', error_1);
                         return [2 /*return*/, null];
-                    case 3: return [2 /*return*/];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    return JwtService;
+    return MailAdapter;
 }());
-exports.JwtService = JwtService;
-//# sourceMappingURL=jwt.service.js.map
+exports.MailAdapter = MailAdapter;
+//# sourceMappingURL=mail.adapter.js.map

@@ -35,43 +35,31 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JwtService = void 0;
-var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-var settings_1 = require("../../settings");
-var JwtService = /** @class */ (function () {
-    function JwtService() {
+exports.MailManager = void 0;
+var mail_adapter_1 = require("../adapters/mail.adapter");
+var MailManager = /** @class */ (function () {
+    function MailManager() {
     }
-    JwtService.createJwt = function (user) {
+    MailManager.sendRegistrationConfirmationMessage = function (to, confirmationCode) {
         return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/, jsonwebtoken_1.default.sign({ userId: user.id }, settings_1.settings.jwtSecret, { expiresIn: '1000000h' })];
-            });
-        });
-    };
-    JwtService.getUserIdFromJwt = function (token) {
-        return __awaiter(this, void 0, void 0, function () {
-            var userId, error_1;
+            var err_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, jsonwebtoken_1.default.verify(token, settings_1.settings.jwtSecret)];
-                    case 1:
-                        userId = (_a.sent()).userId;
-                        return [2 /*return*/, userId];
+                        return [4 /*yield*/, mail_adapter_1.MailAdapter.sendMessage(to, 'Подтверждение регистрации', "\n                <h1>Thank for your registration</h1>\n                 <p>To finish registration please follow the link below:\n                     <a href=\"https://somesite.com/confirm-email?code=".concat(confirmationCode, "\">complete registration</a>\n                 </p>\n                "))];
+                    case 1: return [2 /*return*/, _a.sent()];
                     case 2:
-                        error_1 = _a.sent();
+                        err_1 = _a.sent();
+                        console.error('[sendRegistrationConfirmationMessage]', err_1);
                         return [2 /*return*/, null];
                     case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    return JwtService;
+    return MailManager;
 }());
-exports.JwtService = JwtService;
-//# sourceMappingURL=jwt.service.js.map
+exports.MailManager = MailManager;
+//# sourceMappingURL=mail.manager.js.map

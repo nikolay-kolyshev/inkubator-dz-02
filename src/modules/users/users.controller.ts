@@ -31,7 +31,7 @@ export class UsersController {
         res: Response<UserEntity>,
     ): Promise<void> {
         const { login, password, email } = req.body;
-        const isCreatedUser = await UsersService.createUser({
+        const isCreatedUser = await UsersService.create({
             login,
             email,
             password,
@@ -56,7 +56,7 @@ export class UsersController {
             res.sendStatus(STATUS_CODES.NOT_FOUND);
             return;
         }
-        const isUserDeleted = await UsersService.deleteUserById(req.params.id);
+        const isUserDeleted = await UsersService.deleteById(req.params.id);
         if (isUserDeleted) {
             res.sendStatus(STATUS_CODES.NO_CONTENT);
             return;

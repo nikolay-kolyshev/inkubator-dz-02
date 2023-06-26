@@ -40,6 +40,7 @@ exports.AuthController = void 0;
 var jwt_service_1 = require("../../application/jwt/jwt.service");
 var constants_1 = require("../../common/constants");
 var users_service_1 = require("../users/users.service");
+var auth_service_1 = require("./auth.service");
 var AuthController = /** @class */ (function () {
     function AuthController() {
     }
@@ -87,6 +88,60 @@ var AuthController = /** @class */ (function () {
                             login: (_b = user === null || user === void 0 ? void 0 : user.login) !== null && _b !== void 0 ? _b : '',
                             userId: (_c = user === null || user === void 0 ? void 0 : user.id) !== null && _c !== void 0 ? _c : '',
                         });
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AuthController.registration = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userCreationResult;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, auth_service_1.AuthService.registration(req.body)];
+                    case 1:
+                        userCreationResult = _a.sent();
+                        if (userCreationResult === null) {
+                            res.sendStatus(constants_1.STATUS_CODES.BAD_REQUEST);
+                            return [2 /*return*/];
+                        }
+                        res.sendStatus(constants_1.STATUS_CODES.NO_CONTENT);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AuthController.registrationConfirmation = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var emailConfirmationResult;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, auth_service_1.AuthService.registrationConfirmation(req.body.code, req.userId)];
+                    case 1:
+                        emailConfirmationResult = _a.sent();
+                        if (emailConfirmationResult === null) {
+                            res.sendStatus(constants_1.STATUS_CODES.BAD_REQUEST);
+                            return [2 /*return*/];
+                        }
+                        res.sendStatus(constants_1.STATUS_CODES.NO_CONTENT);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AuthController.registrationEmailResending = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var emailResendingResult;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, auth_service_1.AuthService.registrationEmailResendingByUserId(req.body.email, req.userId)];
+                    case 1:
+                        emailResendingResult = _a.sent();
+                        if (emailResendingResult === null) {
+                            res.sendStatus(constants_1.STATUS_CODES.BAD_REQUEST);
+                            return [2 /*return*/];
+                        }
+                        res.sendStatus(constants_1.STATUS_CODES.NO_CONTENT);
                         return [2 /*return*/];
                 }
             });

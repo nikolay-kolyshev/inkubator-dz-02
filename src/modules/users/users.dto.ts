@@ -21,6 +21,7 @@ export type UsersCreateUserServiceDTO = {
     login: string;
     password: string;
     email: string;
+    emailConfirmationCode?: string;
 };
 
 export type UsersCreateUserRepositoryDTO = {
@@ -30,4 +31,6 @@ export type UsersCreateUserRepositoryDTO = {
     createdAt: string;
     passwordHash: string;
     passwordSalt: string;
+    isEmailConfirmed: boolean;
+    emailConfirmationCode: string;
 };

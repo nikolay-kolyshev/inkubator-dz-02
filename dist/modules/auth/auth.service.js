@@ -106,7 +106,7 @@ var AuthService = /** @class */ (function () {
     };
     AuthService.registrationEmailResending = function (email) {
         return __awaiter(this, void 0, void 0, function () {
-            var foundUser, newCode, updateUserConfirmationCodeResult, emailSendingResult;
+            var foundUser, newCode, emailSendingResult, updateUserConfirmationCodeResult;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, users_query_repository_1.UsersQueryRepository.findUserSchemaByEmail(email)];
@@ -116,16 +116,16 @@ var AuthService = /** @class */ (function () {
                             return [2 /*return*/, null];
                         }
                         newCode = (0, generateId_1.generateId)();
-                        return [4 /*yield*/, users_repository_1.UsersRepository.updateUserConfirmationCodeByUserId(newCode, foundUser.id)];
-                    case 2:
-                        updateUserConfirmationCodeResult = _a.sent();
-                        if (!updateUserConfirmationCodeResult) {
-                            return [2 /*return*/, null];
-                        }
                         return [4 /*yield*/, mail_manager_1.MailManager.sendRegistrationConfirmationMessage(email, newCode)];
-                    case 3:
+                    case 2:
                         emailSendingResult = _a.sent();
                         if (emailSendingResult === null) {
+                            return [2 /*return*/, null];
+                        }
+                        return [4 /*yield*/, users_repository_1.UsersRepository.updateUserConfirmationCodeByUserId(newCode, foundUser.id)];
+                    case 3:
+                        updateUserConfirmationCodeResult = _a.sent();
+                        if (!updateUserConfirmationCodeResult) {
                             return [2 /*return*/, null];
                         }
                         return [2 /*return*/, true];

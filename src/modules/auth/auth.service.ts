@@ -51,15 +51,15 @@ export class AuthService {
             return null;
         }
         const newCode = generateId();
+        const emailSendingResult = await MailManager.sendRegistrationConfirmationMessage(email, newCode);
+        if (emailSendingResult === null) {
+            return null;
+        }
         const updateUserConfirmationCodeResult = await UsersRepository.updateUserConfirmationCodeByUserId(
             newCode,
             foundUser.id,
         );
         if (!updateUserConfirmationCodeResult) {
-            return null;
-        }
-        const emailSendingResult = await MailManager.sendRegistrationConfirmationMessage(email, newCode);
-        if (emailSendingResult === null) {
             return null;
         }
         return true;

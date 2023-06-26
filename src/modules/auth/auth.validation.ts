@@ -65,7 +65,21 @@ export const authValidation = {
             .exists()
             .withMessage('code должен быть передан')
             .notEmpty()
-            .withMessage('code не должен быть пустым'),
+            .withMessage('code не должен быть пустым')
+            .custom(async (code) => {
+                const isEmailConfirmed = await UsersQueryRepository.checkUserEmailConfirmationByEmail(code);
+                if (isEmailConfirmed) {
+                    throw new Error();
+                }
+            })
+            .withMessage('Пользователь с этим email уже подтвердил свой аккаунт')
+            .custom(async (code) => {
+                const foundUser = await UsersQueryRepository.findUserSchemaByConfirmationCode(code);
+                if (!foundUser) {
+                    throw new Error();
+                }
+            })
+            .withMessage('Пользователя с таким кодом подтверждения email не существует'),
     ],
     registrationEmailResendingBody: [
         body('email')
@@ -75,6 +89,13 @@ export const authValidation = {
             .withMessage('email не должен быть пустым')
             .isEmail()
             .withMessage('email должен быть валидным')
+            .custom(async (email) => {
+                const foundUser = await UsersQueryRepository.findUserSchemaByEmail(email);
+                if (!foundUser) {
+                    throw new Error();
+                }
+            })
+            .withMessage('Пользователь с этим email не существует')
             .custom(async (email) => {
                 const isEmailConfirmed = await UsersQueryRepository.checkUserEmailConfirmationByEmail(email);
                 if (isEmailConfirmed) {

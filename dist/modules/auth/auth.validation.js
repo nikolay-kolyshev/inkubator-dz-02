@@ -118,7 +118,37 @@ exports.authValidation = {
             .exists()
             .withMessage('code должен быть передан')
             .notEmpty()
-            .withMessage('code не должен быть пустым'),
+            .withMessage('code не должен быть пустым')
+            .custom(function (code) { return __awaiter(void 0, void 0, void 0, function () {
+            var isEmailConfirmed;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, users_query_repository_1.UsersQueryRepository.checkUserEmailConfirmationByEmail(code)];
+                    case 1:
+                        isEmailConfirmed = _a.sent();
+                        if (isEmailConfirmed) {
+                            throw new Error();
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        }); })
+            .withMessage('Пользователь с этим email уже подтвердил свой аккаунт')
+            .custom(function (code) { return __awaiter(void 0, void 0, void 0, function () {
+            var foundUser;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, users_query_repository_1.UsersQueryRepository.findUserSchemaByConfirmationCode(code)];
+                    case 1:
+                        foundUser = _a.sent();
+                        if (!foundUser) {
+                            throw new Error();
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        }); })
+            .withMessage('Пользователя с таким кодом подтверждения email не существует'),
     ],
     registrationEmailResendingBody: [
         (0, express_validator_1.body)('email')
@@ -128,6 +158,21 @@ exports.authValidation = {
             .withMessage('email не должен быть пустым')
             .isEmail()
             .withMessage('email должен быть валидным')
+            .custom(function (email) { return __awaiter(void 0, void 0, void 0, function () {
+            var foundUser;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, users_query_repository_1.UsersQueryRepository.findUserSchemaByEmail(email)];
+                    case 1:
+                        foundUser = _a.sent();
+                        if (!foundUser) {
+                            throw new Error();
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        }); })
+            .withMessage('Пользователь с этим email не существует')
             .custom(function (email) { return __awaiter(void 0, void 0, void 0, function () {
             var isEmailConfirmed;
             return __generator(this, function (_a) {

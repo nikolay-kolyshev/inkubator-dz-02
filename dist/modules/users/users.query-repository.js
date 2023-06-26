@@ -179,6 +179,19 @@ var UsersQueryRepository = /** @class */ (function () {
             });
         });
     };
+    UsersQueryRepository.checkUserEmailConfirmationByConfirmationCode = function (code) {
+        return __awaiter(this, void 0, void 0, function () {
+            var user;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, collections_1.usersCollection.findOne({ emailConfirmationCode: code, isEmailConfirmed: true })];
+                    case 1:
+                        user = _a.sent();
+                        return [2 /*return*/, Boolean(user)];
+                }
+            });
+        });
+    };
     UsersQueryRepository.findUserEntityById = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             var user;

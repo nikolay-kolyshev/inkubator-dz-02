@@ -99,6 +99,11 @@ export class UsersQueryRepository {
         return Boolean(user);
     }
 
+    static async checkUserEmailConfirmationByConfirmationCode(code: string): Promise<Nullable<boolean>> {
+        const user = await usersCollection.findOne({ emailConfirmationCode: code, isEmailConfirmed: true });
+        return Boolean(user);
+    }
+
     static async findUserEntityById(id: string): Promise<Nullable<UserEntity>> {
         const user = await UsersQueryRepository.findUserSchemaById(id);
         if (!user) {

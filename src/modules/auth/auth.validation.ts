@@ -67,7 +67,8 @@ export const authValidation = {
             .notEmpty()
             .withMessage('code не должен быть пустым')
             .custom(async (code) => {
-                const isUserAlreadyConfirmEmail = await UsersQueryRepository.checkUserEmailConfirmationByConfirmationCode(code);
+                const isUserAlreadyConfirmEmail =
+                    await UsersQueryRepository.checkUserEmailConfirmationByConfirmationCode(code);
                 if (isUserAlreadyConfirmEmail) {
                     throw new Error();
                 }

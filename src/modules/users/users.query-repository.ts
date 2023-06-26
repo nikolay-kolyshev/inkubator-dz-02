@@ -90,6 +90,10 @@ export class UsersQueryRepository {
         return await usersCollection.findOne({ email });
     }
 
+    static async findUserSchemaByConfirmationCode(code: string): Promise<Nullable<UserSchema>> {
+        return await usersCollection.findOne({ emailConfirmationCode: code });
+    }
+
     static async checkUserEmailConfirmationByEmail(email: string): Promise<Nullable<boolean>> {
         const user = await usersCollection.findOne({ email, isEmailConfirmed: true });
         return Boolean(user);

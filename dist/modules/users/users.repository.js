@@ -54,6 +54,23 @@ var UsersRepository = /** @class */ (function () {
             });
         });
     };
+    UsersRepository.updateUserConfirmationCodeByUserId = function (code, userId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var updateRes;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, collections_1.usersCollection.updateOne({
+                            id: userId,
+                        }, {
+                            $set: { emailConfirmationCode: code },
+                        })];
+                    case 1:
+                        updateRes = _a.sent();
+                        return [2 /*return*/, updateRes.acknowledged];
+                }
+            });
+        });
+    };
     UsersRepository.confirmUserEmailByUserId = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             var updateRes;

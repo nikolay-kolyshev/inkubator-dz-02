@@ -85,12 +85,13 @@ var UsersService = /** @class */ (function () {
      */
     UsersService.create = function (dto) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, createdAt, passwordSalt, passwordHash, userCreationResult;
+            var id, createdAt, emailConfirmationCode, passwordSalt, passwordHash, userCreationResult;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         id = (0, generateId_1.generateId)();
                         createdAt = (0, generateDate_1.generateDate)();
+                        emailConfirmationCode = (0, generateId_1.generateId)();
                         return [4 /*yield*/, HashingUtils_1.HashingUtils.generateSalt()];
                     case 1:
                         passwordSalt = _a.sent();
@@ -105,6 +106,7 @@ var UsersService = /** @class */ (function () {
                                 passwordHash: passwordHash,
                                 passwordSalt: passwordSalt,
                                 isEmailConfirmed: false,
+                                emailConfirmationCode: emailConfirmationCode,
                             })];
                     case 3:
                         userCreationResult = _a.sent();

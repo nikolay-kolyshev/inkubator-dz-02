@@ -6,6 +6,17 @@ export class UsersRepository {
         const insertRes = await usersCollection.insertOne(dto);
         return insertRes.acknowledged;
     }
+    static async updateUserConfirmationCodeByUserId(code: string, userId: string): Promise<boolean> {
+        const updateRes = await usersCollection.updateOne(
+            {
+                id: userId,
+            },
+            {
+                $set: { emailConfirmationCode: code },
+            },
+        );
+        return updateRes.acknowledged;
+    }
     static async confirmUserEmailByUserId(id: string): Promise<boolean> {
         const updateRes = await usersCollection.updateOne(
             {

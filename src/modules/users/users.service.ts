@@ -30,6 +30,7 @@ export class UsersService {
     static async create(dto: UsersCreateUserServiceDTO): Promise<Nullable<string>> {
         const id = generateId();
         const createdAt = generateDate();
+        const emailConfirmationCode = generateId();
         const passwordSalt = await HashingUtils.generateSalt();
         const passwordHash = await HashingUtils.generateHash(dto.password, passwordSalt);
         const userCreationResult = await UsersRepository.createUser({
@@ -40,6 +41,7 @@ export class UsersService {
             passwordHash,
             passwordSalt,
             isEmailConfirmed: false,
+            emailConfirmationCode,
         });
         if (!userCreationResult) {
             return null;

@@ -31,4 +31,5 @@ export type UsersCreateUserRepositoryDTO = {
     passwordHash: string;
     passwordSalt: string;
     isEmailConfirmed: boolean;
+    emailConfirmationCode: string;
 };

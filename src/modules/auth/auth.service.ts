@@ -1,5 +1,7 @@
+import { generateId } from '../../common/utils/generateId';
 import { MailManager } from '../../managers/mail.manager';
 import { UsersQueryRepository } from '../users/users.query-repository';
+import { UsersRepository } from '../users/users.repository';
 import { UsersService } from '../users/users.service';
 import { AuthRegistrationInputDto } from './auth.dto';
 
@@ -13,7 +15,14 @@ export class AuthService {
         if (!userId) {
             return null;
         }
-        const emailSendingResult = await MailManager.sendRegistrationConfirmationMessage(dto.email, userId);
+        const foundUser = await UsersQueryRepository.findUserSchemaById(userId);
+        if (!foundUser) {
+            return null;
+        }
+        const emailSendingResult = await MailManager.sendRegistrationConfirmationMessage(
+            dto.email,
+            foundUser.emailConfirmationCode,
+        );
         if (emailSendingResult === null) {
             await UsersService.deleteById(userId);
             return null;
@@ -22,11 +31,11 @@ export class AuthService {
     }
 
     static async registrationConfirmation(code: string): Promise<Nullable<boolean>> {
-        const foundUser = await UsersService.getById(code);
+        const foundUser = await UsersQueryRepository.findUserSchemaByConfirmationCode(code);
         if (!foundUser) {
             return null;
         }
-        if (foundUser.id !== code) {
+        if (foundUser.emailConfirmationCode !== code) {
             return null;
         }
         const userEmailConfirmationResult = await UsersService.confirmUserEmailByUserId(foundUser.id);
@@ -41,7 +50,15 @@ export class AuthService {
         if (!foundUser) {
             return null;
         }
-        const emailSendingResult = await MailManager.sendRegistrationConfirmationMessage(email, foundUser.id);
+        const newCode = generateId();
+        const updateUserConfirmationCodeResult = await UsersRepository.updateUserConfirmationCodeByUserId(
+            newCode,
+            foundUser.id,
+        );
+        if (!updateUserConfirmationCodeResult) {
+            return null;
+        }
+        const emailSendingResult = await MailManager.sendRegistrationConfirmationMessage(email, newCode);
         if (emailSendingResult === null) {
             return null;
         }

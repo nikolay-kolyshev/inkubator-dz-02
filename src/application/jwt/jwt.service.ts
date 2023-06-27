@@ -4,10 +4,10 @@ import { settings } from '../../settings';
 
 export class JwtService {
     static async createAccessJwtToken(user: UserEntity): Promise<string> {
-        return this.createJwtToken(user, '10d');
+        return this.createJwtToken(user, '10s');
     }
     static async createRefreshJwtToken(user: UserEntity): Promise<string> {
-        return this.createJwtToken(user, '20d');
+        return this.createJwtToken(user, '20s');
     }
     static async getUserIdFromJwt(token: string): Promise<Nullable<string>> {
         try {

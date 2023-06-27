@@ -49,7 +49,7 @@ app_1.app.listen(PORT, function () { return __awaiter(void 0, void 0, void 0, fu
             case 0: return [4 /*yield*/, (0, database_1.runDatabase)()];
             case 1:
                 _a.sent();
-                console.log("Server is listening on port ".concat(PORT));
+                console.info("Server is listening on port ".concat(PORT));
                 return [2 /*return*/];
         }
     });

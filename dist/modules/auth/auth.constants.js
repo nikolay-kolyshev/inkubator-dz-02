@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BASIC_AUTH_CREDENTIALS = exports.AuthType = void 0;
+exports.REFRESH_TOKEN_COOKIE_NAME = exports.BASIC_AUTH_CREDENTIALS = exports.AuthType = void 0;
 var AuthType;
 (function (AuthType) {
     AuthType["Basic"] = "basic";
@@ -11,4 +11,5 @@ exports.BASIC_AUTH_CREDENTIALS = {
     username: 'admin',
     password: 'qwerty',
 };
+exports.REFRESH_TOKEN_COOKIE_NAME = 'refreshToken';
 //# sourceMappingURL=auth.constants.js.map

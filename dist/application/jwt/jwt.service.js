@@ -48,14 +48,14 @@ var JwtService = /** @class */ (function () {
     JwtService.createAccessJwtToken = function (user) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.createJwtToken(user, '10d')];
+                return [2 /*return*/, this.createJwtToken(user, '10s')];
             });
         });
     };
     JwtService.createRefreshJwtToken = function (user) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.createJwtToken(user, '20d')];
+                return [2 /*return*/, this.createJwtToken(user, '20s')];
             });
         });
     };
@@ -72,7 +72,7 @@ var JwtService = /** @class */ (function () {
                         return [2 /*return*/, userId];
                     case 2:
                         error_1 = _a.sent();
-                        console.log('[JwtService]', error_1);
+                        console.error('[JwtService]', error_1);
                         return [2 /*return*/, null];
                     case 3: return [2 /*return*/];
                 }

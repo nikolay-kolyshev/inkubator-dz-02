@@ -52,11 +52,11 @@ var runDatabase = function () { return __awaiter(void 0, void 0, void 0, functio
                 return [4 /*yield*/, exports.databaseClient.connect()];
             case 1:
                 _a.sent();
-                console.log('👌Connected to database');
+                console.info('👌Connected to database');
                 return [3 /*break*/, 3];
             case 2:
                 error_1 = _a.sent();
-                console.log('👎Error connecting to database', error_1);
+                console.info('👎Error connecting to database', error_1);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }

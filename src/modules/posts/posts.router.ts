@@ -2,7 +2,7 @@
 
 import { Router } from 'express';
 import { authBasicGuard } from '../../common/guards/auth-basic.guard';
-import { authJwtGuard } from '../../common/guards/auth-jwt.guard';
+import { authAccessTokenJwtGuard } from '../../common/guards/auth-access-token-jwt.guard';
 import { inputValidationMiddleware } from '../../common/middlewares/input-validation.middleware';
 import { blogsValidation } from '../blogs/blogs.validation';
 import { PostsController } from './posts.controller';
@@ -28,7 +28,7 @@ postsRouter.get(
 );
 postsRouter.post(
     '/:postId/comments',
-    authJwtGuard,
+    authAccessTokenJwtGuard,
     ...commentsValidation.inputBody,
     inputValidationMiddleware,
     PostsController.postCommentByPostId,

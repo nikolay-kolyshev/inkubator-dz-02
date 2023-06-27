@@ -4,6 +4,7 @@ import { UsersQueryRepository } from '../users/users.query-repository';
 import { UsersRepository } from '../users/users.repository';
 import { UsersService } from '../users/users.service';
 import { AuthRegistrationInputDto } from './auth.dto';
+import { AuthRepository } from './auth.repository';
 
 export class AuthService {
     static async registration(dto: AuthRegistrationInputDto): Promise<Nullable<boolean>> {
@@ -60,6 +61,14 @@ export class AuthService {
         }
         const emailSendingResult = await MailManager.sendRegistrationConfirmationMessage(email, newCode);
         if (emailSendingResult === null) {
+            return null;
+        }
+        return true;
+    }
+
+    static async addRefreshTokenToBannedJwtTokens(token: string) {
+        const resOperation = await AuthRepository.addRefreshTokenToBannedJwtTokens(token);
+        if (!resOperation) {
             return null;
         }
         return true;

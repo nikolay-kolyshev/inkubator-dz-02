@@ -11,22 +11,20 @@
     "start:prod": "node dist/index.js",
     "watch": "tsc -w",
     "inspect": "nodemon --inspect dist/index.js",
-
     "setup": "yarn install --frozen-lockfile",
     "unsetup": "rm -rf node_modules",
     "presetup": "npm run unsetup",
     "reinstall": "rm -rf node_modules && yarn",
-
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
     "lint:check": "eslint .",
     "lint:fix": "eslint --fix .",
-
     "test": "jest"
   },
   "dependencies": {
     "@types/jsonwebtoken": "9.0.2",
     "bcrypt": "5.1.0",
+    "cookie-parser": "1.4.6",
     "date-fns": "2.29.3",
     "dotenv": "16.0.3",
     "express": "4.18.2",
@@ -38,6 +36,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "5.0.0",
+    "@types/cookie-parser": "1.4.3",
     "@types/express": "4.17.14",
     "@types/jest": "29.2.3",
     "@types/node": "18.11.9",

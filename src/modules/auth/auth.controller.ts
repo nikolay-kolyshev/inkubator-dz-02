@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { JwtService } from '../../application/jwt/jwt.service';
 import { STATUS_CODES } from '../../common/constants';
+import { UsersQueryRepository } from '../users/users.query-repository';
 import { UsersService } from '../users/users.service';
 import {
     AuthLoginInputDto,
@@ -9,22 +10,33 @@ import {
     AuthRegistrationInputDto,
 } from './auth.dto';
 import { AuthService } from './auth.service';
-import { AuthLoginView, GetMeView } from './auth.views';
+import { AuthLoginView, AuthRefreshTokenView, GetMeView } from './auth.views';
 
 export class AuthController {
-    static async postLogin(req: Request<{}, void, AuthLoginInputDto>, res: Response<AuthLoginView>) {
+    /**
+     * @description method POST
+     */
+    static async login(req: Request<{}, void, AuthLoginInputDto>, res: Response<AuthLoginView>) {
         const { loginOrEmail, password } = req.body;
         const user = await UsersService.checkCredentials({ loginOrEmail, password });
         if (user === null) {
             res.sendStatus(STATUS_CODES.UNAUTHORIZED);
             return;
         }
-        const token = await JwtService.createJwt(user);
+        const accessToken = await JwtService.createAccessJwtToken(user);
+        const refreshToken = await JwtService.createRefreshJwtToken(user);
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+        });
         res.status(STATUS_CODES.OK).send({
-            accessToken: token,
+            accessToken,
         });
         return;
     }
+
+    /**
+     * @description method GET
+     */
     static async getMe(req: Request<{}, void, {}>, res: Response<GetMeView>) {
         const userId = req.userId.toString();
         const user = await UsersService.getById(userId);
@@ -39,6 +51,9 @@ export class AuthController {
         return;
     }
 
+    /**
+     * @description method POST
+     */
     static async registration(req: Request<{}, void, AuthRegistrationInputDto>, res: Response<void>) {
         const userCreationResult = await AuthService.registration(req.body);
         if (userCreationResult === null) {
@@ -49,6 +64,9 @@ export class AuthController {
         return;
     }
 
+    /**
+     * @description method POST
+     */
     static async registrationConfirmation(
         req: Request<{}, void, AuthRegistrationConfirmationInputDto>,
         res: Response<void>,
@@ -62,6 +80,9 @@ export class AuthController {
         return;
     }
 
+    /**
+     * @description method POST
+     */
     static async registrationEmailResending(
         req: Request<{}, void, AuthRegistrationEmailResendingInputDto>,
         res: Response<void>,
@@ -71,6 +92,47 @@ export class AuthController {
             res.sendStatus(STATUS_CODES.BAD_REQUEST);
             return;
         }
+        res.sendStatus(STATUS_CODES.NO_CONTENT);
+        return;
+    }
+
+    /**
+     * @description method POST
+     */
+    static async refreshToken(req: Request<{}, void, {}>, res: Response<AuthRefreshTokenView>) {
+        const token = req.cookies['refresh-token'];
+        const resOperation = await AuthService.addRefreshTokenToBannedJwtTokens(token);
+        if (!resOperation) {
+            res.sendStatus(STATUS_CODES.BAD_REQUEST);
+            return;
+        }
+        const user = await UsersQueryRepository.findUserEntityById(req.userId);
+        if (!user) {
+            res.sendStatus(STATUS_CODES.BAD_REQUEST);
+            return;
+        }
+        const accessToken = await JwtService.createAccessJwtToken(user);
+        const refreshToken = await JwtService.createRefreshJwtToken(user);
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+        });
+        res.status(STATUS_CODES.OK).send({
+            accessToken,
+        });
+        return;
+    }
+
+    /**
+     * @description method POST
+     */
+    static async logout(req: Request<{}, void, {}>, res: Response<AuthRefreshTokenView>) {
+        const token = req.cookies['refresh-token'];
+        const resOperation = await AuthService.addRefreshTokenToBannedJwtTokens(token);
+        if (!resOperation) {
+            res.sendStatus(STATUS_CODES.BAD_REQUEST);
+            return;
+        }
+        res.clearCookie('refreshToken');
         res.sendStatus(STATUS_CODES.NO_CONTENT);
         return;
     }

@@ -28,9 +28,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
 var bodyParser = __importStar(require("body-parser"));
+var cookie_parser_1 = __importDefault(require("cookie-parser"));
 var express_1 = __importDefault(require("express"));
 var routing_1 = require("./routing");
 exports.app = (0, express_1.default)();
 exports.app.use(bodyParser.json());
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+exports.app.use((0, cookie_parser_1.default)());
 exports.app.use('/', routing_1.rootRouter);
 //# sourceMappingURL=app.js.map

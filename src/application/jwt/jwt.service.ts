@@ -3,8 +3,11 @@ import { UserEntity } from '../../modules/users/users.entities';
 import { settings } from '../../settings';
 
 export class JwtService {
-    static async createJwt(user: UserEntity): Promise<string> {
-        return jwt.sign({ userId: user.id }, settings.jwtSecret, { expiresIn: '1000000h' });
+    static async createAccessJwtToken(user: UserEntity): Promise<string> {
+        return this.createJwtToken(user, '1h');
+    }
+    static async createRefreshJwtToken(user: UserEntity): Promise<string> {
+        return this.createJwtToken(user, '1d');
     }
     static async getUserIdFromJwt(token: string): Promise<Nullable<string>> {
         try {
@@ -13,5 +16,8 @@ export class JwtService {
         } catch (error) {
             return null;
         }
+    }
+    static async createJwtToken(user: UserEntity, expiresIn: string) {
+        return jwt.sign({ userId: user.id }, settings.jwtSecret, { expiresIn });
     }
 }

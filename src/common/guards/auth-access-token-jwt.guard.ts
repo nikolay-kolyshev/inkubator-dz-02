@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { JwtService } from '../../application/jwt/jwt.service';
 import { STATUS_CODES } from '../constants';
 
-export const authJwtGuard = async (req: Request, res: Response, next: NextFunction) => {
+export const authAccessTokenJwtGuard = async (req: Request, res: Response, next: NextFunction) => {
     if (!req.headers?.authorization) {
         res.send(STATUS_CODES.UNAUTHORIZED);
         return;

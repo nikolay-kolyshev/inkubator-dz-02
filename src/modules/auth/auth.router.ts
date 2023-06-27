@@ -1,14 +1,15 @@
 /** Auth router */
 import { Router } from 'express';
-import { authJwtGuard } from '../../common/guards/auth-jwt.guard';
+import { authAccessTokenJwtGuard } from '../../common/guards/auth-access-token-jwt.guard';
+import { authRefreshTokenJwtGuard } from '../../common/guards/auth-refresh-token-jwt.guard';
 import { inputValidationMiddleware } from '../../common/middlewares/input-validation.middleware';
 import { AuthController } from './auth.controller';
 import { authValidation } from './auth.validation';
 
 const authRouter = Router();
 
-authRouter.post('/login', ...authValidation.loginBody, inputValidationMiddleware, AuthController.postLogin);
-authRouter.get('/me', authJwtGuard, AuthController.getMe);
+authRouter.post('/login', ...authValidation.loginBody, inputValidationMiddleware, AuthController.login);
+authRouter.get('/me', authAccessTokenJwtGuard, AuthController.getMe);
 authRouter.post(
     '/registration',
     ...authValidation.registrationBody,
@@ -27,5 +28,7 @@ authRouter.post(
     inputValidationMiddleware,
     AuthController.registrationEmailResending,
 );
+authRouter.post('/refresh-token', authRefreshTokenJwtGuard, AuthController.refreshToken);
+authRouter.post('/logout', authRefreshTokenJwtGuard, AuthController.logout);
 
 export default authRouter;

@@ -4,7 +4,7 @@ exports.commentsCollection = exports.postsCollection = exports.blogsCollection =
 var index_1 = require("../index");
 var database = index_1.databaseClient.db();
 exports.usersCollection = database.collection('users');
-exports.bannedTokensCollection = database.collection('auth');
+exports.bannedTokensCollection = database.collection('banned-tokens');
 exports.blogsCollection = database.collection('blogs');
 exports.postsCollection = database.collection('posts');
 exports.commentsCollection = database.collection('users');

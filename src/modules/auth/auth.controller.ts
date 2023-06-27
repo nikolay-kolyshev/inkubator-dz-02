@@ -11,6 +11,7 @@ import {
 } from './auth.dto';
 import { AuthService } from './auth.service';
 import { AuthLoginView, AuthRefreshTokenView, GetMeView } from './auth.views';
+import {REFRESH_TOKEN_COOKIE_NAME} from "./auth.constants";
 
 export class AuthController {
     /**
@@ -25,7 +26,7 @@ export class AuthController {
         }
         const accessToken = await JwtService.createAccessJwtToken(user);
         const refreshToken = await JwtService.createRefreshJwtToken(user);
-        res.cookie('refreshToken', refreshToken, {
+        res.cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken, {
             httpOnly: true,
             secure: true,
         });
@@ -101,7 +102,7 @@ export class AuthController {
      * @description method POST
      */
     static async refreshToken(req: Request<{}, void, {}>, res: Response<AuthRefreshTokenView>) {
-        const token = req.cookies['refresh-token'];
+        const token = req.cookies[REFRESH_TOKEN_COOKIE_NAME];
         const resOperation = await AuthService.addRefreshTokenToBannedJwtTokens(token);
         if (!resOperation) {
             res.sendStatus(STATUS_CODES.BAD_REQUEST);
@@ -114,7 +115,7 @@ export class AuthController {
         }
         const accessToken = await JwtService.createAccessJwtToken(user);
         const refreshToken = await JwtService.createRefreshJwtToken(user);
-        res.cookie('refreshToken', refreshToken, {
+        res.cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken, {
             httpOnly: true,
             secure: true,
         });
@@ -128,13 +129,13 @@ export class AuthController {
      * @description method POST
      */
     static async logout(req: Request<{}, void, {}>, res: Response<AuthRefreshTokenView>) {
-        const token = req.cookies['refresh-token'];
+        const token = req.cookies[REFRESH_TOKEN_COOKIE_NAME];
         const resOperation = await AuthService.addRefreshTokenToBannedJwtTokens(token);
         if (!resOperation) {
             res.sendStatus(STATUS_CODES.BAD_REQUEST);
             return;
         }
-        res.clearCookie('refreshToken');
+        res.clearCookie(REFRESH_TOKEN_COOKIE_NAME);
         res.sendStatus(STATUS_CODES.NO_CONTENT);
         return;
     }

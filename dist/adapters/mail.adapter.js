@@ -69,11 +69,10 @@ var MailAdapter = /** @class */ (function () {
                         return [4 /*yield*/, new Promise(function (resolve, reject) {
                                 transporter.verify(function (error, success) {
                                     if (error) {
-                                        console.log(error);
+                                        console.error('[MailAdapter.sendMessage, transporter.verify]', error);
                                         reject(error);
                                     }
                                     else {
-                                        console.log('Сервер готов отправлять сообщения');
                                         resolve(success);
                                     }
                                 });
@@ -105,7 +104,7 @@ var MailAdapter = /** @class */ (function () {
                     case 3: return [2 /*return*/, _a.sent()];
                     case 4:
                         error_1 = _a.sent();
-                        console.error('[MailAdapter.sendMessage]', error_1);
+                        console.error('[MailAdapter.sendMessage, transporter.sendMail]', error_1);
                         return [2 /*return*/, null];
                     case 5: return [2 /*return*/];
                 }

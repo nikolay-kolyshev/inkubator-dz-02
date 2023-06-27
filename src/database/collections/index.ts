@@ -8,7 +8,7 @@ import { databaseClient } from '../index';
 const database = databaseClient.db();
 
 export const usersCollection = database.collection<UserSchemaDefault>('users');
-export const bannedTokensCollection = database.collection<BannedTokenSchemaDefault>('auth');
+export const bannedTokensCollection = database.collection<BannedTokenSchemaDefault>('banned-tokens');
 export const blogsCollection = database.collection<BlogSchemeDefault>('blogs');
 export const postsCollection = database.collection<PostSchemeDefault>('posts');
 export const commentsCollection = database.collection<CommentsSchemaDefault>('users');

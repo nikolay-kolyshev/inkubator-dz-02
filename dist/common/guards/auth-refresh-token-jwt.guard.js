@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authRefreshTokenJwtGuard = void 0;
 var jwt_service_1 = require("../../application/jwt/jwt.service");
+var auth_constants_1 = require("../../modules/auth/auth.constants");
 var auth_repository_1 = require("../../modules/auth/auth.repository");
 var constants_1 = require("../constants");
 var authRefreshTokenJwtGuard = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
@@ -45,7 +46,7 @@ var authRefreshTokenJwtGuard = function (req, res, next) { return __awaiter(void
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                token = req.cookies['refreshToken'];
+                token = req.cookies[auth_constants_1.REFRESH_TOKEN_COOKIE_NAME];
                 if (!token) {
                     res.sendStatus(constants_1.STATUS_CODES.UNAUTHORIZED);
                     return [2 /*return*/];

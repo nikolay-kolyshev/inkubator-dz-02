@@ -1,10 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { JwtService } from '../../application/jwt/jwt.service';
+import { REFRESH_TOKEN_COOKIE_NAME } from '../../modules/auth/auth.constants';
 import { AuthRepository } from '../../modules/auth/auth.repository';
 import { STATUS_CODES } from '../constants';
 
 export const authRefreshTokenJwtGuard = async (req: Request, res: Response, next: NextFunction) => {
-    const token = req.cookies['refreshToken'];
+    const token = req.cookies[REFRESH_TOKEN_COOKIE_NAME];
 
     if (!token) {
         res.sendStatus(STATUS_CODES.UNAUTHORIZED);

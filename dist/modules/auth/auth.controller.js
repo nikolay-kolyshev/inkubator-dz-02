@@ -42,6 +42,7 @@ var constants_1 = require("../../common/constants");
 var users_query_repository_1 = require("../users/users.query-repository");
 var users_service_1 = require("../users/users.service");
 var auth_service_1 = require("./auth.service");
+var auth_constants_1 = require("./auth.constants");
 var AuthController = /** @class */ (function () {
     function AuthController() {
     }
@@ -68,7 +69,7 @@ var AuthController = /** @class */ (function () {
                         return [4 /*yield*/, jwt_service_1.JwtService.createRefreshJwtToken(user)];
                     case 3:
                         refreshToken = _b.sent();
-                        res.cookie('refreshToken', refreshToken, {
+                        res.cookie(auth_constants_1.REFRESH_TOKEN_COOKIE_NAME, refreshToken, {
                             httpOnly: true,
                             secure: true,
                         });
@@ -179,7 +180,7 @@ var AuthController = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        token = req.cookies['refresh-token'];
+                        token = req.cookies[auth_constants_1.REFRESH_TOKEN_COOKIE_NAME];
                         return [4 /*yield*/, auth_service_1.AuthService.addRefreshTokenToBannedJwtTokens(token)];
                     case 1:
                         resOperation = _a.sent();
@@ -200,7 +201,7 @@ var AuthController = /** @class */ (function () {
                         return [4 /*yield*/, jwt_service_1.JwtService.createRefreshJwtToken(user)];
                     case 4:
                         refreshToken = _a.sent();
-                        res.cookie('refreshToken', refreshToken, {
+                        res.cookie(auth_constants_1.REFRESH_TOKEN_COOKIE_NAME, refreshToken, {
                             httpOnly: true,
                             secure: true,
                         });
@@ -221,7 +222,7 @@ var AuthController = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        token = req.cookies['refresh-token'];
+                        token = req.cookies[auth_constants_1.REFRESH_TOKEN_COOKIE_NAME];
                         return [4 /*yield*/, auth_service_1.AuthService.addRefreshTokenToBannedJwtTokens(token)];
                     case 1:
                         resOperation = _a.sent();
@@ -229,7 +230,7 @@ var AuthController = /** @class */ (function () {
                             res.sendStatus(constants_1.STATUS_CODES.BAD_REQUEST);
                             return [2 /*return*/];
                         }
-                        res.clearCookie('refreshToken');
+                        res.clearCookie(auth_constants_1.REFRESH_TOKEN_COOKIE_NAME);
                         res.sendStatus(constants_1.STATUS_CODES.NO_CONTENT);
                         return [2 /*return*/];
                 }

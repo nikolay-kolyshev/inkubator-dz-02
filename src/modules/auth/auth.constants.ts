@@ -8,3 +8,5 @@ export const BASIC_AUTH_CREDENTIALS = {
     username: 'admin',
     password: 'qwerty',
 };
+
+export const REFRESH_TOKEN_COOKIE_NAME = 'refreshToken';

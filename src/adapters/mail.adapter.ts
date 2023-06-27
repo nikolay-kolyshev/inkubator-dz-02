@@ -22,10 +22,9 @@ export class MailAdapter {
         await new Promise((resolve, reject) => {
             transporter.verify(function (error, success) {
                 if (error) {
-                    console.log(error);
+                    console.error('[MailAdapter.sendMessage, transporter.verify]', error);
                     reject(error);
                 } else {
-                    console.log('Сервер готов отправлять сообщения');
                     resolve(success);
                 }
             });
@@ -52,7 +51,7 @@ export class MailAdapter {
                 });
             });
         } catch (error) {
-            console.error('[MailAdapter.sendMessage]', error);
+            console.error('[MailAdapter.sendMessage, transporter.sendMail]', error);
             return null;
         }
     }

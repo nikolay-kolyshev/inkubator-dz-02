@@ -48,14 +48,14 @@ var JwtService = /** @class */ (function () {
     JwtService.createAccessJwtToken = function (user) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.createJwtToken(user, '10s')];
+                return [2 /*return*/, this.createJwtToken(user, '10d')];
             });
         });
     };
     JwtService.createRefreshJwtToken = function (user) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.createJwtToken(user, '20s')];
+                return [2 /*return*/, this.createJwtToken(user, '20d')];
             });
         });
     };

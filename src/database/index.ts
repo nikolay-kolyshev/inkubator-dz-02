@@ -10,8 +10,8 @@ export const databaseClient = new MongoClient(settings.databaseUrl);
 export const runDatabase = async () => {
     try {
         await databaseClient.connect();
-        console.log('👌Connected to database');
+        console.info('👌Connected to database');
     } catch (error) {
-        console.log('👎Error connecting to database', error);
+        console.info('👎Error connecting to database', error);
     }
 };

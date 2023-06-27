@@ -4,10 +4,10 @@ import { AuthRepository } from '../../modules/auth/auth.repository';
 import { STATUS_CODES } from '../constants';
 
 export const authRefreshTokenJwtGuard = async (req: Request, res: Response, next: NextFunction) => {
-    const token = req.cookies['refresh-token'];
+    const token = req.cookies['refreshToken'];
 
     if (!token) {
-        res.send(STATUS_CODES.UNAUTHORIZED);
+        res.sendStatus(STATUS_CODES.UNAUTHORIZED);
         return;
     }
 

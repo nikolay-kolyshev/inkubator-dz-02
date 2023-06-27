@@ -45,9 +45,9 @@ var authRefreshTokenJwtGuard = function (req, res, next) { return __awaiter(void
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                token = req.cookies['refresh-token'];
+                token = req.cookies['refreshToken'];
                 if (!token) {
-                    res.send(constants_1.STATUS_CODES.UNAUTHORIZED);
+                    res.sendStatus(constants_1.STATUS_CODES.UNAUTHORIZED);
                     return [2 /*return*/];
                 }
                 return [4 /*yield*/, jwt_service_1.JwtService.getUserIdFromJwt(token)];

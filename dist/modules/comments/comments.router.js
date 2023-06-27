@@ -10,15 +10,15 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
-var auth_jwt_guard_1 = require("../../common/guards/auth-jwt.guard");
+var auth_access_token_jwt_guard_1 = require("../../common/guards/auth-access-token-jwt.guard");
 var input_validation_middleware_1 = require("../../common/middlewares/input-validation.middleware");
 var comments_controller_1 = require("./comments.controller");
 var comments_validation_1 = require("./comments.validation");
 var commentsRouter = (0, express_1.Router)();
 commentsRouter.get('/:commentId', comments_controller_1.CommentsController.getCommentById);
 commentsRouter.put.apply(commentsRouter, __spreadArray(__spreadArray(['/:commentId',
-    auth_jwt_guard_1.authJwtGuard], comments_validation_1.commentsValidation.inputBody, false), [input_validation_middleware_1.inputValidationMiddleware,
+    auth_access_token_jwt_guard_1.authAccessTokenJwtGuard], comments_validation_1.commentsValidation.inputBody, false), [input_validation_middleware_1.inputValidationMiddleware,
     comments_controller_1.CommentsController.putCommentById], false));
-commentsRouter.delete('/:id', auth_jwt_guard_1.authJwtGuard, comments_controller_1.CommentsController.deleteCommentById);
+commentsRouter.delete('/:id', auth_access_token_jwt_guard_1.authAccessTokenJwtGuard, comments_controller_1.CommentsController.deleteCommentById);
 exports.default = commentsRouter;
 //# sourceMappingURL=comments.router.js.map

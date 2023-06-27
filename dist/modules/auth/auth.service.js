@@ -42,6 +42,7 @@ var mail_manager_1 = require("../../managers/mail.manager");
 var users_query_repository_1 = require("../users/users.query-repository");
 var users_repository_1 = require("../users/users.repository");
 var users_service_1 = require("../users/users.service");
+var auth_repository_1 = require("./auth.repository");
 var AuthService = /** @class */ (function () {
     function AuthService() {
     }
@@ -126,6 +127,22 @@ var AuthService = /** @class */ (function () {
                     case 3:
                         emailSendingResult = _a.sent();
                         if (emailSendingResult === null) {
+                            return [2 /*return*/, null];
+                        }
+                        return [2 /*return*/, true];
+                }
+            });
+        });
+    };
+    AuthService.addRefreshTokenToBannedJwtTokens = function (token) {
+        return __awaiter(this, void 0, void 0, function () {
+            var resOperation;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, auth_repository_1.AuthRepository.addRefreshTokenToBannedJwtTokens(token)];
+                    case 1:
+                        resOperation = _a.sent();
+                        if (!resOperation) {
                             return [2 /*return*/, null];
                         }
                         return [2 /*return*/, true];

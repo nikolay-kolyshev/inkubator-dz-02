@@ -39,14 +39,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 var jwt_service_1 = require("../../application/jwt/jwt.service");
 var constants_1 = require("../../common/constants");
+var users_query_repository_1 = require("../users/users.query-repository");
 var users_service_1 = require("../users/users.service");
 var auth_service_1 = require("./auth.service");
 var AuthController = /** @class */ (function () {
     function AuthController() {
     }
-    AuthController.postLogin = function (req, res) {
+    /**
+     * @description method POST
+     */
+    AuthController.login = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, loginOrEmail, password, user, token;
+            var _a, loginOrEmail, password, user, accessToken, refreshToken;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -58,17 +62,26 @@ var AuthController = /** @class */ (function () {
                             res.sendStatus(constants_1.STATUS_CODES.UNAUTHORIZED);
                             return [2 /*return*/];
                         }
-                        return [4 /*yield*/, jwt_service_1.JwtService.createJwt(user)];
+                        return [4 /*yield*/, jwt_service_1.JwtService.createAccessJwtToken(user)];
                     case 2:
-                        token = _b.sent();
+                        accessToken = _b.sent();
+                        return [4 /*yield*/, jwt_service_1.JwtService.createRefreshJwtToken(user)];
+                    case 3:
+                        refreshToken = _b.sent();
+                        res.cookie('refreshToken', refreshToken, {
+                            httpOnly: true,
+                        });
                         res.status(constants_1.STATUS_CODES.OK).send({
-                            accessToken: token,
+                            accessToken: accessToken,
                         });
                         return [2 /*return*/];
                 }
             });
         });
     };
+    /**
+     * @description method GET
+     */
     AuthController.getMe = function (req, res) {
         var _a, _b, _c;
         return __awaiter(this, void 0, void 0, function () {
@@ -93,6 +106,9 @@ var AuthController = /** @class */ (function () {
             });
         });
     };
+    /**
+     * @description method POST
+     */
     AuthController.registration = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
             var userCreationResult;
@@ -111,6 +127,9 @@ var AuthController = /** @class */ (function () {
             });
         });
     };
+    /**
+     * @description method POST
+     */
     AuthController.registrationConfirmation = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
             var emailConfirmationResult;
@@ -129,6 +148,9 @@ var AuthController = /** @class */ (function () {
             });
         });
     };
+    /**
+     * @description method POST
+     */
     AuthController.registrationEmailResending = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
             var emailResendingResult;
@@ -141,6 +163,71 @@ var AuthController = /** @class */ (function () {
                             res.sendStatus(constants_1.STATUS_CODES.BAD_REQUEST);
                             return [2 /*return*/];
                         }
+                        res.sendStatus(constants_1.STATUS_CODES.NO_CONTENT);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * @description method POST
+     */
+    AuthController.refreshToken = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var token, resOperation, user, accessToken, refreshToken;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        token = req.cookies['refresh-token'];
+                        return [4 /*yield*/, auth_service_1.AuthService.addRefreshTokenToBannedJwtTokens(token)];
+                    case 1:
+                        resOperation = _a.sent();
+                        if (!resOperation) {
+                            res.sendStatus(constants_1.STATUS_CODES.BAD_REQUEST);
+                            return [2 /*return*/];
+                        }
+                        return [4 /*yield*/, users_query_repository_1.UsersQueryRepository.findUserEntityById(req.userId)];
+                    case 2:
+                        user = _a.sent();
+                        if (!user) {
+                            res.sendStatus(constants_1.STATUS_CODES.BAD_REQUEST);
+                            return [2 /*return*/];
+                        }
+                        return [4 /*yield*/, jwt_service_1.JwtService.createAccessJwtToken(user)];
+                    case 3:
+                        accessToken = _a.sent();
+                        return [4 /*yield*/, jwt_service_1.JwtService.createRefreshJwtToken(user)];
+                    case 4:
+                        refreshToken = _a.sent();
+                        res.cookie('refreshToken', refreshToken, {
+                            httpOnly: true,
+                        });
+                        res.status(constants_1.STATUS_CODES.OK).send({
+                            accessToken: accessToken,
+                        });
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * @description method POST
+     */
+    AuthController.logout = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var token, resOperation;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        token = req.cookies['refresh-token'];
+                        return [4 /*yield*/, auth_service_1.AuthService.addRefreshTokenToBannedJwtTokens(token)];
+                    case 1:
+                        resOperation = _a.sent();
+                        if (!resOperation) {
+                            res.sendStatus(constants_1.STATUS_CODES.BAD_REQUEST);
+                            return [2 /*return*/];
+                        }
+                        res.clearCookie('refreshToken');
                         res.sendStatus(constants_1.STATUS_CODES.NO_CONTENT);
                         return [2 /*return*/];
                 }

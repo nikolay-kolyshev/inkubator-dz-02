@@ -45,10 +45,17 @@ var settings_1 = require("../../settings");
 var JwtService = /** @class */ (function () {
     function JwtService() {
     }
-    JwtService.createJwt = function (user) {
+    JwtService.createAccessJwtToken = function (user) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, jsonwebtoken_1.default.sign({ userId: user.id }, settings_1.settings.jwtSecret, { expiresIn: '1000000h' })];
+                return [2 /*return*/, this.createJwtToken(user, '1h')];
+            });
+        });
+    };
+    JwtService.createRefreshJwtToken = function (user) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.createJwtToken(user, '1d')];
             });
         });
     };
@@ -68,6 +75,13 @@ var JwtService = /** @class */ (function () {
                         return [2 /*return*/, null];
                     case 3: return [2 /*return*/];
                 }
+            });
+        });
+    };
+    JwtService.createJwtToken = function (user, expiresIn) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, jsonwebtoken_1.default.sign({ userId: user.id }, settings_1.settings.jwtSecret, { expiresIn: expiresIn })];
             });
         });
     };

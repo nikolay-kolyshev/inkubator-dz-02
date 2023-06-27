@@ -27,6 +27,7 @@ export class AuthController {
         const refreshToken = await JwtService.createRefreshJwtToken(user);
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
+            secure: true,
         });
         res.status(STATUS_CODES.OK).send({
             accessToken,
@@ -115,6 +116,7 @@ export class AuthController {
         const refreshToken = await JwtService.createRefreshJwtToken(user);
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
+            secure: true,
         });
         res.status(STATUS_CODES.OK).send({
             accessToken,

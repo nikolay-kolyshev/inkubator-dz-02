@@ -12,6 +12,7 @@ export const authRefreshTokenJwtGuard = async (req: Request, res: Response, next
     }
 
     const userId = await JwtService.getUserIdFromJwt(token);
+
     if (!userId) {
         res.sendStatus(STATUS_CODES.UNAUTHORIZED);
         return;

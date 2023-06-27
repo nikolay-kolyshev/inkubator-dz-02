@@ -14,6 +14,7 @@ export class JwtService {
             const { userId } = (await jwt.verify(token, settings.jwtSecret)) as { userId: string };
             return userId;
         } catch (error) {
+            console.log('[JwtService]', error);
             return null;
         }
     }

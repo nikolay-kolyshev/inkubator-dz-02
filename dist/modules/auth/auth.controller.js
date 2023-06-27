@@ -70,6 +70,7 @@ var AuthController = /** @class */ (function () {
                         refreshToken = _b.sent();
                         res.cookie('refreshToken', refreshToken, {
                             httpOnly: true,
+                            secure: true,
                         });
                         res.status(constants_1.STATUS_CODES.OK).send({
                             accessToken: accessToken,
@@ -201,6 +202,7 @@ var AuthController = /** @class */ (function () {
                         refreshToken = _a.sent();
                         res.cookie('refreshToken', refreshToken, {
                             httpOnly: true,
+                            secure: true,
                         });
                         res.status(constants_1.STATUS_CODES.OK).send({
                             accessToken: accessToken,

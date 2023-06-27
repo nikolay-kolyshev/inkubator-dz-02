@@ -72,6 +72,7 @@ var JwtService = /** @class */ (function () {
                         return [2 /*return*/, userId];
                     case 2:
                         error_1 = _a.sent();
+                        console.log('[JwtService]', error_1);
                         return [2 /*return*/, null];
                     case 3: return [2 /*return*/];
                 }
